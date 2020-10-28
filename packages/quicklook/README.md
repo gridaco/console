@@ -1,18 +1,6 @@
-# console
-Bridged's project collaboration console for product-level management
-
-
-
-
-
-## Dev Docs
-
-https://nextjs.org/docs/advanced-features/multi-zones
-
-
-
-
-
+# quicklook
+> quicklook under `console.bridged.xyz`.
+> `https://console.bridged.xyz/projects/:id/quicklook/:frame`
 
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
