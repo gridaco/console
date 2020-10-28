@@ -1,15 +1,10 @@
 {
-  "name": "console.bridged.xyz",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
-  },
-  "dependencies": {
-    "next": "10.0.0",
-    "react": "17.0.1",
-    "react-dom": "17.0.1"
-  }
+    "name": "@bridged.xyz/console.bridged.xyz",
+    "version": "0.0.1",
+    "private": true,
+    "license": "Apache 2.0",
+    "workspaces": [
+        "home",
+        "quicklook"
+    ]
 }
