@@ -11,6 +11,8 @@ https://nextjs.org/docs/advanced-features/multi-zones
 
 
 
+## Deployed with vercel
+visit vercel.com for more informations
 
 
 
