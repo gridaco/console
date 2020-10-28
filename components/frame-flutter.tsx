@@ -11,7 +11,7 @@ export default class FrameFlutter extends React.Component<{ js: string }> {
         if (isIFrame(iframe) && iframe.contentWindow) {
             iframe.onload = () => {
                 iframe.contentWindow!.postMessage(
-                    { command: "execute", html: undefined, css: undefined, js: this.props.js },
+                    { command: "execute", html: '<h1>loading...</h1>', css: 'h1 { text-align: center }', js: this.props.js },
                     '*'
                 );
             }
