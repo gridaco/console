@@ -1,6 +1,6 @@
 import React from "react"
 import { useRouter } from 'next/router'
-import FrameFlutter from "../components/frame-flutter"
+import FrameFlutter from "../../components/frame-flutter"
 export default function Frame() {
     const router = useRouter();
     const id = router.query.frame as string

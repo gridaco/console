@@ -10,6 +10,7 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
+        quick look is not allowed for user-first browser entry.
       </main>
     </div>
   )

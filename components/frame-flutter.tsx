@@ -20,8 +20,7 @@ export default class FrameFlutter extends React.Component<{ js: string }> {
 
     render() {
         return (
-            <iframe id="frame" width="375" height="812" src="frame-flutter.html" sandbox="allow-scripts"></iframe>
+            <iframe id="frame" width="375" height="812" src="/quicklook-assets/flutter/frame-flutter.html" sandbox="allow-scripts"></iframe>
         )
     }
-
 }
