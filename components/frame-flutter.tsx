@@ -1,6 +1,6 @@
 import { NumberSize, Resizable } from "re-resizable";
 import { Direction } from "re-resizable/lib/resizer";
-import React from "react"
+import React, { useEffect, useState } from "react"
 
 const isIFrame = (input: HTMLElement | null): input is HTMLIFrameElement =>
     input !== null && input.tagName === 'IFRAME';
@@ -8,6 +8,8 @@ const isIFrame = (input: HTMLElement | null): input is HTMLIFrameElement =>
 interface State {
     viewportWidth: number
     viewportHeight: number
+    iframe: any,
+    logs: any
 }
 
 interface Props { js: string }
@@ -18,7 +20,9 @@ export default class FrameFlutter extends React.Component<Props, State> {
         super(props)
         this.state = {
             viewportHeight: 812,
-            viewportWidth: 375
+            viewportWidth: 375,
+            logs: [],
+            iframe: undefined
         }
     }
 
@@ -44,6 +48,14 @@ export default class FrameFlutter extends React.Component<Props, State> {
         iframe.contentWindow!.onerror = (event: Event | string, source?: string, lineno?: number, colno?: number, error?: Error) => {
             console.error('error from flutter js', source)
         }
+
+        // set iframe to state
+
+        this.setState(() => {
+            return {
+                iframe: iframe.contentWindow
+            }
+        })
     }
 
 
@@ -65,23 +77,67 @@ export default class FrameFlutter extends React.Component<Props, State> {
 
     render() {
         return (
-            <Resizable
-                ref={c => { this.resizable = c; }}
+            <div>
 
-                defaultSize={{
-                    width: 375,
-                    height: 812,
-                }}
-                onResize={this.onResize}
-                handleComponent={{
-                    bottomRight: BottomRightHandle()
-                }}
-            >
-                <iframe id="frame" width={this.state.viewportWidth} height={this.state.viewportHeight} src="/quicklook-assets/flutter/frame-flutter.html" sandbox="allow-scripts allow-same-origin" onLoad={this.onIframeLoaded}></ iframe>
-            </Resizable>
+                <Resizable
+                    ref={c => { this.resizable = c; }}
+
+                    defaultSize={{
+                        width: 375,
+                        height: 812,
+                    }}
+                    onResize={this.onResize}
+                    handleComponent={{
+                        bottomRight: BottomRightHandle()
+                    }}
+                >
+                    <iframe id="frame" width={this.state.viewportWidth} height={this.state.viewportHeight} src="/quicklook-assets/flutter/frame-flutter.html" sandbox="allow-scripts allow-same-origin" onLoad={this.onIframeLoaded}></ iframe>
+                </Resizable>
+
+            </div >
         )
     }
 }
+
+
+
+/**
+ * 
+                 <ConsoleFeed window={this.state.iframe} logs={this.state.logs} setLogs={(l: any) => {
+                    this.setState(() => {
+                        return { logs: l }
+                    })
+                }}></ConsoleFeed>
+ */
+
+// TODO
+function ConsoleFeed(props: {
+    window: any,
+    logs: any,
+    setLogs: any
+}) {
+    // console.log('window', props)
+    const { window } = props
+    try {
+        if (window !== undefined) {
+            const { Hook, Console, Decode, Unhook } = require('console-feed')
+            // region console-feed
+            // https://github.com/samdenty/console-feed/issues/57
+            useEffect(() => {
+                Hook(window.console, (log: any) => props.setLogs([log]), false)
+                return () => Unhook(window.console)
+            }, [])
+            // endregion console-feed
+            return <Console logs={props.logs} />
+        }
+    } catch (e) { }
+    if (props.window) {
+        return <h1>{props.window.console.count()}</h1>
+    } else {
+        return <p></p>
+    }
+}
+
 
 
 const SouthEastArrow = () => (

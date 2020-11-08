@@ -5,6 +5,7 @@ Bridged's project collaboration console for product-level management
 
 ## Dependencies
 - [re-resizable](https://github.com/bokuweb/re-resizable)
+- [console-feed](https://github.com/samdenty/console-feed)
 
 
 ## Dev Docs

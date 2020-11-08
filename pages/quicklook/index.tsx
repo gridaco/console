@@ -1,6 +1,7 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { useRouter } from 'next/router'
 import FrameFlutter from "../../components/frame-flutter"
+
 
 interface Query {
     frame?: string
@@ -17,7 +18,6 @@ interface Query {
  */
 export default function Frame() {
     const router = useRouter();
-    console.log(router.query)
     const q: Query = {
         frame: router.query.frame as string,
         url: router.query.url as string,
@@ -37,11 +37,13 @@ export default function Frame() {
         }
         return <div>loading..</div>
     }
+
     return (
         <div>
             {appFrame()}
             <button onClick={() => {
-                // TODO
+                navigator.clipboard.writeText(window.location.href)
+                alert('copied to clipboard')
             }}>copy sharable link</button>
             <button onClick={() => {
                 open('https://github.com/bridgedxyz/console.bridged.xyz')
@@ -49,3 +51,4 @@ export default function Frame() {
         </div>
     )
 }
+
