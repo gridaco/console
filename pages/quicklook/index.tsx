@@ -26,12 +26,26 @@ export default function Frame() {
         h: Number.parseInt(router.query.h as string) ?? 812,
     }
 
-    if (q.frame) {
-        const jsCdn = `https://s3-us-west-1.amazonaws.com/xyz.bridged.console.quicklook/${q.frame}.dart.js`
-        return <FrameFlutter js={jsCdn}></FrameFlutter>
+
+    function appFrame() {
+        if (q.frame) {
+            const jsCdn = `https://s3-us-west-1.amazonaws.com/xyz.bridged.console.quicklook/${q.frame}.dart.js`
+            return <FrameFlutter js={jsCdn}></FrameFlutter>
+        }
+        else if (q.url) {
+            return <FrameFlutter js={q.url}></FrameFlutter>
+        }
+        return <div>loading..</div>
     }
-    else if (q.url) {
-        return <FrameFlutter js={q.url}></FrameFlutter>
-    }
-    return <div>loading..</div>
+    return (
+        <div>
+            {appFrame()}
+            <button onClick={() => {
+                // TODO
+            }}>copy sharable link</button>
+            <button onClick={() => {
+                open('https://github.com/bridgedxyz/console.bridged.xyz')
+            }}>improve this page on github</button>
+        </div>
+    )
 }

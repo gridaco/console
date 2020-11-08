@@ -3,6 +3,8 @@ Bridged's project collaboration console for product-level management
 
 
 
+## Dependencies
+- [re-resizable](https://github.com/bokuweb/re-resizable)
 
 
 ## Dev Docs
