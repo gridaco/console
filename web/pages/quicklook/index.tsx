@@ -49,7 +49,7 @@ export default function Frame() {
 
 
     return (
-        <div>
+        <div style={{ margin: 48 }}>
             <Grid
                 container
                 direction="row"
@@ -84,17 +84,16 @@ export default function Frame() {
                                 }
                             }}
                         />
+                        <Button variant="contained" onClick={() => {
+                            navigator.clipboard.writeText(window.location.href)
+                            alert('copied to clipboard')
+                        }}>copy sharable link</Button>
+                        <Button variant="outlined" onClick={() => {
+                            open('https://github.com/bridgedxyz/console.bridged.xyz')
+                        }}>improve this page on github</Button>
                     </div>
                 </Grid>
             </Grid>
-
-            <Button variant="contained" onClick={() => {
-                navigator.clipboard.writeText(window.location.href)
-                alert('copied to clipboard')
-            }}>copy sharable link</Button>
-            <Button variant="outlined" onClick={() => {
-                open('https://github.com/bridgedxyz/console.bridged.xyz')
-            }}>improve this page on github</Button>
         </div>
     )
 }
