@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import FrameFlutter from "../../components/frame-flutter"
 import dynamic from "next/dynamic";
 
-import sample from '../code-sample'
+import sample from '../../utils/code-sample'
 
 
 const MonacoEditor = dynamic(import("react-monaco-editor"), { ssr: false });
