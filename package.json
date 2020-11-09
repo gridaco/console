@@ -8,15 +8,20 @@
     "start": "next start"
   },
   "dependencies": {
+    "@zeit/next-css": "^1.0.1",
     "next": "10.0.0",
     "re-resizable": "^6.8.0",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "react-monaco-editor": "^0.40.0"
   },
   "devDependencies": {
     "@types/node": "^14.14.5",
     "@types/react": "^16.9.55",
     "@types/react-dom": "^16.9.9",
+    "monaco-editor-webpack-plugin": "^2.0.0",
+    "next-fonts": "^1.4.0",
+    "next-transpile-modules": "^4.1.0",
     "typescript": "^4.0.5"
   }
 }
