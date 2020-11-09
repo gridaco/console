@@ -19,12 +19,11 @@
     "noEmit": true,
     "jsx": "preserve"
   },
-  "include": [
-    "pages",
-    "styles"
-  ],
   "exclude": [
-    "node_modules",
-    "legacy"
+    "node_modules"
+  ],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx"
   ]
 }
