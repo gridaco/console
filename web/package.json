@@ -2,7 +2,7 @@
   "name": "web",
   "version": "0.1.0",
   "scripts": {
-    "preinstall": "git branch --set-upstream-to=origin/master master && git pull",
+    "preinstall": "git pull origin main --recurse-submodules",
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
