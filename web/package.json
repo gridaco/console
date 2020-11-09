@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@bridged.xyz/client-sdk": "^0.0.1-14",
+    "@material-ui/core": "^4.11.0",
     "@zeit/next-css": "^1.0.1",
     "next": "10.0.0",
     "re-resizable": "^6.8.0",

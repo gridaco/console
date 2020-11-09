@@ -1,21 +1,14 @@
-import React from "react"
+import React, { useState } from "react"
 import { useRouter } from 'next/router'
 import FrameFlutter from "../../components/frame-flutter"
 import dynamic from "next/dynamic";
-
-import sample from '../../utils/code-sample'
-
+import Axios from "axios"
+import Grid from "@material-ui/core/Grid"
+import Button from "@material-ui/core/Button"
+import { QuicklookQueryParams, framework, language } from "@bridged.xyz/client-sdk/dist/projects/quicklook"
 
 const MonacoEditor = dynamic(import("react-monaco-editor"), { ssr: false });
 
-
-interface Query {
-    frame?: string
-    url?: string
-    name: string
-    w: number
-    h: number
-}
 
 /**
  * frame or url is required
@@ -24,9 +17,12 @@ interface Query {
  */
 export default function Frame() {
     const router = useRouter();
-    console.log(router.query)
-    const q: Query = {
-        frame: router.query.frame as string,
+    const [source, setSource] = useState<string>();
+
+    const q: QuicklookQueryParams = {
+        id: (router.query.id as string) ?? '',
+        framework: (router.query.framework as 'flutter' | 'react') ?? "flutter",
+        language: (router.query.language as 'dart' | 'js') ?? "js",
         url: router.query.url as string,
         name: router.query.name as string,
         w: Number.parseInt(router.query.w as string) ?? 375,
@@ -34,46 +30,101 @@ export default function Frame() {
     }
 
 
-    function appFrame() {
-        if (q.frame) {
-            const jsCdn = `https://s3-us-west-1.amazonaws.com/xyz.bridged.console.quicklook/${q.frame}.dart.js`
-            return <FrameFlutter js={jsCdn}></FrameFlutter>
-        }
-        else if (q.url) {
-            return <FrameFlutter js={q.url}></FrameFlutter>
-        }
-        return <div>loading..</div>
+    switch (q.framework) {
+        case "flutter":
+            if (q.url) {
+                if (q.language == "js") {
+                    setSource(q.url)
+                } else if (q.language == "dart") {
+                    // fetch dart file and set as source
+                    Axios.get(q.url).then((r) => {
+                        const dartSource = r.data
+                        setSource(dartSource)
+                    })
+                }
+            }
+            break;
+        case "react":
     }
+
+
     return (
         <div>
-            {appFrame()}
-            <div>
-                <MonacoEditor
-                    height={'600px'}
-                    language="typescript"
-                    theme="vs-dark"
-                    value={sample}
-                    onChange={console.log}
-                    editorDidMount={() => {
-                        // @ts-ignore
-                        window.MonacoEnvironment.getWorkerUrl = (moduleId, label) => {
-                            if (label === 'json') return '/_next/static/json.worker.js'
-                            if (label === 'css') return '/_next/static/css.worker.js'
-                            if (label === 'html') return '/_next/static/html.worker.js'
-                            if (label === 'typescript' || label === 'javascript')
-                                return '/_next/static/ts.worker.js'
-                            return '/_next/static/editor.worker.js'
-                        }
-                    }}
-                />
-            </div>
-            <button onClick={() => {
+            <Grid
+                container
+                direction="row"
+                justify="space-between"
+                alignItems="stretch"
+            >
+                <Grid item>
+                    {appFrame({
+                        id: q.id,
+                        framework: q.framework,
+                        source: source,
+                        language: q.language
+                    })}
+                </Grid>
+                <Grid item>
+                    <div style={{ width: '50vw' }}>
+                        <MonacoEditor
+                            height={'600px'}
+                            language="dart"
+                            theme="vs-dark"
+                            value={source}
+                            // onChange={console.log}
+                            editorDidMount={() => {
+                                // @ts-ignore
+                                window.MonacoEnvironment.getWorkerUrl = (moduleId, label) => {
+                                    if (label === 'json') return '/_next/static/json.worker.js'
+                                    if (label === 'css') return '/_next/static/css.worker.js'
+                                    if (label === 'html') return '/_next/static/html.worker.js'
+                                    if (label === 'typescript' || label === 'javascript')
+                                        return '/_next/static/ts.worker.js'
+                                    return '/_next/static/editor.worker.js'
+                                }
+                            }}
+                        />
+                    </div>
+                </Grid>
+            </Grid>
+
+            <Button variant="contained" onClick={() => {
                 navigator.clipboard.writeText(window.location.href)
                 alert('copied to clipboard')
-            }}>copy sharable link</button>
-            <button onClick={() => {
+            }}>copy sharable link</Button>
+            <Button variant="outlined" onClick={() => {
                 open('https://github.com/bridgedxyz/console.bridged.xyz')
-            }}>improve this page on github</button>
+            }}>improve this page on github</Button>
         </div>
     )
+}
+
+
+
+
+function appFrame(props: {
+    id: string
+    source: string | undefined
+    framework: framework
+    language: language
+}) {
+    const loading = <div>loading..</div>
+
+    if (!props.source) {
+        return loading
+    }
+
+    switch (props.framework) {
+        case "flutter":
+            if (props.language == "js") {
+                return <FrameFlutter id={props.id} js={props.source}></FrameFlutter>
+            } else if (props.language == "dart") {
+                return <FrameFlutter id={props.id} dart={props.source}></FrameFlutter>
+            }
+            return loading
+        case "react":
+            return <p>react framework is not yet supported.</p>
+        default:
+            return loading
+    }
 }

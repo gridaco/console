@@ -16,7 +16,7 @@ module.exports = withCSS({
         config.plugins.push(
             new MonacoWebpackPlugin({
                 // Add languages as needed...
-                languages: ['javascript', 'typescript'],
+                languages: ['javascript', 'typescript', 'dart'],
                 filename: 'static/[name].worker.js',
             })
         )

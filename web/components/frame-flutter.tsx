@@ -1,6 +1,8 @@
 import { NumberSize, Resizable } from "re-resizable";
 import { Direction } from "re-resizable/lib/resizer";
 import React from "react"
+import { compileFlutterApp } from "@bridged.xyz/client-sdk/dist/build/flutter"
+import { upload } from "@bridged.xyz/client-sdk/dist/hosting"
 
 const isIFrame = (input: HTMLElement | null): input is HTMLIFrameElement =>
     input !== null && input.tagName === 'IFRAME';
@@ -10,7 +12,19 @@ interface State {
     viewportHeight: number
 }
 
-interface Props { js: string }
+interface Props {
+    id: string
+
+    /**
+     * this can be both string source of js file, or url of the hosted js file
+     */
+    js?: string
+
+    /**
+     * this can not be a url of dart file. it should be dart source as string
+     */
+    dart?: string
+}
 
 export default class FrameFlutter extends React.Component<Props, State> {
 
@@ -23,23 +37,47 @@ export default class FrameFlutter extends React.Component<Props, State> {
     }
 
     componentDidMount() {
-        // console.log('props', this.props)
-        // let iframe = document.getElementById('frame') as HTMLIFrameElement
-        // if (isIFrame(iframe) && iframe.contentWindow) {
-        //     iframe!.onerror = (event: Event | string, source?: string, lineno?: number, colno?: number, error?: Error) => {
-        //         console.warn(event, source, lineno, error);
-        //     }
-        // }
+    }
+
+    async getCompiledJsSource(): Promise<string> {
+        if (this.props.js) {
+            return this.props.js
+        } else if (this.props.dart) {
+            const app = await compileFlutterApp({
+                dart: this.props.dart,
+                id: this.props.id
+            })
+            const jsHosted = await upload({
+                file: app.js!,
+                name: 'dart.js'
+            })
+            return jsHosted.url
+
+            // console.log('compiled complete', app)
+            // return app.js!
+        } else {
+            throw 'one of dart or js should be provided'
+        }
     }
 
     onIframeLoaded = () => {
         console.info("iframe loaded")
         let iframe = document.getElementById('frame') as HTMLIFrameElement
 
-        iframe.contentWindow!.postMessage(
-            { command: "execute", html: '<h1>loading...</h1>', css: 'h1 { text-align: center }', js: this.props.js },
-            '*'
-        );
+        // get the compiled js source
+        this.getCompiledJsSource().then((js) => {
+            // post message to iframe to execute js source
+            iframe.contentWindow!.postMessage(
+                {
+                    command: "execute",
+                    html: '<h1>loading...</h1>',
+                    css: 'h1 { text-align: center }',
+                    js: js
+                },
+                '*'
+            );
+        })
+
 
         iframe.contentWindow!.onerror = (event: Event | string, source?: string, lineno?: number, colno?: number, error?: Error) => {
             console.error('error from flutter js', source)
