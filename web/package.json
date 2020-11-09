@@ -2,7 +2,7 @@
   "name": "web",
   "version": "0.1.0",
   "scripts": {
-    "preinstall": "git pull origin main --recurse-submodules",
+    "preinstall": "git submodule update --init --recursive",
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
