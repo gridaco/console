@@ -82,7 +82,7 @@ export default class FrameFlutter extends React.Component<Props, State> {
             iframe.contentWindow!.postMessage(
                 {
                     command: "execute",
-                    html: '<h1>loading...</h1>',
+                    html: '<div><h1>loading...</h1><p>if it stuck on loading, you might want to check the browser console. for errors</p></div>',
                     css: 'h1 { text-align: center }',
                     js: js
                 },
