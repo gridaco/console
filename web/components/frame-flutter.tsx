@@ -7,12 +7,12 @@ import { upload } from "@bridged.xyz/client-sdk/dist/hosting"
 const isIFrame = (input: HTMLElement | null): input is HTMLIFrameElement =>
     input !== null && input.tagName === 'IFRAME';
 
-type flutterLoadingState = "pre-warming" | "frame-loaded" | "js-compiled" | "engine-loaded" | "drawing" | "complete"
+type flutterLoadingState = "pre-warming" | "compiling" | "js-compiled" | "engine-loaded" | "drawing" | "complete" | "failed"
 
 interface State {
     viewportWidth: number
     viewportHeight: number
-    frameState: flutterLoadingState
+    compileState: flutterLoadingState
 }
 
 interface Props {
@@ -34,7 +34,7 @@ export default class FrameFlutter extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props)
         this.state = {
-            frameState: 'pre-warming',
+            compileState: 'pre-warming',
             viewportHeight: 812,
             viewportWidth: 375
         }
@@ -46,23 +46,30 @@ export default class FrameFlutter extends React.Component<Props, State> {
     async getCompiledJsSource(): Promise<string> {
         if (this.props.js) {
             this.setState(() => {
-                return { frameState: 'js-compiled' }
+                return { compileState: 'js-compiled' }
             })
             return this.props.js
         } else if (this.props.dart) {
-            const app = await compileFlutterApp({
-                dart: this.props.dart,
-                id: this.props.id
-            })
+            try {
+                const app = await compileFlutterApp({
+                    dart: this.props.dart,
+                    id: this.props.id
+                })
 
-            var blob = new Blob([app.js!], { 'type': 'application/javascript' });
-            var url = URL.createObjectURL(blob);
+                var blob = new Blob([app.js!], { 'type': 'application/javascript' });
+                var url = URL.createObjectURL(blob);
 
-            this.setState(() => {
-                return { frameState: 'js-compiled' }
-            })
+                this.setState(() => {
+                    return { compileState: 'js-compiled' }
+                })
 
-            return url
+                return url
+            } catch (e) {
+                this.setState(() => {
+                    return { compileState: 'failed' }
+                })
+                return ''
+            }
 
         } else {
             throw 'one of dart or js should be provided'
@@ -71,7 +78,7 @@ export default class FrameFlutter extends React.Component<Props, State> {
 
     onIframeLoaded = () => {
         this.setState(() => {
-            return { frameState: 'frame-loaded' }
+            return { compileState: 'compiling' }
         })
 
         let iframe = document.getElementById('frame') as HTMLIFrameElement
@@ -88,10 +95,10 @@ export default class FrameFlutter extends React.Component<Props, State> {
             );
 
             this.setState(() => {
-                return { frameState: 'drawing' }
+                return { compileState: 'drawing' }
             })
             this.setState(() => {
-                return { frameState: 'complete' }
+                return { compileState: 'complete' }
             })
         })
 
@@ -119,8 +126,18 @@ export default class FrameFlutter extends React.Component<Props, State> {
     resizable: Resizable | null = null;
 
 
+    message() {
+        switch (this.state.compileState) {
+            case 'failed':
+                return <p>failed to compile. check your code</p>
+            case 'complete':
+                return <p>complete</p>
+            default:
+                return <p>{this.state.compileState} ... </p>
+        }
+    }
+
     render() {
-        const messageP = this.state.frameState == 'complete' ? <p>complete</p> : <p>{this.state.frameState} ... </p>
         return (
             <Resizable
                 ref={c => { this.resizable = c; }}
@@ -135,7 +152,7 @@ export default class FrameFlutter extends React.Component<Props, State> {
                 }}
             >
                 <iframe id="frame" width={this.state.viewportWidth} height={this.state.viewportHeight} src="/quicklook-assets/flutter/frame-flutter.html" sandbox="allow-scripts allow-same-origin" onLoad={this.onIframeLoaded}></ iframe>
-                {messageP}
+                {this.message()}
             </Resizable>
         )
     }
