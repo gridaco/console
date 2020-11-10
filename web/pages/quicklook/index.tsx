@@ -91,6 +91,9 @@ export default function Frame() {
                         <Button variant="outlined" onClick={() => {
                             open('https://github.com/bridgedxyz/console.bridged.xyz')
                         }}>improve this page on github</Button>
+                        <Button variant="outlined" onClick={() => {
+                            open('https://github.com/bridgedxyz/assistant/issues/new/choose')
+                        }}>report bug</Button>
                     </div>
                 </Grid>
             </Grid>

@@ -1,18 +1,3 @@
-# console
-Bridged's project collaboration console for product-level management
-
-
-
-## Dependencies
-- [re-resizable](https://github.com/bokuweb/re-resizable)
-
-
-
-## The design file
-opened and available on [figma](https://www.figma.com/file/Gaznaw1QHppxvs9UkqNOb0/?node-id=328%3A734)
-
-
-
 
 ## Dev Docs
 
