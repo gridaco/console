@@ -7,9 +7,12 @@ import { upload } from "@bridged.xyz/client-sdk/dist/hosting"
 const isIFrame = (input: HTMLElement | null): input is HTMLIFrameElement =>
     input !== null && input.tagName === 'IFRAME';
 
+type flutterLoadingState = "pre-warming" | "frame-loaded" | "js-compiled" | "engine-loaded" | "drawing" | "complete"
+
 interface State {
     viewportWidth: number
     viewportHeight: number
+    frameState: flutterLoadingState
 }
 
 interface Props {
@@ -31,6 +34,7 @@ export default class FrameFlutter extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props)
         this.state = {
+            frameState: 'pre-warming',
             viewportHeight: 812,
             viewportWidth: 375
         }
@@ -41,6 +45,9 @@ export default class FrameFlutter extends React.Component<Props, State> {
 
     async getCompiledJsSource(): Promise<string> {
         if (this.props.js) {
+            this.setState(() => {
+                return { frameState: 'js-compiled' }
+            })
             return this.props.js
         } else if (this.props.dart) {
             const app = await compileFlutterApp({
@@ -50,6 +57,11 @@ export default class FrameFlutter extends React.Component<Props, State> {
 
             var blob = new Blob([app.js!], { 'type': 'application/javascript' });
             var url = URL.createObjectURL(blob);
+
+            this.setState(() => {
+                return { frameState: 'js-compiled' }
+            })
+
             return url
 
         } else {
@@ -58,7 +70,10 @@ export default class FrameFlutter extends React.Component<Props, State> {
     }
 
     onIframeLoaded = () => {
-        console.info("iframe loaded")
+        this.setState(() => {
+            return { frameState: 'frame-loaded' }
+        })
+
         let iframe = document.getElementById('frame') as HTMLIFrameElement
 
         // get the compiled js source
@@ -73,6 +88,10 @@ export default class FrameFlutter extends React.Component<Props, State> {
                 },
                 '*'
             );
+
+            this.setState(() => {
+                return { frameState: 'drawing' }
+            })
         })
 
 
@@ -113,6 +132,7 @@ export default class FrameFlutter extends React.Component<Props, State> {
                 }}
             >
                 <iframe id="frame" width={this.state.viewportWidth} height={this.state.viewportHeight} src="/quicklook-assets/flutter/frame-flutter.html" sandbox="allow-scripts allow-same-origin" onLoad={this.onIframeLoaded}></ iframe>
+                <p>{this.state.frameState} ... </p>
             </Resizable>
         )
     }
