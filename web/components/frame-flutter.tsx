@@ -82,8 +82,6 @@ export default class FrameFlutter extends React.Component<Props, State> {
             iframe.contentWindow!.postMessage(
                 {
                     command: "execute",
-                    html: '<div><h1>loading...</h1><p>if it stuck on loading, you might want to check the browser console. for errors</p></div>',
-                    css: 'h1 { text-align: center }',
                     js: js
                 },
                 '*'
@@ -91,6 +89,9 @@ export default class FrameFlutter extends React.Component<Props, State> {
 
             this.setState(() => {
                 return { frameState: 'drawing' }
+            })
+            this.setState(() => {
+                return { frameState: 'complete' }
             })
         })
 
@@ -117,7 +118,9 @@ export default class FrameFlutter extends React.Component<Props, State> {
 
     resizable: Resizable | null = null;
 
+
     render() {
+        const messageP = this.state.frameState == 'complete' ? <p>complete</p> : <p>{this.state.frameState} ... </p>
         return (
             <Resizable
                 ref={c => { this.resizable = c; }}
@@ -132,7 +135,7 @@ export default class FrameFlutter extends React.Component<Props, State> {
                 }}
             >
                 <iframe id="frame" width={this.state.viewportWidth} height={this.state.viewportHeight} src="/quicklook-assets/flutter/frame-flutter.html" sandbox="allow-scripts allow-same-origin" onLoad={this.onIframeLoaded}></ iframe>
-                <p>{this.state.frameState} ... </p>
+                {messageP}
             </Resizable>
         )
     }
