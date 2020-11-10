@@ -8,8 +8,9 @@ import Button from "@material-ui/core/Button"
 import { QuicklookQueryParams, framework, language } from "@bridged.xyz/client-sdk/dist/projects/quicklook"
 
 const MonacoEditor = dynamic(import("react-monaco-editor"), { ssr: false });
+import * as monacoEditor from "monaco-editor/esm/vs/editor/editor.api";
 
-
+let IS_LOADED_ONCE: boolean = false
 /**
  * frame or url is required
  * @param frame the frame id of selected node, which uploaded to default bridged quicklook s3 buket.
@@ -18,6 +19,7 @@ const MonacoEditor = dynamic(import("react-monaco-editor"), { ssr: false });
 export default function Frame() {
     const router = useRouter();
     const [source, setSource] = useState<string>();
+    let editingSource: string;
 
     const q: QuicklookQueryParams = {
         id: (router.query.id as string) ?? '',
@@ -30,22 +32,41 @@ export default function Frame() {
     }
 
 
-    switch (q.framework) {
-        case "flutter":
-            if (q.url) {
-                if (q.language == "js") {
-                    setSource(q.url)
-                } else if (q.language == "dart") {
-                    // fetch dart file and set as source
-                    Axios.get(q.url).then((r) => {
-                        const dartSource = r.data
-                        setSource(dartSource)
-                    })
+    if (!IS_LOADED_ONCE) {
+        switch (q.framework) {
+            case "flutter":
+                if (q.url) {
+                    if (q.language == "js") {
+                        setSource(q.url)
+                    } else if (q.language == "dart") {
+                        // fetch dart file and set as source
+                        Axios.get(q.url).then((r) => {
+                            IS_LOADED_ONCE = true
+
+                            const dartSource = r.data
+
+                            editingSource = dartSource
+                            setSource(dartSource)
+                        })
+                    }
                 }
-            }
-            break;
-        case "react":
+                break;
+            case "react":
+        }
     }
+
+    const run = () => {
+        if (editingSource) {
+            setSource(editingSource);
+        } else {
+            alert('your code has no changes')
+        }
+    }
+
+    const hasDiff = () => {
+        return editingSource !== source
+    }
+
 
 
     return (
@@ -71,8 +92,9 @@ export default function Frame() {
                             language="dart"
                             theme="vs-dark"
                             value={source}
-                            // onChange={console.log}
-                            editorDidMount={() => {
+                            options={{ unusualLineTerminators: 'off' }}
+                            onChange={(value: string) => { editingSource = value }}
+                            editorDidMount={(editor: monacoEditor.editor.IStandaloneCodeEditor) => {
                                 // @ts-ignore
                                 window.MonacoEnvironment.getWorkerUrl = (moduleId, label) => {
                                     if (label === 'json') return '/_next/static/json.worker.js'
@@ -84,6 +106,10 @@ export default function Frame() {
                                 }
                             }}
                         />
+                        {/* disabled={hasDiff()}  */}
+                        <Button variant="contained" color='primary' onClick={() => {
+                            run()
+                        }}>RE-RUN</Button>
                         <Button variant="contained" onClick={() => {
                             navigator.clipboard.writeText(window.location.href)
                             alert('copied to clipboard')
@@ -110,6 +136,7 @@ function appFrame(props: {
     framework: framework
     language: language
 }) {
+    console.log(props)
     const loading = <div>loading..</div>
 
     if (!props.source) {
@@ -121,7 +148,7 @@ function appFrame(props: {
             if (props.language == "js") {
                 return <FrameFlutter id={props.id} js={props.source}></FrameFlutter>
             } else if (props.language == "dart") {
-                return <FrameFlutter id={props.id} dart={props.source}></FrameFlutter>
+                return <FrameFlutter key={props.source} id={props.id} dart={props.source}></FrameFlutter>
             }
             return loading
         case "react":
