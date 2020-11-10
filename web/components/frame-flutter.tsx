@@ -47,14 +47,11 @@ export default class FrameFlutter extends React.Component<Props, State> {
                 dart: this.props.dart,
                 id: this.props.id
             })
-            const jsHosted = await upload({
-                file: app.js!,
-                name: 'dart.js'
-            })
-            return jsHosted.url
 
-            // console.log('compiled complete', app)
-            // return app.js!
+            var blob = new Blob([app.js!], { 'type': 'application/javascript' });
+            var url = URL.createObjectURL(blob);
+            return url
+
         } else {
             throw 'one of dart or js should be provided'
         }
