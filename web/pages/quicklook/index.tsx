@@ -88,7 +88,7 @@ export default function Frame() {
                 <Grid item>
                     <div style={{ width: '50vw' }}>
                         <MonacoEditor
-                            height={'600px'}
+                            height={'860px'}
                             language="dart"
                             theme="vs-dark"
                             value={source}
