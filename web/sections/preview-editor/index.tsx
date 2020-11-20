@@ -4,12 +4,10 @@ import {
   FormControl,
   Select,
   MenuItem,
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
 } from "@material-ui/core";
+import EditableTextCard from "../../components/g11n/editable-text-card"
 
-const PreviewEditor = () => {
+const PreviewEditor = (props?: {}) => {
   const [tmpLang, setTmpLang] = useState("English (default)");
 
   const handleLangOnChange = (e: React.ChangeEvent<{ value: unknown }>) => {
@@ -53,21 +51,12 @@ const PreviewEditor = () => {
           </FormControl>
         </div>
         <div>
-          <Accordion style={{ padding: "20px" }}>
-            <AccordionSummary
-              aria-controls="panel2a-content"
-              id="panel2a-header"
-            >
-              <Typography style={{ width: "30%" }}>key/name</Typography>
-              <Typography style={{ width: "50%" }}>asdfasfssdfa</Typography>
-              <Typography align="right" style={{ width: "20%" }}>
-                3/3
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>key/name</Typography>
-            </AccordionDetails>
-          </Accordion>
+          <EditableTextCard />
+          <EditableTextCard />
+          <EditableTextCard />
+          <EditableTextCard />
+          <EditableTextCard />
+          <EditableTextCard />
         </div>
       </div>
     </>
