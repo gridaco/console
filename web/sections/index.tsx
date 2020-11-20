@@ -1,6 +1,6 @@
 import React from "react";
-import PreviewEditor from "../sections/PreviewEditor";
-import Preview from "../sections/Preview";
+import PreviewEditor from "./preview-editor";
+import Preview from "./canvas-preview";
 import { NextRouter } from "next/router";
 
 const page = (props: { router: NextRouter }) => {
