@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@bridged.xyz/client-sdk": "^0.0.1-14",
+    "@reflect.bridged.xyz/core": "^0.0.1",
     "@material-ui/core": "^4.11.0",
     "@zeit/next-css": "^1.0.1",
     "konva": "^7.1.8",

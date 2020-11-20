@@ -1,36 +1,74 @@
 import React, { Component, useState } from "react"
-import dynamic from "next/dynamic"
-// import { renderToString } from 'react-dom/server';
 import { Stage, Layer, Rect, Text, Image, Group, } from 'react-konva';
-import Konva from 'konva';
 import useImage from 'use-image';
+import { VanillaScreenTransport } from "@bridged.xyz/client-sdk"
+import { TextManifest } from "@reflect.bridged.xyz/core/lib"
+import { useRouter, NextRouter } from 'next/router'
+import { dark } from "@material-ui/core/styles/createPalette";
 
-const Sketch = dynamic(import("react-p5"), { ssr: false });
-const imageurl = 'https://upload.wikimedia.org/wikipedia/en/9/95/Test_image.jpg'
+
 interface Props {
     //Your component props
+    router: NextRouter
 }
 
-let img: any
-export default class extends Component {
+
+interface State {
+    screenConfig?: VanillaScreenTransport
+}
+
+export default function () {
+    const router = useRouter()
+    return <GlobalizationPage key={JSON.stringify(router.query)} router={router} />
+}
+
+class GlobalizationPage extends Component<Props, State> {
     constructor(props: Props) {
         super(props)
+
+        this.state = {
+            screenConfig: undefined
+        }
+    }
+
+    componentDidMount() {
+        const query = this.props.router.query
+        const url: string = query.url as string
+
+        if (url) {
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    this.setState(() => {
+                        return {
+                            screenConfig: data as VanillaScreenTransport
+                        }
+                    })
+                });
+        }
+
     }
 
 
     render() {
-        if (typeof window !== 'undefined') {
+        if (this.state.screenConfig && typeof window !== 'undefined') {
             return (
-                <div>
-                    <Stage width={window.innerWidth} height={window.innerHeight}>
-                        <Layer>
-                            <StaticDesignImageDisplay url={imageurl} />
-                        </Layer>
-                        <Layer>
-                            <EditableG11nText text="hi" />
-                        </Layer>
-                    </Stage>
-                </div>
+                <Stage width={this.state.screenConfig.width} height={this.state.screenConfig.height}>
+                    {
+                        this.state.screenConfig.elements.sort((a, b) => a.index - b.index).map((e) => {
+                            if (e.type == 'text') {
+                                return <Layer key={e.id} x={e.x} y={e.y}>
+                                    <EditableG11nText text={(e.src as any)} width={e.width} height={e.height} />
+                                </Layer>
+                            }
+                            else {
+                                return <Layer key={e.id} x={e.x} y={e.y} >
+                                    <StaticDesignImageDisplay url={e.src.src} width={e.width} height={e.height} />
+                                </Layer>
+                            }
+                        })
+                    }
+                </Stage>
             )
         } else {
             return <p>loading..</p>
@@ -39,18 +77,20 @@ export default class extends Component {
 }
 
 // the first very simple and recommended way:
-const StaticDesignImageDisplay = (props: { url: string }, ...more: any) => {
+const StaticDesignImageDisplay = (props: { url: string, width: number, height: number, x?: number, y?: number }) => {
     const [image] = useImage(props.url);
-    return <Image image={image} {...more} />;
+    return <Image image={image} width={props.width} height={props.height} x={props.x} y={props.y} />;
 };
 
 
 function EditableG11nText(props: {
-    text: string
+    text: TextManifest
+    width: number
+    height: number
 }) {
     const [focused, setFocused] = useState<boolean>(false)
     const [editing, setEditing] = useState<boolean>(false)
-    const [textValue, setTextValue] = useState<string>(props.text)
+    const [textValue, setTextValue] = useState<string>(props.text.text)
     const [textX, setTextX] = useState<number>(0)
     const [textY, setTextY] = useState<number>(0)
 
@@ -108,24 +148,13 @@ function EditableG11nText(props: {
     };
 
     return (
-        <Group
-            x={20}
-            y={20}
+        <Text text={textValue} align={props.text.textAlign}
+            verticalAlign={props.text.textAlignVertical}
+            fontSize={props.text.style.fontSize}
+            fontFamily="'Arial'"//{`"${props.text.style.fontFamily}"`}
+            width={props.width} height={props.height}
             onMouseLeave={() => { setFocused(false) }}
             ondblclick={handleDoubleClick}
-            onClick={handleClick}
-        >
-
-            <Rect
-                width={50}
-                height={50}
-                fill={focused ? 'green' : 'white'}
-            >
-
-            </Rect>
-            <Text text={textValue} align='center' />
-        </Group>
-
-
+            onClick={handleClick} />
     );
 }
