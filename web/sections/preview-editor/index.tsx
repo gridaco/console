@@ -1,11 +1,6 @@
 import React, { useState } from "react";
-import {
-  Typography,
-  FormControl,
-  Select,
-  MenuItem,
-} from "@material-ui/core";
-import EditableTextCard from "../../components/g11n/editable-text-card"
+import { Typography, FormControl, Select, MenuItem } from "@material-ui/core";
+import EditableTextCard from "../../components/g11n/editable-text-card";
 
 const PreviewEditor = (props?: {}) => {
   const [tmpLang, setTmpLang] = useState("English (default)");
