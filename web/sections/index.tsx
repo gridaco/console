@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PreviewEditor from "./preview-editor";
 import Preview from "./canvas-preview";
 import KeyEditor from "./key-editor";
 import { NextRouter } from "next/router";
 import { editorState } from "../recoil";
 import { useRecoilValue, useRecoilState } from "recoil";
+import { VanillaScreenTransport } from "@bridged.xyz/client-sdk";
 
 const page = (props: { router: NextRouter }) => {
   const [isSelect, setIsSelect] = useRecoilState(editorState);
@@ -13,6 +14,23 @@ const page = (props: { router: NextRouter }) => {
     const isFocus = useRecoilValue(editorState);
     return isFocus;
   };
+
+  const [screenConfig, setScreenConfig] = useState<VanillaScreenTransport>();
+
+  const query = props.router.query;
+  const url: string = query.url as string;
+
+  useEffect(() => {
+    if (url && !screenConfig) {
+      console.log('fetching')
+      fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+          setScreenConfig(data as VanillaScreenTransport);
+        });
+    }
+  })
+
 
   return (
     <>
@@ -41,7 +59,7 @@ const page = (props: { router: NextRouter }) => {
         ></div>
         <Preview
           key={JSON.stringify(props.router.query)}
-          router={props.router}
+          screenConfig={screenConfig}
         />
       </div>
       <div

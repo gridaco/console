@@ -3,7 +3,6 @@ import { Typography, FormControl, Select, MenuItem } from "@material-ui/core";
 import EditableTextCard from "../../components/g11n/editable-text-card";
 
 const KeyEditor = () => {
-  console.log("keyEditor");
   return (
     <>
       <div>
