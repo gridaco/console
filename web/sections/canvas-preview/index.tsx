@@ -40,7 +40,7 @@ export default function (props: {
                     <EditableG11nText
                       id={e.id}
                       selected={selection === e.id}
-                      text={e.src as any}
+                      text={e.data as any}
                       width={e.width}
                       height={e.height}
                       onFocusChange={(
@@ -59,7 +59,7 @@ export default function (props: {
                 return (
                   <Group key={e.id} x={e.x} y={e.y}>
                     <StaticDesignImageDisplay
-                      url={(e.src as any).src}
+                      url={(e.data as any).src}
                       width={e.width}
                       height={e.height}
                     />
