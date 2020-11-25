@@ -1,8 +1,5 @@
 import React from "react";
-import { selector, useRecoilValue } from "recoil";
 import { Typography, Input } from "@material-ui/core";
-
-import { langColumns, dummyData } from "../../recoil";
 
 import IconEn from "../../assets/lang-icon-en";
 import IconKr from "../../assets/lang-icon-kr";
