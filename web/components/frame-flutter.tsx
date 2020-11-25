@@ -1,8 +1,8 @@
 import { NumberSize, Resizable } from "re-resizable";
 import { Direction } from "re-resizable/lib/resizer";
 import React from "react"
-import { compileFlutterApp } from "@bridged.xyz/client-sdk/dist/build/flutter"
-import { upload } from "@bridged.xyz/client-sdk/dist/hosting"
+import { compileFlutterApp } from "@bridged.xyz/client-sdk/lib/build/flutter"
+import { upload } from "@bridged.xyz/client-sdk/lib/hosting"
 
 const isIFrame = (input: HTMLElement | null): input is HTMLIFrameElement =>
     input !== null && input.tagName === 'IFRAME';

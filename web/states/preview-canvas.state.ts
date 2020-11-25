@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 
-export const targetLayerId = atom({
+export const targetLayerState = atom({
     key: "target-layer-id",
     default: null,
 });

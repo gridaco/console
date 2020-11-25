@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Stage, Layer, Rect, Text, Image, Group } from "react-konva";
 import useImage from "use-image";
 import { VanillaScreenTransport } from "@bridged.xyz/client-sdk";
 import { TextManifest } from "@reflect.bridged.xyz/core/lib";
-import { useRouter, NextRouter } from "next/router";
 import { editorState } from "../../states/text-editor.state";
+import { targetLayerState } from "../../states/preview-canvas.state"
 import { useRecoilState } from "recoil";
 
 
@@ -13,7 +13,8 @@ export default function (props: {
 }) {
   const { screenConfig } = props
   const [isSelect, setIsSelect] = useRecoilState(editorState);
-  const [selection, setSelection] = useState<string>();
+  const [targetLayerId, setTargetLayerId] = useRecoilState(targetLayerState);
+  const [selectionLayerId, setSelectionLayerId] = useState<string>();
 
 
   if (screenConfig && typeof window !== "undefined") {
@@ -23,9 +24,16 @@ export default function (props: {
         height={screenConfig.height}
         onClick={(e) => {
           const targetId = e.target.attrs.id;
-          console.log("click event on stage", targetId,);
-          if (selection !== targetId) {
-            setSelection(targetId)
+          setTargetLayerId(targetId)
+
+          /**
+           * since the stage gets click event callback,
+           * no regarding to its' child also have click event being called,
+           * we should check the event id,
+           * and compare to actual selection event comming from the layer itself.
+           */
+          if (selectionLayerId !== targetId) {
+            setSelectionLayerId(targetId)
             setIsSelect(false);
           }
         }}
@@ -39,7 +47,7 @@ export default function (props: {
                   <Group key={e.id} x={e.x} y={e.y}>
                     <EditableG11nText
                       id={e.id}
-                      selected={selection === e.id}
+                      selected={selectionLayerId === e.id}
                       text={e.data as any}
                       width={e.width}
                       height={e.height}
@@ -48,7 +56,7 @@ export default function (props: {
                         focus: boolean
                       ) => {
                         if (focus) {
-                          setSelection(id)
+                          setSelectionLayerId(id)
                           setIsSelect(true);
                         }
                       }}
@@ -69,7 +77,6 @@ export default function (props: {
               }
             })}
         </Layer>
-
       </Stage>
     );
   } else {
@@ -105,27 +112,15 @@ function EditableG11nText(props: {
   height: number;
   onFocusChange: (id: string, focus: boolean) => void;
 }) {
-  if (props.selected) {
-    console.log('selected', props.id, props.selected)
-  }
-  // const [focused, setFocused] = useState<boolean>(false);
-  // const [editing, setEditing] = useState<boolean>(false);
   const [textValue, setTextValue] = useState<string>(props.text.text);
   const [hover, setHover] = useState<boolean>();
-  // const [textX, setTextX] = useState<number>(0);
-  // const [textY, setTextY] = useState<number>(0);
 
   const handleClick = (e: any) => {
-    // setFocused(true);
-    // props.onFocusChange(props.id, true);
     props.onFocusChange(props.id, true);
-
-    console.log(`${props.id} clicked, text id is ${props.id}`);
   };
 
   const handleDoubleClick = (e: any) => {
     props.onFocusChange(props.id, true);
-    // setEditing(true);
   };
 
   const handleOutFocus = (e: any) => {
@@ -133,11 +128,6 @@ function EditableG11nText(props: {
   };
   const handleInFocus = (e: any) => {
     setHover(true)
-  };
-
-  const handleTextEdit = (e: any) => {
-    console.log("changed", e.target.value);
-    setTextValue(e.target.value);
   };
 
   return (
