@@ -4,9 +4,9 @@ import { Typography, Input } from "@material-ui/core";
 
 import { langColumns, dummyData } from "../../recoil";
 
-import IconEn from "../../asset/lang-icon-en";
-import IconKr from "../../asset/lang-icon-kr";
-import IconJp from "../../asset/lang-icon-jp";
+import IconEn from "../../assets/lang-icon-en";
+import IconKr from "../../assets/lang-icon-kr";
+import IconJp from "../../assets/lang-icon-jp";
 
 const EditableLangColumn = () => {
   const langIcon = (type: string) => {

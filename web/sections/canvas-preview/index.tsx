@@ -4,7 +4,7 @@ import useImage from "use-image";
 import { VanillaScreenTransport } from "@bridged.xyz/client-sdk";
 import { TextManifest } from "@reflect.bridged.xyz/core/lib";
 import { useRouter, NextRouter } from "next/router";
-import { editorState } from "../../recoil";
+import { editorState } from "../../states/text-editor.state";
 import { useRecoilState } from "recoil";
 
 

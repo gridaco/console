@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import PreviewEditor from "./preview-editor";
-import Preview from "./canvas-preview";
-import KeyEditor from "./key-editor";
+import PreviewEditor from "../preview-editor";
+import Preview from "../canvas-preview";
+import KeyEditor from "../key-editor";
 import { NextRouter } from "next/router";
-import { editorState } from "../recoil";
+import { editorState } from "../../states/text-editor.state";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { VanillaScreenTransport } from "@bridged.xyz/client-sdk";
 

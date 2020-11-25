@@ -1,7 +1,6 @@
 import Head from "next/head";
-import Page from "../../sections";
+import Page from "../../sections/editor-control-panel";
 import { useRouter } from "next/router";
-import { RecoilRoot } from "recoil";
 
 export default function Home() {
   const router = useRouter();
@@ -14,9 +13,7 @@ export default function Home() {
       </Head>
 
       <main>
-        <RecoilRoot>
-          <Page router={router} />
-        </RecoilRoot>
+        <Page router={router} />
       </main>
     </div>
   );
