@@ -1,7 +1,8 @@
 const withCSS = require('@zeit/next-css')
+const withSASS = require('@zeit/next-sass')
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
 
-module.exports = withCSS({
+module.exports = withCSS(withSASS({
     webpack: (config) => {
         config.module.rules.push({
             test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
@@ -23,4 +24,4 @@ module.exports = withCSS({
 
         return config
     },
-})
+}))

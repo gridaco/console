@@ -5,9 +5,9 @@ import KeyEditor from "../key-editor";
 import { NextRouter } from "next/router";
 import { editorState } from "../../states/text-editor.state";
 import { useRecoilValue, useRecoilState } from "recoil";
-import { VanillaScreenTransport } from "@bridged.xyz/client-sdk";
+import { VanillaScreenTransport } from "@bridged.xyz/client-sdk/lib";
 
-const page = (props: { router: NextRouter }) => {
+function Page(props: { router: NextRouter }) {
   const [isSelect, setIsSelect] = useRecoilState(editorState);
 
   const editorSwitch = () => {
@@ -34,34 +34,16 @@ const page = (props: { router: NextRouter }) => {
 
   return (
     <>
-      <div
-        style={{
-          width: "50%",
-          float: "left",
-          height: "100vh",
-          padding: "65px",
-          paddingBottom: "0",
-        }}
-      >
-        <div
-          style={{
-            width: "50vw",
-            height: "100vw",
-            position: "absolute",
-            top: "0",
-            float: "left",
-            paddingBottom: "0",
-          }}
-          onClick={(e) => {
+      <Preview
+        onBackgroundClick={
+          (e) => {
             console.log(e);
             setIsSelect(false);
-          }}
-        ></div>
-        <Preview
-          key={JSON.stringify(props.router.query)}
-          screenConfig={screenConfig}
-        />
-      </div>
+          }
+        }
+        key={JSON.stringify(props.router.query)}
+        screenConfig={screenConfig}
+      />
       <div
         style={{
           width: "50%",
@@ -78,4 +60,4 @@ const page = (props: { router: NextRouter }) => {
   );
 };
 
-export default page;
+export default Page;
