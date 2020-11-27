@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import Axios from "axios"
 import Grid from "@material-ui/core/Grid"
 import Button from "@material-ui/core/Button"
-import { QuicklookQueryParams, framework, language } from "@bridged.xyz/client-sdk/lib/projects/quicklook"
+import { QuicklookQueryParams, framework, language } from "@bridged.xyz/client-sdk/dist/projects/quicklook"
 
 const MonacoEditor = dynamic(import("react-monaco-editor"), { ssr: false });
 import * as monacoEditor from "monaco-editor/esm/vs/editor/editor.api";
