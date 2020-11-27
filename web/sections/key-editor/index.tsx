@@ -1,11 +1,10 @@
 import React from "react";
-import { Typography, FormControl, Select, MenuItem, TextField } from "@material-ui/core";
-import EditableTextCard from "../../components/g11n/editable-text-card";
-import { targetLayerState } from "../../states/preview-canvas.state"
-import { useRecoilState } from "recoil";
+import { Typography, TextField } from "@material-ui/core";
+import { targetLayerSelector } from "../../states/preview-canvas.state"
+import { useRecoilState, useRecoilValue } from "recoil";
 const KeyEditor = () => {
 
-  const [targetLayer, setTargetLayer] = useRecoilState(targetLayerState)
+  const targetLayer = useRecoilValue(targetLayerSelector)
 
   return (
     <>
@@ -15,7 +14,7 @@ const KeyEditor = () => {
         </div>
         <div className="textKey">
           <Typography variant="h2">"No key"</Typography>
-          <Typography variant="h6">no key is set for selected layer "{targetLayer}"</Typography>
+          <Typography variant="h6">no key is set for selected layer "{targetLayer?.data.text}"</Typography>
         </div>
         <div>
           <TextField />

@@ -4,10 +4,11 @@ import { CanvasBackground } from "../../components/canvas/background";
 import Stage from "../../components/canvas/stage"
 import { usePinch } from 'react-use-gesture'
 import { motion } from "framer-motion"
+import { SceneLocalRepository } from "../../repositories";
 
 export default function (props: {
   onBackgroundClick: (e: any) => void
-  screenConfig?: VanillaScreenTransport
+  sceneRepository?: SceneLocalRepository
 }) {
 
   // 1. TODO
@@ -28,7 +29,7 @@ export default function (props: {
   }}>
     <CanvasBackground onClick={props.onBackgroundClick} />
     {/* <motion.div animate={{ zoom: zoom }}> */}
-    <Stage screenConfig={props.screenConfig} />
+    <Stage sceneRepository={props.sceneRepository} />
     {/* </motion.div> */}
   </div>
 }

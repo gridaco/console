@@ -7,6 +7,7 @@ import { editorState } from "../../states/text-editor.state";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { VanillaScreenTransport } from "@bridged.xyz/client-sdk/lib";
 import { Resizable } from "re-resizable";
+import { SceneLocalRepository } from "../../repositories";
 
 function Page(props: { router: NextRouter }) {
   const [isSelect, setIsSelect] = useRecoilState(editorState);
@@ -16,18 +17,19 @@ function Page(props: { router: NextRouter }) {
     return isFocus;
   };
 
-  const [screenConfig, setScreenConfig] = useState<VanillaScreenTransport>();
+  const [sceneRepository, setScreenRepository] = useState<SceneLocalRepository>();
 
   const query = props.router.query;
   const url: string = query.url as string;
 
   useEffect(() => {
-    if (url && !screenConfig) {
-      console.log('fetching')
+    if (url && !sceneRepository) {
+      console.log('fetching scene data')
       fetch(url)
         .then((response) => response.json())
         .then((data) => {
-          setScreenConfig(data as VanillaScreenTransport);
+          const sceneRepository = new SceneLocalRepository(data as VanillaScreenTransport)
+          setScreenRepository(sceneRepository);
         });
     }
   })
@@ -43,7 +45,7 @@ function Page(props: { router: NextRouter }) {
           }
         }
         key={JSON.stringify(props.router.query)}
-        screenConfig={screenConfig}
+        sceneRepository={sceneRepository}
       />
       <Resizable
         style={{

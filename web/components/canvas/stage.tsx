@@ -1,31 +1,34 @@
 import React, { useState } from "react";
 import { Stage, Layer, Rect, Text, Image, Group } from "react-konva";
 import useImage from "use-image";
-import { VanillaScreenTransport } from "@bridged.xyz/client-sdk/lib";
+import { VanillaScreenTransport, TransportLayer } from "@bridged.xyz/client-sdk/lib";
 import { TextManifest } from "@reflect.bridged.xyz/core/lib";
 import { editorState } from "../../states/text-editor.state";
-import { targetLayerState } from "../../states/preview-canvas.state"
+import { targetLayerIdAtom } from "../../states/preview-canvas.state"
 import { useRecoilState } from "recoil";
 import { SelectableLayer } from "../../components/canvas/selectable-layer";
+import { SceneLocalRepository } from "../../repositories";
+
 
 export default function (props: {
-    screenConfig?: VanillaScreenTransport
+    sceneRepository?: SceneLocalRepository
 }) {
-    const { screenConfig } = props
+    const { sceneRepository } = props
+    const scene = sceneRepository?.scene;
     const [isSelect, setIsSelect] = useRecoilState(editorState);
-    const [targetLayerId, setTargetLayerId] = useRecoilState(targetLayerState);
+    const [targetLayerId, setTargetLayerId] = useRecoilState(targetLayerIdAtom);
     const [selectionLayerId, setSelectionLayerId] = useState<string>();
 
 
-    if (screenConfig && typeof window !== "undefined") {
+    if (scene && typeof window !== "undefined") {
         return (
             <div
                 style={{
                     backgroundColor: "#FFFFFF"
                 }}>
                 <Stage
-                    width={screenConfig.width}
-                    height={screenConfig.height}
+                    width={scene.width}
+                    height={scene.height}
                     onClick={(e) => {
                         const targetId = e.target.attrs.id;
                         setTargetLayerId(targetId)
@@ -43,7 +46,7 @@ export default function (props: {
                     }}
                 >
                     <Layer>
-                        {screenConfig.elements
+                        {scene.elements
                             .sort((a, b) => a.index - b.index)
                             .map((e) => {
                                 if (e.type == "text") {
