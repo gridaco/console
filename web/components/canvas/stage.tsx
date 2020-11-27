@@ -4,8 +4,8 @@ import useImage from "use-image";
 import { VanillaScreenTransport, TransportLayer } from "@bridged.xyz/client-sdk/lib";
 import { TextManifest } from "@reflect.bridged.xyz/core/lib";
 import { editorState } from "../../states/text-editor.state";
-import { targetLayerIdAtom } from "../../states/preview-canvas.state"
-import { useRecoilState } from "recoil";
+import { targetLayerIdAtom, targetLayerSelector } from "../../states/preview-canvas.state"
+import { useRecoilState, useRecoilValue } from "recoil";
 import { SelectableLayer } from "../../components/canvas/selectable-layer";
 import { SceneLocalRepository } from "../../repositories";
 

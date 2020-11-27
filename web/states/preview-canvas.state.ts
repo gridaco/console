@@ -16,3 +16,8 @@ export const targetLayerSelector = selector<TransportLayer<any>>({
         return layer
     },
 });
+
+export const currentTextLayerEditingValueAtom = atom<string>({
+    key: "current-layer-text-edit-value-selector",
+    default: undefined!
+});
