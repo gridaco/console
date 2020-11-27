@@ -6,6 +6,7 @@ import { NextRouter } from "next/router";
 import { editorState } from "../../states/text-editor.state";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { VanillaScreenTransport } from "@bridged.xyz/client-sdk/lib";
+import { Resizable } from "re-resizable";
 
 function Page(props: { router: NextRouter }) {
   const [isSelect, setIsSelect] = useRecoilState(editorState);
@@ -44,18 +45,24 @@ function Page(props: { router: NextRouter }) {
         key={JSON.stringify(props.router.query)}
         screenConfig={screenConfig}
       />
-      <div
+      <Resizable
         style={{
-          width: "50%",
-          float: "left",
-          height: "100vh",
+          float: "right",
           padding: "65px",
           paddingBottom: "0",
           backgroundColor: "#F8F8F8",
         }}
+        defaultSize={{
+          width: "50%",
+          height: "100vh",
+        }}
+        maxWidth="50%"
+        minWidth="20%"
+        minHeight="100vh"
       >
         {editorSwitch() ? <KeyEditor /> : <PreviewEditor />}
-      </div>
+      </Resizable>
+
     </>
   );
 };
