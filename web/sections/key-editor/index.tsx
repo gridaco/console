@@ -4,7 +4,7 @@ import { targetLayerSelector, currentTextEditValueAtom } from "../../states"
 import { useRecoilState, useRecoilValue } from "recoil";
 import { StorableLayerType } from "@bridged.xyz/client-sdk/lib";
 import { TextManifest } from "@reflect.bridged.xyz/core";
-const KeyEditor = () => {
+function KeyEditor() {
 
   const targetLayer = useRecoilValue(targetLayerSelector)
   const [currentEditTextValue, setCurrentEditTextValue] = useRecoilState(currentTextEditValueAtom)

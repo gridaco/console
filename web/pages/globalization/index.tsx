@@ -6,6 +6,8 @@ import { SceneLocalRepository, ScenesRepository } from "../../repositories";
 import { StorableScene } from "@bridged.xyz/client-sdk/lib";
 import { SceneStoreService } from "@bridged.xyz/client-sdk/lib"
 import ErrorPage from 'next/error'
+import { useRecoilState } from "recoil";
+import { targetSceneIdAtom } from "../../states/preview-canvas.state";
 
 
 
@@ -15,6 +17,7 @@ export default function Home() {
   const query = router.query;
   const sceneId: string = query.scene as string;
   const [sceneRepository, setScreenRepository] = useState<SceneLocalRepository>();
+  const [targetSceneId, setTargetSceneId] = useRecoilState(targetSceneIdAtom)
 
   useEffect(() => {
     if (sceneId && !sceneRepository) {
@@ -24,6 +27,7 @@ export default function Home() {
         console.log('response', response)
         const sceneRepository = ScenesRepository.make(response.data.data as StorableScene)
         console.log('made sceneRepository', sceneRepository)
+        setTargetSceneId(sceneRepository.id)
         setScreenRepository(sceneRepository);
       })
     }
