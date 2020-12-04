@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Stage, Layer, Rect, Text, Image, Group } from "react-konva";
+import { Stage, Layer, Text, Image, Group } from "react-konva";
 import useImage from "use-image";
-import { VanillaScreenTransport, TransportLayer } from "@bridged.xyz/client-sdk/lib";
+import { StorableLayerType } from "@bridged.xyz/client-sdk/lib";
 import { TextManifest } from "@reflect.bridged.xyz/core/lib";
 import { editorState } from "../../states/text-editor.state";
-import { targetLayerIdAtom, targetLayerSelector } from "../../states/preview-canvas.state"
-import { useRecoilState, useRecoilValue } from "recoil";
+import { targetLayerIdAtom } from "../../states/preview-canvas.state"
+import { useRecoilState } from "recoil";
 import { SelectableLayer } from "../../components/canvas/selectable-layer";
 import { SceneLocalRepository } from "../../repositories";
 
@@ -49,7 +49,7 @@ export default function (props: {
                         {scene.elements
                             .sort((a, b) => a.index - b.index)
                             .map((e) => {
-                                if (e.type == "text") {
+                                if (e.type == StorableLayerType.text) {
                                     return (
                                         <Group key={e.id} x={e.x} y={e.y}>
                                             <EditableG11nText

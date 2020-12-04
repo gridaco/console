@@ -17,7 +17,7 @@ export class SceneLocalRepository {
     }
 
 
-    layer(id: string): TransportLayer<any> {
+    layer(id: string): TransportLayer {
         return this.scene.elements.find(e => e.id == id)!
     }
 }

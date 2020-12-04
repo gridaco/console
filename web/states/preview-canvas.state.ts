@@ -8,7 +8,7 @@ export const targetLayerIdAtom = atom<string>({
 });
 
 
-export const targetLayerSelector = selector<TransportLayer<any>>({
+export const targetLayerSelector = selector<TransportLayer>({
     key: "target-layer-selector", // unique ID
     get: ({ get }) => {
         const id = get(targetLayerIdAtom);

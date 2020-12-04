@@ -16,6 +16,7 @@
     "framer-motion": "^2.9.4",
     "konva": "^7.1.8",
     "next": "10.0.0",
+    "next-transpile-modules": "^6.0.0",
     "p5": "^1.1.9",
     "re-resizable": "^6.8.0",
     "react": "17.0.1",
@@ -35,6 +36,7 @@
     "monaco-editor-webpack-plugin": "^2.0.0",
     "next-fonts": "^1.4.0",
     "next-transpile-modules": "^4.1.0",
+    "ts-loader": "^8.0.11",
     "typescript": "^4.0.5"
   }
 }
