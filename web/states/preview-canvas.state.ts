@@ -1,18 +1,23 @@
-import { TransportLayer } from "@bridged.xyz/client-sdk/lib";
+import { StorableLayer } from "@bridged.xyz/client-sdk/lib";
 import { atom, selector } from "recoil";
-import { currentSceneRepository } from "../repositories";
+import { ScenesRepository } from "../repositories";
 
 export const targetLayerIdAtom = atom<string>({
     key: "target-layer-id",
     default: undefined!,
 });
 
+export const targetSceneIdAtom = atom<string>({
+    key: "target-scene-id",
+    default: undefined!,
+});
 
-export const targetLayerSelector = selector<TransportLayer<any>>({
+export const targetLayerSelector = selector<StorableLayer>({
     key: "target-layer-selector", // unique ID
     get: ({ get }) => {
         const id = get(targetLayerIdAtom);
-        const layer = currentSceneRepository.layer(id)
+        const sceneId = get(targetSceneIdAtom)
+        const layer = ScenesRepository.find(sceneId).layer(id)
         return layer
     },
 });

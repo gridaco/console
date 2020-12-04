@@ -1,38 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PreviewEditor from "../preview-editor";
 import Preview from "../canvas-preview";
 import KeyEditor from "../key-editor";
-import { NextRouter } from "next/router";
 import { editorState } from "../../states/text-editor.state";
 import { useRecoilValue, useRecoilState } from "recoil";
-import { VanillaScreenTransport } from "@bridged.xyz/client-sdk/lib";
 import { Resizable } from "re-resizable";
-import { SceneLocalRepository } from "../../repositories";
+import { SceneLocalRepository, ScenesRepository } from "../../repositories";
 
-function Page(props: { router: NextRouter }) {
+
+type EditorMode = "translation" | "preview" | "prototype" | "*"
+interface EditorProps {
+  mode: EditorMode
+  projectId?: string
+  sceneId: string
+}
+
+function Editor(props: EditorProps) {
   const [isSelect, setIsSelect] = useRecoilState(editorState);
 
   const editorSwitch = () => {
     const isFocus = useRecoilValue(editorState);
     return isFocus;
   };
-
-  const [sceneRepository, setScreenRepository] = useState<SceneLocalRepository>();
-
-  const query = props.router.query;
-  const url: string = query.url as string;
-
-  useEffect(() => {
-    if (url && !sceneRepository) {
-      console.log('fetching scene data')
-      fetch(url)
-        .then((response) => response.json())
-        .then((data) => {
-          const sceneRepository = new SceneLocalRepository(data as VanillaScreenTransport)
-          setScreenRepository(sceneRepository);
-        });
-    }
-  })
 
 
   return (
@@ -44,8 +33,7 @@ function Page(props: { router: NextRouter }) {
             setIsSelect(false);
           }
         }
-        key={JSON.stringify(props.router.query)}
-        sceneRepository={sceneRepository}
+        sceneRepository={ScenesRepository.find(props.sceneId)}
       />
       <Resizable
         style={{
@@ -69,4 +57,4 @@ function Page(props: { router: NextRouter }) {
   );
 };
 
-export default Page;
+export default Editor;

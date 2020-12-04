@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Stage, Layer, Rect, Text, Image, Group } from "react-konva";
+import { Stage, Layer, Text, Image, Group } from "react-konva";
 import useImage from "use-image";
-import { VanillaScreenTransport, TransportLayer } from "@bridged.xyz/client-sdk/lib";
+import { StorableLayerType } from "@bridged.xyz/client-sdk/lib";
 import { TextManifest } from "@reflect.bridged.xyz/core/lib";
 import { currentTextEditValueAtom, editorState } from "../../states/text-editor.state";
-import { targetLayerIdAtom, targetLayerSelector } from "../../states/preview-canvas.state"
-import { useRecoilBridgeAcrossReactRoots_UNSTABLE, useRecoilState, useRecoilValue } from "recoil";
+import { targetLayerIdAtom } from "../../states/preview-canvas.state"
+import { useRecoilBridgeAcrossReactRoots_UNSTABLE, useRecoilState } from "recoil";
 import { SelectableLayer } from "../../components/canvas/selectable-layer";
 import { SceneLocalRepository } from "../../repositories";
 
@@ -23,6 +23,8 @@ export default function (props: {
     const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE()
 
     if (scene && typeof window !== "undefined") {
+        console.log('sceneRepository', sceneRepository)
+        console.log('layers', scene.layers)
         return (
             <div
                 style={{
@@ -48,17 +50,18 @@ export default function (props: {
                     }}
                 >
                     <RecoilBridge>
-
-                        <Layer>
-                            {scene.elements
+                        <Layer key="main-layer">
+                            {scene.layers
                                 .sort((a, b) => a.index - b.index)
                                 .map((e) => {
-                                    if (e.type == "text") {
+                                    console.log(e)
+                                    if (e.type == StorableLayerType.text) {
+                                        console.log('text layer', e)
                                         return (
-                                            <Group key={e.id} x={e.x} y={e.y}>
+                                            <Group key={e.nodeId} x={e.x} y={e.y}>
                                                 <EditableG11nText
-                                                    id={e.id}
-                                                    selected={selectionLayerId === e.id}
+                                                    id={e.nodeId}
+                                                    selected={selectionLayerId === e.nodeId}
                                                     manifest={e.data as any}
                                                     width={e.width}
                                                     height={e.height}
@@ -77,9 +80,9 @@ export default function (props: {
                                         );
                                     } else {
                                         return (
-                                            <Group key={e.id} x={e.x} y={e.y}>
+                                            <Group key={e.nodeId} x={e.x} y={e.y}>
                                                 <StaticDesignImageDisplay
-                                                    url={(e.data as any).src}
+                                                    url={(e.data as any)?.src}
                                                     width={e.width}
                                                     height={e.height}
                                                 />
@@ -91,7 +94,6 @@ export default function (props: {
                     </RecoilBridge>
                 </Stage>
             </div>
-
         );
     } else {
         return <p>loading..</p>;
