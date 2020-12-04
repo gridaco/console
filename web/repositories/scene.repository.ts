@@ -1,23 +1,29 @@
-import { TransportLayer, VanillaScreenTransport } from "@bridged.xyz/client-sdk/lib";
+import { StorableLayer, StorableScene } from "@bridged.xyz/client-sdk/lib";
 
 // NOT USING
 export class ScenesRepository {
     static repositories: Array<SceneLocalRepository> = []
+
+    static find(scene: string): SceneLocalRepository {
+        return this.repositories.find(r => r.scene.id == scene)!
+    }
+
+    static make(scene: StorableScene) {
+        const newRepository = new SceneLocalRepository(scene)
+        this.repositories.push(newRepository)
+        return newRepository
+    }
 }
 
 
-
-// TODO - clean this (dirty)
-export let currentSceneRepository: SceneLocalRepository
-
-
 export class SceneLocalRepository {
-    constructor(readonly scene: VanillaScreenTransport) {
-        currentSceneRepository = this
+    readonly id: string;
+    constructor(readonly scene: StorableScene) {
+        this.id = scene.id!
     }
 
 
-    layer(id: string): TransportLayer {
-        return this.scene.elements.find(e => e.id == id)!
+    layer(id: string): StorableLayer {
+        return this.scene.layers.find(e => e.nodeId == id)!
     }
 }

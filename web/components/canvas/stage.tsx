@@ -18,9 +18,9 @@ export default function (props: {
     const [isSelect, setIsSelect] = useRecoilState(editorState);
     const [targetLayerId, setTargetLayerId] = useRecoilState(targetLayerIdAtom);
     const [selectionLayerId, setSelectionLayerId] = useState<string>();
-
-
     if (scene && typeof window !== "undefined") {
+        console.log('sceneRepository', sceneRepository)
+        console.log('layers', scene.layers)
         return (
             <div
                 style={{
@@ -45,16 +45,18 @@ export default function (props: {
                         }
                     }}
                 >
-                    <Layer>
-                        {scene.elements
+                    <Layer key="main-layer">
+                        {scene.layers
                             .sort((a, b) => a.index - b.index)
                             .map((e) => {
+                                console.log(e)
                                 if (e.type == StorableLayerType.text) {
+                                    console.log('text layer', e)
                                     return (
-                                        <Group key={e.id} x={e.x} y={e.y}>
+                                        <Group key={e.nodeId} x={e.x} y={e.y}>
                                             <EditableG11nText
-                                                id={e.id}
-                                                selected={selectionLayerId === e.id}
+                                                id={e.nodeId}
+                                                selected={selectionLayerId === e.nodeId}
                                                 manifest={e.data as any}
                                                 width={e.width}
                                                 height={e.height}
@@ -73,9 +75,9 @@ export default function (props: {
                                     );
                                 } else {
                                     return (
-                                        <Group key={e.id} x={e.x} y={e.y}>
+                                        <Group key={e.nodeId} x={e.x} y={e.y}>
                                             <StaticDesignImageDisplay
-                                                url={(e.data as any).src}
+                                                url={(e.data as any)?.src}
                                                 width={e.width}
                                                 height={e.height}
                                             />
