@@ -1,6 +1,15 @@
 import React from "react";
 import { atom } from "recoil";
 
+/**
+ * the very current value of focused edit text value. this is mostly used for displaying preview value on the canvas.
+ */
+export const currentTextEditValueAtom = atom<string>({
+    key: 'current-text-edit-value',
+    default: undefined!
+})
+
+
 export const editorState = atom({
     key: "editorState",
     default: false,

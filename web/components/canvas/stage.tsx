@@ -3,9 +3,9 @@ import { Stage, Layer, Rect, Text, Image, Group } from "react-konva";
 import useImage from "use-image";
 import { VanillaScreenTransport, TransportLayer } from "@bridged.xyz/client-sdk/lib";
 import { TextManifest } from "@reflect.bridged.xyz/core/lib";
-import { editorState } from "../../states/text-editor.state";
+import { currentTextEditValueAtom, editorState } from "../../states/text-editor.state";
 import { targetLayerIdAtom, targetLayerSelector } from "../../states/preview-canvas.state"
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilBridgeAcrossReactRoots_UNSTABLE, useRecoilState, useRecoilValue } from "recoil";
 import { SelectableLayer } from "../../components/canvas/selectable-layer";
 import { SceneLocalRepository } from "../../repositories";
 
@@ -19,6 +19,8 @@ export default function (props: {
     const [targetLayerId, setTargetLayerId] = useRecoilState(targetLayerIdAtom);
     const [selectionLayerId, setSelectionLayerId] = useState<string>();
 
+    // https://github.com/konvajs/react-konva/issues/533
+    const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE()
 
     if (scene && typeof window !== "undefined") {
         return (
@@ -45,45 +47,48 @@ export default function (props: {
                         }
                     }}
                 >
-                    <Layer>
-                        {scene.elements
-                            .sort((a, b) => a.index - b.index)
-                            .map((e) => {
-                                if (e.type == "text") {
-                                    return (
-                                        <Group key={e.id} x={e.x} y={e.y}>
-                                            <EditableG11nText
-                                                id={e.id}
-                                                selected={selectionLayerId === e.id}
-                                                manifest={e.data as any}
-                                                width={e.width}
-                                                height={e.height}
-                                                onFocusChange={(
-                                                    id: string,
-                                                    focus: boolean
-                                                ) => {
-                                                    console.log('focus change', id)
-                                                    if (focus) {
-                                                        setSelectionLayerId(id)
-                                                        setIsSelect(true);
-                                                    }
-                                                }}
-                                            />
-                                        </Group>
-                                    );
-                                } else {
-                                    return (
-                                        <Group key={e.id} x={e.x} y={e.y}>
-                                            <StaticDesignImageDisplay
-                                                url={(e.data as any).src}
-                                                width={e.width}
-                                                height={e.height}
-                                            />
-                                        </Group>
-                                    );
-                                }
-                            })}
-                    </Layer>
+                    <RecoilBridge>
+
+                        <Layer>
+                            {scene.elements
+                                .sort((a, b) => a.index - b.index)
+                                .map((e) => {
+                                    if (e.type == "text") {
+                                        return (
+                                            <Group key={e.id} x={e.x} y={e.y}>
+                                                <EditableG11nText
+                                                    id={e.id}
+                                                    selected={selectionLayerId === e.id}
+                                                    manifest={e.data as any}
+                                                    width={e.width}
+                                                    height={e.height}
+                                                    onFocusChange={(
+                                                        id: string,
+                                                        focus: boolean
+                                                    ) => {
+                                                        console.log('focus change', id)
+                                                        if (focus) {
+                                                            setSelectionLayerId(id)
+                                                            setIsSelect(true);
+                                                        }
+                                                    }}
+                                                />
+                                            </Group>
+                                        );
+                                    } else {
+                                        return (
+                                            <Group key={e.id} x={e.x} y={e.y}>
+                                                <StaticDesignImageDisplay
+                                                    url={(e.data as any).src}
+                                                    width={e.width}
+                                                    height={e.height}
+                                                />
+                                            </Group>
+                                        );
+                                    }
+                                })}
+                        </Layer>
+                    </RecoilBridge>
                 </Stage>
             </div>
 
@@ -93,14 +98,13 @@ export default function (props: {
     }
 }
 
-// the first very simple and recommended way:
-const StaticDesignImageDisplay = (props: {
+function StaticDesignImageDisplay(props: {
     url: string;
     width: number;
     height: number;
     x?: number;
     y?: number;
-}) => {
+}) {
     const [image] = useImage(props.url);
     return (
         <SelectableLayer {...props}>
@@ -125,12 +129,19 @@ function EditableG11nText(props: {
     height: number;
     onFocusChange: (id: string, focus: boolean) => void;
 }) {
+
+    let text = props.manifest.text
+    if (props.selected) {
+        const [currentEditTextValue, setCurrentEditTextValue] = useRecoilState(currentTextEditValueAtom)
+        text = currentEditTextValue ?? ""
+    }
+
     return (
         <SelectableLayer {...props}>
             <Text
                 key={props.id}
                 id={props.id}
-                text={props.manifest.text}
+                text={text}
                 align={props.manifest.textAlign}
                 verticalAlign={props.manifest.textAlignVertical}
                 fontSize={props.manifest.style.fontSize}

@@ -1,10 +1,15 @@
 import React from "react";
 import { Typography, TextField } from "@material-ui/core";
-import { targetLayerSelector } from "../../states/preview-canvas.state"
+import { targetLayerSelector, currentTextEditValueAtom } from "../../states"
 import { useRecoilState, useRecoilValue } from "recoil";
 const KeyEditor = () => {
 
   const targetLayer = useRecoilValue(targetLayerSelector)
+  const [currentEditTextValue, setCurrentEditTextValue] = useRecoilState(currentTextEditValueAtom)
+
+  const handleEdit = (e: any) => {
+    setCurrentEditTextValue(e.target.value)
+  }
 
   return (
     <>
@@ -17,7 +22,7 @@ const KeyEditor = () => {
           <Typography variant="h6">no key is set for selected layer "{targetLayer?.data.text}"</Typography>
         </div>
         <div>
-          <TextField />
+          <TextField onChange={handleEdit} />
         </div>
       </div>
     </>
