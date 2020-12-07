@@ -9,6 +9,8 @@ import { useRecoilBridgeAcrossReactRoots_UNSTABLE, useRecoilState } from "recoil
 import { SelectableLayer } from "../../components/canvas/selectable-layer";
 import { SceneLocalRepository } from "../../repositories";
 import { convertReflectColorToUniversal } from "@reflect.bridged.xyz/core/lib/converters/color.convert"
+import { convertBorderRadius } from "@reflect.bridged.xyz/core/lib/converters/border-radius.convert"
+
 import { ColorFormat } from "@reflect.bridged.xyz/core/lib/color";
 
 export default function (props: {
@@ -92,16 +94,18 @@ export default function (props: {
                                         );
                                     } else if (e.type == StorableLayerType.rect) {
                                         return (
-                                            <CGRect
-                                                key={e.nodeId} data={e.data as CGRectManifest}
-                                            />
+                                            <Group key={e.nodeId} x={e.x} y={e.y}>
+                                                <CGRect
+                                                    key={e.nodeId} data={e.data as CGRectManifest}
+                                                />
+                                            </Group>
                                         );
                                     }
                                 })}
                         </Layer>
                     </RecoilBridge>
                 </Stage>
-            </div>
+            </div >
         );
     } else {
         return <p>loading..</p>;
@@ -112,13 +116,14 @@ function CGRect(props: {
     data: CGRectManifest
 }) {
     const fill = props.data.fill !== undefined ? convertReflectColorToUniversal(props.data.fill, ColorFormat.hex6) : undefined
-    console.log('data', props.data)
+    const borderRadius = props.data.borderRadius !== undefined ? convertBorderRadius(props.data.borderRadius) : undefined
     console.log('fill', fill)
     return (
         // <SelectableLayer>
         <Rect
             opacit={1}
             fill={fill}
+            cornerRadius={borderRadius}
             width={props.data.width}
             height={props.data.height}
         />
