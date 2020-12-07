@@ -8,9 +8,9 @@ import { targetLayerIdAtom } from "../../states/preview-canvas.state"
 import { useRecoilBridgeAcrossReactRoots_UNSTABLE, useRecoilState } from "recoil";
 import { SelectableLayer } from "../../components/canvas/selectable-layer";
 import { SceneLocalRepository } from "../../repositories";
-import { convertReflectColorToUniversal } from "@reflect.bridged.xyz/core/lib/converters/color.convert"
+import { convertReflectColorToUniversal, fetchColrOpacity } from "@reflect.bridged.xyz/core/lib/converters/color.convert"
 import { convertBorderRadius } from "@reflect.bridged.xyz/core/lib/converters/border-radius.convert"
-
+import { convertOffsetToUniversal } from "@reflect.bridged.xyz/core/lib/converters/offset.convert"
 import { ColorFormat } from "@reflect.bridged.xyz/core/lib/color";
 
 export default function (props: {
@@ -116,13 +116,19 @@ function CGRect(props: {
     data: CGRectManifest
 }) {
     const fill = props.data.fill !== undefined ? convertReflectColorToUniversal(props.data.fill, ColorFormat.hex6) : undefined
+    const opacity = fetchColrOpacity(props.data.fill)
     const borderRadius = props.data.borderRadius !== undefined ? convertBorderRadius(props.data.borderRadius) : undefined
+    const shadow = props.data.shadow
     console.log('fill', fill)
     return (
         // <SelectableLayer>
         <Rect
-            opacit={1}
+            opacit={opacity}
             fill={fill}
+            shadowColor={convertReflectColorToUniversal(shadow?.color, ColorFormat.hex6)}
+            shadowOpacity={fetchColrOpacity(shadow?.color)}
+            shadowBlur={shadow?.blurRadius}
+            shadowOffset={convertOffsetToUniversal(shadow?.offset)}
             cornerRadius={borderRadius}
             width={props.data.width}
             height={props.data.height}
