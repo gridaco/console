@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { Stage, Layer, Text, Image, Group } from "react-konva";
+import { Stage, Layer, Text, Image, Group, Rect } from "react-konva";
 import useImage from "use-image";
 import { StorableLayerType } from "@bridged.xyz/client-sdk/lib";
-import { TextManifest } from "@reflect.bridged.xyz/core/lib";
+import { CGRectManifest, TextManifest } from "@reflect.bridged.xyz/core/lib";
 import { currentTextEditValueAtom, editorState } from "../../states/text-editor.state";
 import { targetLayerIdAtom } from "../../states/preview-canvas.state"
 import { useRecoilBridgeAcrossReactRoots_UNSTABLE, useRecoilState } from "recoil";
 import { SelectableLayer } from "../../components/canvas/selectable-layer";
 import { SceneLocalRepository } from "../../repositories";
-
+import { convertReflectColorToUniversal } from "@reflect.bridged.xyz/core/lib/converters/color.convert"
+import { ColorFormat } from "@reflect.bridged.xyz/core/lib/color";
 
 export default function (props: {
     sceneRepository?: SceneLocalRepository
@@ -60,9 +61,10 @@ export default function (props: {
                                         return (
                                             <Group key={e.nodeId} x={e.x} y={e.y}>
                                                 <EditableG11nText
+                                                    key={e.nodeId}
                                                     id={e.nodeId}
                                                     selected={selectionLayerId === e.nodeId}
-                                                    manifest={e.data as any}
+                                                    manifest={e.data as TextManifest}
                                                     width={e.width}
                                                     height={e.height}
                                                     onFocusChange={(
@@ -78,7 +80,7 @@ export default function (props: {
                                                 />
                                             </Group>
                                         );
-                                    } else {
+                                    } else if (e.type == StorableLayerType.vanilla) {
                                         return (
                                             <Group key={e.nodeId} x={e.x} y={e.y}>
                                                 <StaticDesignImageDisplay
@@ -87,6 +89,12 @@ export default function (props: {
                                                     height={e.height}
                                                 />
                                             </Group>
+                                        );
+                                    } else if (e.type == StorableLayerType.rect) {
+                                        return (
+                                            <CGRect
+                                                key={e.nodeId} data={e.data as CGRectManifest}
+                                            />
                                         );
                                     }
                                 })}
@@ -98,6 +106,24 @@ export default function (props: {
     } else {
         return <p>loading..</p>;
     }
+}
+
+function CGRect(props: {
+    data: CGRectManifest
+}) {
+    const fill = props.data.fill !== undefined ? convertReflectColorToUniversal(props.data.fill, ColorFormat.hex6) : undefined
+    console.log('data', props.data)
+    console.log('fill', fill)
+    return (
+        // <SelectableLayer>
+        <Rect
+            opacit={1}
+            fill={fill}
+            width={props.data.width}
+            height={props.data.height}
+        />
+        // </SelectableLayer>
+    )
 }
 
 function StaticDesignImageDisplay(props: {
@@ -131,6 +157,7 @@ function EditableG11nText(props: {
     height: number;
     onFocusChange: (id: string, focus: boolean) => void;
 }) {
+    console.log('props', props)
 
     let text = props.manifest.text
     if (props.selected) {

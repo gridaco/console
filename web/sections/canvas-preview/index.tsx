@@ -1,4 +1,3 @@
-import { VanillaScreenTransport } from "@bridged.xyz/client-sdk/lib";
 import React, { useState } from "react";
 import { CanvasBackground } from "../../components/canvas/background";
 import Stage from "../../components/canvas/stage"
