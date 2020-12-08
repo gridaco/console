@@ -1,0 +1,15 @@
+// Colors
+$bg-color: rgb(255, 255, 255);
+$dot-color: #c2c2c2;
+
+// Dimensions
+$dot-size: 2px;
+$dot-space: 22px;
+
+.canvas-bg {
+    background:
+        linear-gradient(90deg, $bg-color ($dot-space - $dot-size), transparent 1%) center,
+        linear-gradient($bg-color ($dot-space - $dot-size), transparent 1%) center,
+        $dot-color;
+    background-size: $dot-space $dot-space;
+}

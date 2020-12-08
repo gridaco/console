@@ -1,0 +1,1069 @@
+{
+  "id": "5341:170813",
+  "project": "temp",
+  "width": 375,
+  "height": 1218,
+  "elements": [
+    {
+      "id": "I5341:170835;1614:109585",
+      "index": 12,
+      "x": 21,
+      "y": 16,
+      "type": "text",
+      "width": 54,
+      "height": 17,
+      "src": {
+        "text": "9:41",
+        "textAlign": 4,
+        "textAlignVertical": 0,
+        "style": {
+          "fontFamily": "SF Pro Text",
+          "fontWeight": "w600",
+          "fontSize": 14,
+          "decoration": 0,
+          "letterSpacing": 0,
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "I5341:170835;1614:109571",
+      "index": 8,
+      "x": 336,
+      "y": 17.33331298828125,
+      "type": "other",
+      "width": 24.32803726196289,
+      "height": 11.333333015441895,
+      "src": {
+        "src": "https://resource-hosting.s3.us-west-1.amazonaws.com/ex0XABFy-[object Object]",
+        "width": 24.32803726196289,
+        "height": 11.333333015441895
+      }
+    },
+    {
+      "id": "I5341:170834;4577:578;1545:14063",
+      "index": 6,
+      "x": 24,
+      "y": 68,
+      "type": "other",
+      "width": 54,
+      "height": 54,
+      "src": {
+        "src": "https://resource-hosting.s3.us-west-1.amazonaws.com/VxmeSOXK-[object Object]",
+        "width": 54,
+        "height": 54
+      }
+    },
+    {
+      "id": "I5341:170834;4577:578;3827:4018",
+      "index": 7,
+      "x": 41,
+      "y": 85,
+      "type": "other",
+      "width": 20,
+      "height": 20,
+      "src": {
+        "src": "https://resource-hosting.s3.us-west-1.amazonaws.com/QJkeYV8h-[object Object]",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "id": "I5341:170834;4577:578;1545:14283",
+      "index": 8,
+      "x": 30,
+      "y": 74,
+      "type": "text",
+      "width": 42,
+      "height": 42,
+      "src": {
+        "text": "Ge",
+        "textAlign": 4,
+        "textAlignVertical": 1,
+        "style": {
+          "fontFamily": "Roboto",
+          "fontWeight": "w700",
+          "fontSize": 22,
+          "decoration": 0,
+          "letterSpacing": 0,
+          "color": {
+            "r": 1,
+            "g": 1,
+            "b": 1,
+            "a": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "I5341:170834;4577:599",
+      "index": 7,
+      "x": 98,
+      "y": 73.5,
+      "type": "text",
+      "width": 209,
+      "height": 21,
+      "src": {
+        "text": "Genoplan healthcare",
+        "textAlign": 2,
+        "textAlignVertical": 0,
+        "style": {
+          "name": "Roboto/Headline/H5-18-B",
+          "fontFamily": "Roboto",
+          "fontWeight": "w700",
+          "fontSize": 18,
+          "decoration": 0,
+          "letterSpacing": 0
+        }
+      }
+    },
+    {
+      "id": "I5341:170834;4577:601",
+      "index": 9,
+      "x": 98,
+      "y": 102.5,
+      "type": "text",
+      "width": 35,
+      "height": 14,
+      "src": {
+        "text": "Admin",
+        "textAlign": 2,
+        "textAlignVertical": 0,
+        "style": {
+          "name": "Roboto/Overline/12-R",
+          "fontFamily": "Roboto",
+          "fontWeight": "w400",
+          "fontSize": 12,
+          "decoration": 0,
+          "letterSpacing": 0
+        }
+      }
+    },
+    {
+      "id": "I5341:170834;4577:602",
+      "index": 10,
+      "x": 135,
+      "y": 102.5,
+      "type": "text",
+      "width": 4,
+      "height": 14,
+      "src": {
+        "text": "·",
+        "textAlign": 2,
+        "textAlignVertical": 0,
+        "style": {
+          "name": "Roboto/Overline/12-R",
+          "fontFamily": "Roboto",
+          "fontWeight": "w400",
+          "fontSize": 12,
+          "decoration": 0,
+          "letterSpacing": 0
+        }
+      }
+    },
+    {
+      "id": "I5341:170834;4577:603",
+      "index": 11,
+      "x": 141,
+      "y": 102.5,
+      "type": "text",
+      "width": 114,
+      "height": 14,
+      "src": {
+        "text": "Joined at 2020-07-02",
+        "textAlign": 2,
+        "textAlignVertical": 0,
+        "style": {
+          "name": "Roboto/Overline/12-R",
+          "fontFamily": "Roboto",
+          "fontWeight": "w400",
+          "fontSize": 12,
+          "decoration": 0,
+          "letterSpacing": 0
+        }
+      }
+    },
+    {
+      "id": "I5341:170834;4577:595",
+      "index": 7,
+      "x": 327,
+      "y": 83,
+      "type": "other",
+      "width": 24,
+      "height": 24,
+      "src": {
+        "src": "https://resource-hosting.s3.us-west-1.amazonaws.com/s4tNYgrx-[object Object]",
+        "width": 24,
+        "height": 24
+      }
+    },
+    {
+      "id": "I5341:170815;1622:1241",
+      "index": 3,
+      "x": 24,
+      "y": 162,
+      "type": "text",
+      "width": 327,
+      "height": 16,
+      "src": {
+        "text": "Recently",
+        "textAlign": 2,
+        "textAlignVertical": 0,
+        "style": {
+          "name": "Roboto/Subtitle/2-14-M",
+          "fontFamily": "Roboto",
+          "fontWeight": "w500",
+          "fontSize": 14,
+          "decoration": 0,
+          "letterSpacing": 0
+        }
+      }
+    },
+    {
+      "id": "I5341:170817;4531:288",
+      "index": 6,
+      "x": 24,
+      "y": 198,
+      "type": "other",
+      "width": 32,
+      "height": 32,
+      "src": {
+        "src": "https://resource-hosting.s3.us-west-1.amazonaws.com/XmMmjCfV-[object Object]",
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "id": "I5341:170817;4531:290",
+      "index": 8,
+      "x": 72,
+      "y": 204.5,
+      "type": "text",
+      "width": 279,
+      "height": 19,
+      "src": {
+        "text": "Sales B team",
+        "textAlign": 2,
+        "textAlignVertical": 1,
+        "style": {
+          "name": "Roboto/Subtitle/1-16-M",
+          "fontFamily": "Roboto",
+          "fontWeight": "w500",
+          "fontSize": 16,
+          "decoration": 0,
+          "letterSpacing": 0
+        }
+      }
+    },
+    {
+      "id": "I5341:170818;4531:288",
+      "index": 7,
+      "x": 24,
+      "y": 254,
+      "type": "other",
+      "width": 32,
+      "height": 32,
+      "src": {
+        "src": "https://resource-hosting.s3.us-west-1.amazonaws.com/4KddqVfo-[object Object]",
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "id": "I5341:170818;4531:290",
+      "index": 9,
+      "x": 72,
+      "y": 260.5,
+      "type": "text",
+      "width": 279,
+      "height": 19,
+      "src": {
+        "text": "Sales B team",
+        "textAlign": 2,
+        "textAlignVertical": 1,
+        "style": {
+          "name": "Roboto/Subtitle/1-16-M",
+          "fontFamily": "Roboto",
+          "fontWeight": "w500",
+          "fontSize": 16,
+          "decoration": 0,
+          "letterSpacing": 0
+        }
+      }
+    },
+    {
+      "id": "I5341:170819;4531:288",
+      "index": 8,
+      "x": 24,
+      "y": 310,
+      "type": "other",
+      "width": 32,
+      "height": 32,
+      "src": {
+        "src": "https://resource-hosting.s3.us-west-1.amazonaws.com/RmwIzACZ-[object Object]",
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "id": "I5341:170819;4531:290",
+      "index": 10,
+      "x": 72,
+      "y": 316.5,
+      "type": "text",
+      "width": 279,
+      "height": 19,
+      "src": {
+        "text": "Sales B team",
+        "textAlign": 2,
+        "textAlignVertical": 1,
+        "style": {
+          "name": "Roboto/Subtitle/1-16-M",
+          "fontFamily": "Roboto",
+          "fontWeight": "w500",
+          "fontSize": 16,
+          "decoration": 0,
+          "letterSpacing": 0
+        }
+      }
+    },
+    {
+      "id": "I5341:170822;4531:288",
+      "index": 6,
+      "x": 24,
+      "y": 406,
+      "type": "other",
+      "width": 32,
+      "height": 32,
+      "src": {
+        "src": "https://resource-hosting.s3.us-west-1.amazonaws.com/DleAhzrA-[object Object]",
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "id": "I5341:170822;4531:290",
+      "index": 8,
+      "x": 72,
+      "y": 412.5,
+      "type": "text",
+      "width": 279,
+      "height": 19,
+      "src": {
+        "text": "Favorite",
+        "textAlign": 2,
+        "textAlignVertical": 1,
+        "style": {
+          "name": "Roboto/Subtitle/1-16-M",
+          "fontFamily": "Roboto",
+          "fontWeight": "w500",
+          "fontSize": 16,
+          "decoration": 0,
+          "letterSpacing": 0
+        }
+      }
+    },
+    {
+      "id": "I5341:170823;4531:288",
+      "index": 7,
+      "x": 24,
+      "y": 462,
+      "type": "other",
+      "width": 32,
+      "height": 32,
+      "src": {
+        "src": "https://resource-hosting.s3.us-west-1.amazonaws.com/UqyW_HGh-[object Object]",
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "id": "I5341:170823;4531:290",
+      "index": 9,
+      "x": 72,
+      "y": 468.5,
+      "type": "text",
+      "width": 279,
+      "height": 19,
+      "src": {
+        "text": "Team",
+        "textAlign": 2,
+        "textAlignVertical": 1,
+        "style": {
+          "name": "Roboto/Subtitle/1-16-M",
+          "fontFamily": "Roboto",
+          "fontWeight": "w500",
+          "fontSize": 16,
+          "decoration": 0,
+          "letterSpacing": 0
+        }
+      }
+    },
+    {
+      "id": "I5341:170824;4531:288",
+      "index": 8,
+      "x": 24,
+      "y": 518,
+      "type": "other",
+      "width": 32,
+      "height": 32,
+      "src": {
+        "src": "https://resource-hosting.s3.us-west-1.amazonaws.com/UEt1DYpU-[object Object]",
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "id": "I5341:170824;4531:290",
+      "index": 10,
+      "x": 72,
+      "y": 524.5,
+      "type": "text",
+      "width": 279,
+      "height": 19,
+      "src": {
+        "text": "My inventory",
+        "textAlign": 2,
+        "textAlignVertical": 1,
+        "style": {
+          "name": "Roboto/Subtitle/1-16-M",
+          "fontFamily": "Roboto",
+          "fontWeight": "w500",
+          "fontSize": 16,
+          "decoration": 0,
+          "letterSpacing": 0
+        }
+      }
+    },
+    {
+      "id": "I5341:170825;4531:288",
+      "index": 9,
+      "x": 24,
+      "y": 574,
+      "type": "other",
+      "width": 32,
+      "height": 32,
+      "src": {
+        "src": "https://resource-hosting.s3.us-west-1.amazonaws.com/V47vXZvu-[object Object]",
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "id": "I5341:170825;4531:290",
+      "index": 11,
+      "x": 72,
+      "y": 580.5,
+      "type": "text",
+      "width": 279,
+      "height": 19,
+      "src": {
+        "text": "Team inventory",
+        "textAlign": 2,
+        "textAlignVertical": 1,
+        "style": {
+          "name": "Roboto/Subtitle/1-16-M",
+          "fontFamily": "Roboto",
+          "fontWeight": "w500",
+          "fontSize": 16,
+          "decoration": 0,
+          "letterSpacing": 0
+        }
+      }
+    },
+    {
+      "id": "I5341:170826;4531:288",
+      "index": 10,
+      "x": 24,
+      "y": 630,
+      "type": "other",
+      "width": 32,
+      "height": 32,
+      "src": {
+        "src": "https://resource-hosting.s3.us-west-1.amazonaws.com/pJmT_eCl-[object Object]",
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "id": "I5341:170826;4531:290",
+      "index": 12,
+      "x": 72,
+      "y": 636.5,
+      "type": "text",
+      "width": 279,
+      "height": 19,
+      "src": {
+        "text": "Buy kits",
+        "textAlign": 2,
+        "textAlignVertical": 1,
+        "style": {
+          "name": "Roboto/Subtitle/1-16-M",
+          "fontFamily": "Roboto",
+          "fontWeight": "w500",
+          "fontSize": 16,
+          "decoration": 0,
+          "letterSpacing": 0
+        }
+      }
+    },
+    {
+      "id": "I5341:170827;4531:288",
+      "index": 11,
+      "x": 24,
+      "y": 686,
+      "type": "other",
+      "width": 32,
+      "height": 32,
+      "src": {
+        "src": "https://resource-hosting.s3.us-west-1.amazonaws.com/qN5SnUDe-[object Object]",
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "id": "I5341:170827;4531:290",
+      "index": 13,
+      "x": 72,
+      "y": 692.5,
+      "type": "text",
+      "width": 279,
+      "height": 19,
+      "src": {
+        "text": "Order history",
+        "textAlign": 2,
+        "textAlignVertical": 1,
+        "style": {
+          "name": "Roboto/Subtitle/1-16-M",
+          "fontFamily": "Roboto",
+          "fontWeight": "w500",
+          "fontSize": 16,
+          "decoration": 0,
+          "letterSpacing": 0
+        }
+      }
+    },
+    {
+      "id": "5341:170828",
+      "index": 4,
+      "x": 24,
+      "y": 738,
+      "type": "other",
+      "width": 327,
+      "height": 1,
+      "src": {
+        "src": "https://resource-hosting.s3.us-west-1.amazonaws.com/R-Sma55C-[object Object]",
+        "width": 327,
+        "height": 1
+      }
+    },
+    {
+      "id": "I5341:170830;4531:288",
+      "index": 8,
+      "x": 24,
+      "y": 759,
+      "type": "other",
+      "width": 32,
+      "height": 32,
+      "src": {
+        "src": "https://resource-hosting.s3.us-west-1.amazonaws.com/_B_01tpl-[object Object]",
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "id": "I5341:170830;4531:290",
+      "index": 10,
+      "x": 72,
+      "y": 765.5,
+      "type": "text",
+      "width": 279,
+      "height": 19,
+      "src": {
+        "text": "Note",
+        "textAlign": 2,
+        "textAlignVertical": 1,
+        "style": {
+          "name": "Roboto/Subtitle/1-16-M",
+          "fontFamily": "Roboto",
+          "fontWeight": "w500",
+          "fontSize": 16,
+          "decoration": 0,
+          "letterSpacing": 0
+        }
+      }
+    },
+    {
+      "id": "I5341:170831;4531:288",
+      "index": 9,
+      "x": 24,
+      "y": 815,
+      "type": "other",
+      "width": 32,
+      "height": 32,
+      "src": {
+        "src": "https://resource-hosting.s3.us-west-1.amazonaws.com/1oiGvfjv-[object Object]",
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "id": "I5341:170831;4531:290",
+      "index": 11,
+      "x": 72,
+      "y": 821.5,
+      "type": "text",
+      "width": 279,
+      "height": 19,
+      "src": {
+        "text": "Settings",
+        "textAlign": 2,
+        "textAlignVertical": 1,
+        "style": {
+          "name": "Roboto/Subtitle/1-16-M",
+          "fontFamily": "Roboto",
+          "fontWeight": "w500",
+          "fontSize": 16,
+          "decoration": 0,
+          "letterSpacing": 0
+        }
+      }
+    },
+    {
+      "id": "I5341:170832;4531:288",
+      "index": 10,
+      "x": 24,
+      "y": 871,
+      "type": "other",
+      "width": 32,
+      "height": 32,
+      "src": {
+        "src": "https://resource-hosting.s3.us-west-1.amazonaws.com/yaSSNNCL-[object Object]",
+        "width": 32,
+        "height": 32
+      }
+    },
+    {
+      "id": "I5341:170832;4531:290",
+      "index": 12,
+      "x": 72,
+      "y": 877.5,
+      "type": "text",
+      "width": 279,
+      "height": 19,
+      "src": {
+        "text": "Help desk",
+        "textAlign": 2,
+        "textAlignVertical": 1,
+        "style": {
+          "name": "Roboto/Subtitle/1-16-M",
+          "fontFamily": "Roboto",
+          "fontWeight": "w500",
+          "fontSize": 16,
+          "decoration": 0,
+          "letterSpacing": 0
+        }
+      }
+    },
+    {
+      "id": "I5341:170833;1645:130079",
+      "index": 4,
+      "x": 24,
+      "y": 963,
+      "type": "text",
+      "width": 327,
+      "height": 19,
+      "src": {
+        "text": "Can’t find what your looking for?",
+        "textAlign": 2,
+        "textAlignVertical": 0,
+        "style": {
+          "name": "Roboto/Subtitle/1-16-M",
+          "fontFamily": "Roboto",
+          "fontWeight": "w500",
+          "fontSize": 16,
+          "decoration": 0,
+          "letterSpacing": 0
+        }
+      }
+    },
+    {
+      "id": "I5341:170833;1645:130081",
+      "index": 6,
+      "x": 24,
+      "y": 1006,
+      "type": "text",
+      "width": 327,
+      "height": 16,
+      "src": {
+        "text": "Suggest curation logic",
+        "textAlign": 2,
+        "textAlignVertical": 1,
+        "style": {
+          "name": "Roboto/Body/2-14-R",
+          "fontFamily": "Roboto",
+          "fontWeight": "w400",
+          "fontSize": 14,
+          "decoration": 0,
+          "letterSpacing": 0
+        }
+      }
+    },
+    {
+      "id": "I5341:170833;1645:130082",
+      "index": 7,
+      "x": 24,
+      "y": 1034,
+      "type": "other",
+      "width": 327,
+      "height": 1,
+      "src": {
+        "src": "https://resource-hosting.s3.us-west-1.amazonaws.com/afg67T7x-[object Object]",
+        "width": 327,
+        "height": 1
+      }
+    },
+    {
+      "id": "I5341:170833;1645:130083",
+      "index": 8,
+      "x": 24,
+      "y": 1047,
+      "type": "text",
+      "width": 327,
+      "height": 16,
+      "src": {
+        "text": "Move to “find”",
+        "textAlign": 2,
+        "textAlignVertical": 1,
+        "style": {
+          "name": "Roboto/Body/2-14-R",
+          "fontFamily": "Roboto",
+          "fontWeight": "w400",
+          "fontSize": 14,
+          "decoration": 0,
+          "letterSpacing": 0
+        }
+      }
+    },
+    {
+      "id": "I5341:170833;1645:130084",
+      "index": 9,
+      "x": 24,
+      "y": 1075,
+      "type": "other",
+      "width": 327,
+      "height": 1,
+      "src": {
+        "src": "https://resource-hosting.s3.us-west-1.amazonaws.com/8RBYYrqd-[object Object]",
+        "width": 327,
+        "height": 1
+      }
+    },
+    {
+      "id": "I5341:170833;1766:116791",
+      "index": 12,
+      "x": 24,
+      "y": 1088,
+      "type": "text",
+      "width": 327,
+      "height": 16,
+      "src": {
+        "text": "Check system status",
+        "textAlign": 2,
+        "textAlignVertical": 1,
+        "style": {
+          "name": "Roboto/Body/2-14-R",
+          "fontFamily": "Roboto",
+          "fontWeight": "w400",
+          "fontSize": 14,
+          "decoration": 0,
+          "letterSpacing": 0
+        }
+      }
+    },
+    {
+      "id": "I5341:170836;1545:20571;5305:4240",
+      "index": 11,
+      "x": 35,
+      "y": 1144,
+      "type": "other",
+      "width": 24,
+      "height": 24,
+      "src": {
+        "src": "https://resource-hosting.s3.us-west-1.amazonaws.com/Sj5vqsqj-[object Object]",
+        "width": 24,
+        "height": 24
+      }
+    },
+    {
+      "id": "I5341:170836;1545:20571;1545:17510",
+      "index": 12,
+      "x": 26,
+      "y": 1172,
+      "type": "text",
+      "width": 42,
+      "height": 12,
+      "src": {
+        "text": "inventory",
+        "textAlign": 4,
+        "textAlignVertical": 0,
+        "style": {
+          "fontFamily": "Roboto",
+          "fontWeight": "w500",
+          "fontSize": 10,
+          "decoration": 0,
+          "letterSpacing": 0,
+          "color": {
+            "r": 0.6784313917160034,
+            "g": 0.7098039388656616,
+            "b": 0.7411764860153198,
+            "a": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "I5341:170836;5305:4826;5305:4821",
+      "index": 12,
+      "x": 128.5,
+      "y": 1144,
+      "type": "other",
+      "width": 24,
+      "height": 24,
+      "src": {
+        "src": "https://resource-hosting.s3.us-west-1.amazonaws.com/pvQWyEnx-[object Object]",
+        "width": 24,
+        "height": 24
+      }
+    },
+    {
+      "id": "I5341:170836;5305:4826;5305:4824",
+      "index": 13,
+      "x": 125,
+      "y": 1172,
+      "type": "text",
+      "width": 31,
+      "height": 12,
+      "src": {
+        "text": "Teams",
+        "textAlign": 4,
+        "textAlignVertical": 0,
+        "style": {
+          "fontFamily": "Roboto",
+          "fontWeight": "w500",
+          "fontSize": 10,
+          "decoration": 0,
+          "letterSpacing": 0,
+          "color": {
+            "r": 0.6784313917160034,
+            "g": 0.7098039388656616,
+            "b": 0.7411764860153198,
+            "a": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "I5341:170836;1545:20573;5305:2521",
+      "index": 13,
+      "x": 223,
+      "y": 1144,
+      "type": "other",
+      "width": 24,
+      "height": 24,
+      "src": {
+        "src": "https://resource-hosting.s3.us-west-1.amazonaws.com/ShjkUng5-[object Object]",
+        "width": 24,
+        "height": 24
+      }
+    },
+    {
+      "id": "I5341:170836;1545:20573;1545:17520",
+      "index": 14,
+      "x": 225,
+      "y": 1172,
+      "type": "text",
+      "width": 20,
+      "height": 12,
+      "src": {
+        "text": "find",
+        "textAlign": 4,
+        "textAlignVertical": 0,
+        "style": {
+          "fontFamily": "Roboto",
+          "fontWeight": "w500",
+          "fontSize": 10,
+          "decoration": 0,
+          "letterSpacing": 0,
+          "color": {
+            "r": 0.6784313917160034,
+            "g": 0.7098039388656616,
+            "b": 0.7411764860153198,
+            "a": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "I5341:170836;1545:20575;1545:17670",
+      "index": 14,
+      "x": 317,
+      "y": 1144,
+      "type": "other",
+      "width": 24,
+      "height": 24,
+      "src": {
+        "src": "https://resource-hosting.s3.us-west-1.amazonaws.com/PNLwvmt7-[object Object]",
+        "width": 24,
+        "height": 24
+      }
+    },
+    {
+      "id": "I5341:170836;1545:20575;1545:17671",
+      "index": 15,
+      "x": 323,
+      "y": 1172,
+      "type": "text",
+      "width": 12,
+      "height": 12,
+      "src": {
+        "text": "All",
+        "textAlign": 4,
+        "textAlignVertical": 0,
+        "style": {
+          "fontFamily": "Roboto",
+          "fontWeight": "w500",
+          "fontSize": 10,
+          "decoration": 0,
+          "letterSpacing": 0,
+          "color": {
+            "r": 0.26274511218070984,
+            "g": 0.7019608020782471,
+            "b": 0.6823529601097107,
+            "a": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "I5341:170836;1545:20564",
+      "index": 7,
+      "x": 0,
+      "y": 1192,
+      "type": "other",
+      "width": 375,
+      "height": 26,
+      "src": {
+        "src": "https://resource-hosting.s3.us-west-1.amazonaws.com/DxkJOInj-[object Object]",
+        "width": 375,
+        "height": 26
+      }
+    }
+  ],
+  "repository": {
+    "buildId": "vanilla-image-repository",
+    "images": {
+      "I5341:170834;4577:578;1545:14063": {
+        "key": "I5341:170834;4577:578;1545:14063",
+        "url": "https://resource-hosting.s3.us-west-1.amazonaws.com/VxmeSOXK-[object Object]"
+      },
+      "I5341:170834;4577:578;3827:4018": {
+        "key": "I5341:170834;4577:578;3827:4018",
+        "url": "https://resource-hosting.s3.us-west-1.amazonaws.com/QJkeYV8h-[object Object]"
+      },
+      "I5341:170834;4577:595": {
+        "key": "I5341:170834;4577:595",
+        "url": "https://resource-hosting.s3.us-west-1.amazonaws.com/s4tNYgrx-[object Object]"
+      },
+      "I5341:170835;1614:109571": {
+        "key": "I5341:170835;1614:109571",
+        "url": "https://resource-hosting.s3.us-west-1.amazonaws.com/ex0XABFy-[object Object]"
+      },
+      "I5341:170817;4531:288": {
+        "key": "I5341:170817;4531:288",
+        "url": "https://resource-hosting.s3.us-west-1.amazonaws.com/XmMmjCfV-[object Object]"
+      },
+      "I5341:170818;4531:288": {
+        "key": "I5341:170818;4531:288",
+        "url": "https://resource-hosting.s3.us-west-1.amazonaws.com/4KddqVfo-[object Object]"
+      },
+      "I5341:170819;4531:288": {
+        "key": "I5341:170819;4531:288",
+        "url": "https://resource-hosting.s3.us-west-1.amazonaws.com/RmwIzACZ-[object Object]"
+      },
+      "I5341:170822;4531:288": {
+        "key": "I5341:170822;4531:288",
+        "url": "https://resource-hosting.s3.us-west-1.amazonaws.com/DleAhzrA-[object Object]"
+      },
+      "I5341:170823;4531:288": {
+        "key": "I5341:170823;4531:288",
+        "url": "https://resource-hosting.s3.us-west-1.amazonaws.com/UqyW_HGh-[object Object]"
+      },
+      "I5341:170824;4531:288": {
+        "key": "I5341:170824;4531:288",
+        "url": "https://resource-hosting.s3.us-west-1.amazonaws.com/UEt1DYpU-[object Object]"
+      },
+      "I5341:170825;4531:288": {
+        "key": "I5341:170825;4531:288",
+        "url": "https://resource-hosting.s3.us-west-1.amazonaws.com/V47vXZvu-[object Object]"
+      },
+      "I5341:170826;4531:288": {
+        "key": "I5341:170826;4531:288",
+        "url": "https://resource-hosting.s3.us-west-1.amazonaws.com/pJmT_eCl-[object Object]"
+      },
+      "I5341:170827;4531:288": {
+        "key": "I5341:170827;4531:288",
+        "url": "https://resource-hosting.s3.us-west-1.amazonaws.com/qN5SnUDe-[object Object]"
+      },
+      "5341:170828": {
+        "key": "5341:170828",
+        "url": "https://resource-hosting.s3.us-west-1.amazonaws.com/R-Sma55C-[object Object]"
+      },
+      "I5341:170830;4531:288": {
+        "key": "I5341:170830;4531:288",
+        "url": "https://resource-hosting.s3.us-west-1.amazonaws.com/_B_01tpl-[object Object]"
+      },
+      "I5341:170831;4531:288": {
+        "key": "I5341:170831;4531:288",
+        "url": "https://resource-hosting.s3.us-west-1.amazonaws.com/1oiGvfjv-[object Object]"
+      },
+      "I5341:170832;4531:288": {
+        "key": "I5341:170832;4531:288",
+        "url": "https://resource-hosting.s3.us-west-1.amazonaws.com/yaSSNNCL-[object Object]"
+      },
+      "I5341:170833;1645:130082": {
+        "key": "I5341:170833;1645:130082",
+        "url": "https://resource-hosting.s3.us-west-1.amazonaws.com/afg67T7x-[object Object]"
+      },
+      "I5341:170833;1645:130084": {
+        "key": "I5341:170833;1645:130084",
+        "url": "https://resource-hosting.s3.us-west-1.amazonaws.com/8RBYYrqd-[object Object]"
+      },
+      "I5341:170836;1545:20571;5305:4240": {
+        "key": "I5341:170836;1545:20571;5305:4240",
+        "url": "https://resource-hosting.s3.us-west-1.amazonaws.com/Sj5vqsqj-[object Object]"
+      },
+      "I5341:170836;5305:4826;5305:4821": {
+        "key": "I5341:170836;5305:4826;5305:4821",
+        "url": "https://resource-hosting.s3.us-west-1.amazonaws.com/pvQWyEnx-[object Object]"
+      },
+      "I5341:170836;1545:20573;5305:2521": {
+        "key": "I5341:170836;1545:20573;5305:2521",
+        "url": "https://resource-hosting.s3.us-west-1.amazonaws.com/ShjkUng5-[object Object]"
+      },
+      "I5341:170836;1545:20575;1545:17670": {
+        "key": "I5341:170836;1545:20575;1545:17670",
+        "url": "https://resource-hosting.s3.us-west-1.amazonaws.com/PNLwvmt7-[object Object]"
+      },
+      "I5341:170836;1545:20564": {
+        "key": "I5341:170836;1545:20564",
+        "url": "https://resource-hosting.s3.us-west-1.amazonaws.com/DxkJOInj-[object Object]"
+      }
+    }
+  }
+}

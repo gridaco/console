@@ -1,8 +1,16 @@
 const withCSS = require('@zeit/next-css')
+const withSASS = require('@zeit/next-sass')
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
 
-module.exports = withCSS({
+const typescriptLoader = {
+    test: /\.ts(x?)$/,
+    loader: ['ts-loader'],
+    exclude: /node_modules/,
+  };
+
+module.exports = withCSS(withSASS({
     webpack: (config) => {
+        config.module.rules.push(typescriptLoader);
         config.module.rules.push({
             test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
             use: {
@@ -12,7 +20,6 @@ module.exports = withCSS({
                 },
             },
         })
-
         config.plugins.push(
             new MonacoWebpackPlugin({
                 // Add languages as needed...
@@ -23,4 +30,4 @@ module.exports = withCSS({
 
         return config
     },
-})
+}))
