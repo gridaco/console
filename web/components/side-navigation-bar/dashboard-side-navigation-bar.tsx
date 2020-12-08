@@ -8,8 +8,7 @@ import { LinkNavigationMenuItem } from "./link-navigation-menu-item"
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            width: '100%',
-            maxWidth: 360,
+            height: '100%',
             backgroundColor: theme.palette.background.paper,
             position: 'fixed',
             zIndex: 1,
