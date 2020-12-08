@@ -3,6 +3,10 @@ import { makeStyles, createStyles, Theme } from "@material-ui/core/styles"
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import { Box } from "@material-ui/core";
+import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
+import { SceneItemContextMenu } from "../context-menus";
+
+
 export interface ISceneItemDisplay {
     name: string
     description: string
@@ -59,23 +63,30 @@ export function SceneItem(props: {
     }
 
     return (
-        <div className={classes.root}
-            onClick={handleClick}
-            onDoubleClick={handleDoubleClick}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-        >
-            <Paper
-                elevation={hover ? 3 : 0}
-            >
-                <Box
-                    className={classes.contentArea}
-                    border={props.selected && 1}>
-                    <img className={classes.preview} src={data.preview}></img>
-                    <Typography variant="h6">{data.name}</Typography>
-                    <Typography variant="body2">{data.description}</Typography>
-                </Box>
-            </Paper>
-        </div >
+        <div>
+            <ContextMenuTrigger id={id}>
+                <div className={classes.root}
+                    onClick={handleClick}
+                    onDoubleClick={handleDoubleClick}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                >
+                    <Paper
+                        elevation={hover ? 3 : 0}
+                    >
+                        <Box
+                            className={classes.contentArea}
+                            border={props.selected && 1}>
+                            <img className={classes.preview} src={data.preview}></img>
+                            <Typography variant="h6">{data.name}</Typography>
+                            <Typography variant="body2">{data.description}</Typography>
+                        </Box>
+                    </Paper>
+                </div >
+            </ContextMenuTrigger>
+            <ContextMenu id={id}>
+                <SceneItemContextMenu />
+            </ContextMenu>
+        </div>
     )
 }

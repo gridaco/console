@@ -32,11 +32,11 @@ export function DashboardSideNavigationBar() {
                     <ListItemText primary="Components" />
                 </ListItem>
                 <ListItem button>
-                    <ListItemText primary="Trash" />
+                    <ListItemText primary="Assets" />
                 </ListItem>
-                <LinkNavigationMenuItem href="#simple-list">
-                    <ListItemText primary="Spam" />
-                </LinkNavigationMenuItem>
+                <ListItem button>
+                    <ListItemText primary="Icons" />
+                </ListItem>
             </List>
         </div>
     )

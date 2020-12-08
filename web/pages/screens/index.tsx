@@ -6,15 +6,12 @@ import { makeStyles } from "@material-ui/core"
 import { Theme } from "@material-ui/core/styles"
 import { createStyles } from "@material-ui/core/styles"
 import Grid from "@material-ui/core/Grid"
-
+import SearchBox from "../../components/search/search-box"
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             flexGrow: 1,
-        },
-        control: {
-            padding: theme.spacing(2),
         },
     }),
 );
@@ -43,20 +40,24 @@ export default function ScreensPage() {
 
     return (
         <DashboardLayout>
-            <Grid container className={classes.root} spacing={2}>
-                {
-                    datas.map((d, i) => {
-                        const id = i.toString()
-                        return <SceneItem
-                            key={id}
-                            id={id}
-                            onSelected={handleSelection}
-                            onDoubleClick={handleDoubleClick}
-                            selected={focusedScreenId === id}
-                            data={d} />
-                    })
-                }
-            </Grid>
+            <div>
+                <SearchBox />
+                <Grid container className={classes.root} spacing={2}>
+                    {
+                        datas.map((d, i) => {
+                            const id = i.toString()
+                            return <SceneItem
+                                key={id}
+                                id={id}
+                                onSelected={handleSelection}
+                                onDoubleClick={handleDoubleClick}
+                                selected={focusedScreenId === id}
+                                data={d} />
+                        })
+                    }
+                </Grid>
+            </div>
+
         </DashboardLayout >
     )
 }

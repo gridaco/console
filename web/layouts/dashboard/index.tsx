@@ -8,7 +8,8 @@ const useStyles = makeStyles({
         width: '160px'
     },
     contentpage: {
-        marginLeft: '160px'
+        marginLeft: '160px',
+        padding: 48
     }
 })
 
