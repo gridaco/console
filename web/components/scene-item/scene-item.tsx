@@ -76,7 +76,7 @@ export function SceneItem(props: {
                     >
                         <Box
                             className={classes.contentArea}
-                            border={props.selected && 1}>
+                            border={props.selected ? 1 : 0}>
                             <img className={classes.preview} src={data.preview}></img>
                             <Typography variant="h6">{data.name}</Typography>
                             <Typography variant="body2">{data.description}</Typography>
