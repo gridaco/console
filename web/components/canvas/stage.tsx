@@ -39,7 +39,6 @@ export default function (props: {
                     onClick={(e) => {
                         const targetId = e.target.attrs.id;
                         setTargetLayerId(targetId)
-
                         /**
                          * since the stage gets click event callback,
                          * no regarding to its' child also have click event being called,
@@ -54,6 +53,7 @@ export default function (props: {
                 >
                     <RecoilBridge>
                         <Layer key="main-layer">
+                            <StageBG width={scene.width} height={scene.height} fill='white' />
                             {scene.layers
                                 .sort((a, b) => a.index - b.index)
                                 .map((e) => {
@@ -110,6 +110,18 @@ export default function (props: {
     } else {
         return <p>loading..</p>;
     }
+}
+
+function StageBG(props: {
+    width: number,
+    height: number,
+    fill: string
+}) {
+    return <Rect
+        width={props.width}
+        height={props.height}
+        fill={props.fill}
+    ></Rect>
 }
 
 function CGRect(props: {

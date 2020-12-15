@@ -4,8 +4,9 @@ import Stage from "../../components/canvas/stage"
 import { usePinch } from 'react-use-gesture'
 import { motion } from "framer-motion"
 import { SceneLocalRepository } from "../../repositories";
+import { CanvasLocaleSelect } from "../../components/canvas/locale-select";
 
-export default function (props: {
+export default function CanvasPreview(props: {
   onBackgroundClick: (e: any) => void
   sceneRepository?: SceneLocalRepository
 }) {
@@ -30,5 +31,6 @@ export default function (props: {
     {/* <motion.div animate={{ zoom: zoom }}> */}
     <Stage sceneRepository={props.sceneRepository} />
     {/* </motion.div> */}
+    <CanvasLocaleSelect />
   </div>
 }

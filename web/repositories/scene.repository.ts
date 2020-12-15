@@ -1,7 +1,7 @@
 import { StorableLayer, StorableScene } from "@bridged.xyz/client-sdk/lib";
 
 // NOT USING
-export class ScenesRepository {
+export class SceneRepositoryStore {
     static repositories: Array<SceneLocalRepository> = []
 
     static find(scene: string): SceneLocalRepository {
@@ -11,6 +11,7 @@ export class ScenesRepository {
     static make(scene: StorableScene) {
         const newRepository = new SceneLocalRepository(scene)
         this.repositories.push(newRepository)
+        console.log('made sceneRepository', newRepository)
         return newRepository
     }
 }

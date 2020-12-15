@@ -1,0 +1,1 @@
+## Editor state - editor related global state

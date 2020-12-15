@@ -4,6 +4,7 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { TranslationFieldRow } from "./translation-field";
 
 interface Props { }
 
@@ -25,9 +26,7 @@ export default class extends React.Component<Props> {
                 <AccordionDetails>
                     <Typography>key/name</Typography>
                     <div style={{ width: 20 }} />
-                    <div></div>
-                    <TextField />
-                    <TextField />
+                    <TranslationFieldRow key={'test'} locale='en_US' initialValue='hello world' />
                 </AccordionDetails>
             </Accordion>
         );
