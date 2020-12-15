@@ -12,12 +12,20 @@ import { convertReflectColorToUniversal, fetchColrOpacity } from "@reflect.bridg
 import { convertBorderRadius } from "@reflect.bridged.xyz/core/lib/converters/border-radius.convert"
 import { convertOffsetToUniversal } from "@reflect.bridged.xyz/core/lib/converters/offset.convert"
 import { ColorFormat } from "@reflect.bridged.xyz/core/lib/color";
+import { DesignGlobalizationRepositoriesStore, DesignGlobalizationRepository } from "@bridged.xyz/client-sdk/lib/g11n/repository";
+import { currentEditorialLocaleAtom } from "../../states/editor-state";
 
 export default function (props: {
     sceneRepository?: SceneLocalRepository
 }) {
     const { sceneRepository } = props
     const scene = sceneRepository?.scene;
+    const designGlobalizationRepository = DesignGlobalizationRepositoriesStore.find(scene?.id!)
+
+    // const [locale,] = useRecoilState(currentEditorialLocaleAtom)
+    // const translatedText = designGlobalizationRepository.fetchTranslation(id)
+
+
     const [isSelect, setIsSelect] = useRecoilState(editorState);
     const [targetLayerId, setTargetLayerId] = useRecoilState(targetLayerIdAtom);
     const [selectionLayerId, setSelectionLayerId] = useState<string>();
@@ -180,23 +188,27 @@ function EditableG11nText(props: {
     height: number;
     onFocusChange: (id: string, focus: boolean) => void;
 }) {
-    console.log('props', props)
-
+    // const [locale,] = useRecoilState(currentEditorialLocaleAtom)
+    // const translatedText = designGlobalizationRepository.fetchTranslation(id)
     let text = props.manifest.text
+
     if (props.selected) {
         const [currentEditTextValue, setCurrentEditTextValue] = useRecoilState(currentTextEditValueAtom)
         text = currentEditTextValue ?? ""
     }
+
+    const [translated, setTranslated] = useState<string>(text)
 
     return (
         <SelectableLayer {...props}>
             <Text
                 key={props.id}
                 id={props.id}
-                text={text}
+                text={translated}
                 align={props.manifest.textAlign}
                 verticalAlign={props.manifest.textAlignVertical}
                 fontSize={props.manifest.style.fontSize}
+                ellipsis={true}
                 // TODO implement font loading
                 fontFamily="'Arial'" //{`"${props.text.style.fontFamily}"`}
                 width={props.width}
