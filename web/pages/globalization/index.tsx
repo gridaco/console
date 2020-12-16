@@ -23,7 +23,7 @@ export default function Home() {
   useEffect(() => {
     if (sceneId && !sceneRepository) {
       console.log('fetching scene data')
-      const service = new SceneStoreService("", "")
+      const service = new SceneStoreService("temp", "")
       service.fetchScene(sceneId).then((response) => {
         console.log('response', response)
         const scene = response.data.data as StorableScene

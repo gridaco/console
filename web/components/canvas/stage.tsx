@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Stage, Layer, Text, Image, Group, Rect } from "react-konva";
 import useImage from "use-image";
 import { StorableLayerType } from "@bridged.xyz/client-sdk/lib";
@@ -192,10 +192,13 @@ function EditableG11nText(props: {
     // const translatedText = designGlobalizationRepository.fetchTranslation(id)
     let text = props.manifest.text
 
+    // useEffect(() => {
     if (props.selected) {
-        const [currentEditTextValue, setCurrentEditTextValue] = useRecoilState(currentTextEditValueAtom)
-        text = currentEditTextValue ?? ""
+        // const [currentEditTextValue,] = useRecoilState(currentTextEditValueAtom)
+        // text = currentEditTextValue ?? ""
+        // })
     }
+
 
     const [translated, setTranslated] = useState<string>(text)
 
