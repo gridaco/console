@@ -2,7 +2,16 @@ import React from "react"
 import Link from 'next/link'
 
 function Index(){
-    return <Link href="/globalization">globalization</Link>
+    return (
+        <ul>
+            <li>
+            <Link href="/globalization">globalization</Link>
+            </li>
+            <li>
+            <Link href="/screens">screens</Link>
+            </li>
+        </ul>
+    )
 }
 
 

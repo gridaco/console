@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Stage, Layer, Text, Image, Group, Rect } from "react-konva";
 import useImage from "use-image";
 import { StorableLayerType } from "@bridged.xyz/client-sdk/lib";
@@ -12,12 +12,20 @@ import { convertReflectColorToUniversal, fetchColrOpacity } from "@reflect.bridg
 import { convertBorderRadius } from "@reflect.bridged.xyz/core/lib/converters/border-radius.convert"
 import { convertOffsetToUniversal } from "@reflect.bridged.xyz/core/lib/converters/offset.convert"
 import { ColorFormat } from "@reflect.bridged.xyz/core/lib/color";
+import { DesignGlobalizationRepositoriesStore, DesignGlobalizationRepository } from "@bridged.xyz/client-sdk/lib/g11n/repository";
+import { currentEditorialLocaleAtom } from "../../states/editor-state";
 
 export default function (props: {
     sceneRepository?: SceneLocalRepository
 }) {
     const { sceneRepository } = props
     const scene = sceneRepository?.scene;
+    const designGlobalizationRepository = DesignGlobalizationRepositoriesStore.find(scene?.id!)
+
+    // const [locale,] = useRecoilState(currentEditorialLocaleAtom)
+    // const translatedText = designGlobalizationRepository.fetchTranslation(id)
+
+
     const [isSelect, setIsSelect] = useRecoilState(editorState);
     const [targetLayerId, setTargetLayerId] = useRecoilState(targetLayerIdAtom);
     const [selectionLayerId, setSelectionLayerId] = useState<string>();
@@ -39,7 +47,6 @@ export default function (props: {
                     onClick={(e) => {
                         const targetId = e.target.attrs.id;
                         setTargetLayerId(targetId)
-
                         /**
                          * since the stage gets click event callback,
                          * no regarding to its' child also have click event being called,
@@ -54,6 +61,7 @@ export default function (props: {
                 >
                     <RecoilBridge>
                         <Layer key="main-layer">
+                            <StageBG width={scene.width} height={scene.height} fill='white' />
                             {scene.layers
                                 .sort((a, b) => a.index - b.index)
                                 .map((e) => {
@@ -112,6 +120,18 @@ export default function (props: {
     }
 }
 
+function StageBG(props: {
+    width: number,
+    height: number,
+    fill: string
+}) {
+    return <Rect
+        width={props.width}
+        height={props.height}
+        fill={props.fill}
+    ></Rect>
+}
+
 function CGRect(props: {
     data: CGRectManifest
 }) {
@@ -168,23 +188,30 @@ function EditableG11nText(props: {
     height: number;
     onFocusChange: (id: string, focus: boolean) => void;
 }) {
-    console.log('props', props)
-
+    // const [locale,] = useRecoilState(currentEditorialLocaleAtom)
+    // const translatedText = designGlobalizationRepository.fetchTranslation(id)
     let text = props.manifest.text
+
+    // useEffect(() => {
     if (props.selected) {
-        const [currentEditTextValue, setCurrentEditTextValue] = useRecoilState(currentTextEditValueAtom)
-        text = currentEditTextValue ?? ""
+        // const [currentEditTextValue,] = useRecoilState(currentTextEditValueAtom)
+        // text = currentEditTextValue ?? ""
+        // })
     }
+
+
+    const [translated, setTranslated] = useState<string>(text)
 
     return (
         <SelectableLayer {...props}>
             <Text
                 key={props.id}
                 id={props.id}
-                text={text}
+                text={translated}
                 align={props.manifest.textAlign}
                 verticalAlign={props.manifest.textAlignVertical}
                 fontSize={props.manifest.style.fontSize}
+                ellipsis={true}
                 // TODO implement font loading
                 fontFamily="'Arial'" //{`"${props.text.style.fontFamily}"`}
                 width={props.width}

@@ -3,13 +3,11 @@ import List from "@material-ui/core/List"
 import ListItem from "@material-ui/core/ListItem"
 import ListItemText from "@material-ui/core/ListItemText"
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
-import { LinkNavigationMenuItem } from "./link-navigation-menu-item"
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            width: '100%',
-            maxWidth: 360,
+            height: '100%',
             backgroundColor: theme.palette.background.paper,
             position: 'fixed',
             zIndex: 1,
@@ -33,11 +31,11 @@ export function DashboardSideNavigationBar() {
                     <ListItemText primary="Components" />
                 </ListItem>
                 <ListItem button>
-                    <ListItemText primary="Trash" />
+                    <ListItemText primary="Assets" />
                 </ListItem>
-                <LinkNavigationMenuItem href="#simple-list">
-                    <ListItemText primary="Spam" />
-                </LinkNavigationMenuItem>
+                <ListItem button>
+                    <ListItemText primary="Icons" />
+                </ListItem>
             </List>
         </div>
     )

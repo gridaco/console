@@ -1,11 +1,13 @@
 import React from "react";
-import PreviewEditor from "../preview-editor";
+import SceneKeyEditor from "../scene-key-editor";
 import Preview from "../canvas-preview";
-import KeyEditor from "../key-editor";
+import SingleKeyEditor from "../key-editor";
 import { editorState } from "../../states/text-editor.state";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { Resizable } from "re-resizable";
-import { SceneLocalRepository, ScenesRepository } from "../../repositories";
+import { SceneLocalRepository, SceneRepositoryStore } from "../../repositories";
+import { DesignGlobalizationRepositoriesStore } from "@bridged.xyz/client-sdk/lib/g11n/repository";
+import { targetLayerSelector } from "../../states";
 
 
 type EditorMode = "translation" | "preview" | "prototype" | "*"
@@ -17,12 +19,13 @@ interface EditorProps {
 
 function Editor(props: EditorProps) {
   const [isSelect, setIsSelect] = useRecoilState(editorState);
+  const targetLayer = useRecoilValue(targetLayerSelector)
 
-  const editorSwitch = () => {
-    const isFocus = useRecoilValue(editorState);
-    return isFocus;
+  const editorSwitch = (): boolean => {
+    return targetLayer !== undefined
   };
 
+  const repository = DesignGlobalizationRepositoriesStore.find(props.sceneId)
 
   return (
     <>
@@ -33,7 +36,7 @@ function Editor(props: EditorProps) {
             setIsSelect(false);
           }
         }
-        sceneRepository={ScenesRepository.find(props.sceneId)}
+        sceneRepository={SceneRepositoryStore.find(props.sceneId)}
       />
       <Resizable
         style={{
@@ -50,7 +53,7 @@ function Editor(props: EditorProps) {
         minWidth="20%"
         minHeight="100vh"
       >
-        {editorSwitch() ? <KeyEditor /> : <PreviewEditor />}
+        {editorSwitch() ? <SingleKeyEditor key={targetLayer.nodeId} repository={repository} /> : <SceneKeyEditor repository={repository} />}
       </Resizable>
 
     </>

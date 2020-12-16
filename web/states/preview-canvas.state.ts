@@ -1,6 +1,6 @@
 import { StorableLayer } from "@bridged.xyz/client-sdk/lib";
 import { atom, selector } from "recoil";
-import { ScenesRepository } from "../repositories";
+import { SceneRepositoryStore } from "../repositories";
 
 export const targetLayerIdAtom = atom<string>({
     key: "target-layer-id",
@@ -17,7 +17,7 @@ export const targetLayerSelector = selector<StorableLayer>({
     get: ({ get }) => {
         const id = get(targetLayerIdAtom);
         const sceneId = get(targetSceneIdAtom)
-        const layer = ScenesRepository.find(sceneId).layer(id)
+        const layer = SceneRepositoryStore.find(sceneId).layer(id)
         return layer
     },
 });
