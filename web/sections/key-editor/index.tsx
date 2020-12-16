@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Typography, TextField, Box, Button, CircularProgress } from "@material-ui/core";
-import { targetLayerSelector, currentTextEditValueAtom } from "../../states"
-import { useRecoilState, useRecoilValue } from "recoil";
+import { targetLayerSelector } from "../../states"
+import { useRecoilValue } from "recoil";
 import { NestedAssetPutRequest, StorableLayer, StorableLayerType } from "@bridged.xyz/client-sdk/lib";
 import { TextManifest } from "@reflect.bridged.xyz/core";
 import { TranslationSetForKey } from "../../components/g11n/translation-set-for-key";
@@ -64,6 +64,8 @@ function SingleKeyEditorCreateNewState(props: {
   }
 
   const handleCreateKeyClick = (e: any) => {
+    console.log('creating with', keyname, initialTranslations)
+
     setState('creating')
 
     repository.registerTextKey(layer.nodeId, {

@@ -1,6 +1,6 @@
 import { Box, Grid, Typography } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
-import React from "react";
+import React, { useEffect } from "react";
 import { currentTextEditValueAtom } from "../../../states"
 import { useRecoilState, useRecoilValue } from "recoil";
 
@@ -50,19 +50,10 @@ export function TranslationEditField(props: {
         props.onSubmit(currentEditTextValue)
     }
 
-    // FIXME
-    const getDisplayValue = (): string => {
-        if (props.initialValue && !currentEditTextValue) {
-            return props.initialValue
-        } else {
-            return currentEditTextValue
-        }
-    }
-
     return <TextField onKeyPress={(ev) => {
         if (ev.key === 'Enter') {
             handleOnSubmit(ev)
             ev.preventDefault();
         }
-    }} value={getDisplayValue()} onChange={handleEdit} fullWidth variant='outlined' />
+    }} defaultValue={props.initialValue} onChange={handleEdit} fullWidth variant='outlined' />
 }

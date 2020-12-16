@@ -5,7 +5,7 @@ import { StorableLayerType } from "@bridged.xyz/client-sdk/lib";
 import { CGRectManifest, TextManifest } from "@reflect.bridged.xyz/core/lib";
 import { currentTextEditValueAtom, editorState } from "../../states/text-editor.state";
 import { targetLayerIdAtom } from "../../states/preview-canvas.state"
-import { useRecoilBridgeAcrossReactRoots_UNSTABLE, useRecoilState } from "recoil";
+import { useRecoilBridgeAcrossReactRoots_UNSTABLE, useRecoilState, useRecoilValue } from "recoil";
 import { SelectableLayer } from "../../components/canvas/selectable-layer";
 import { SceneLocalRepository } from "../../repositories";
 import { convertReflectColorToUniversal, fetchColrOpacity } from "@reflect.bridged.xyz/core/lib/converters/color.convert"
@@ -194,20 +194,23 @@ function EditableG11nText(props: {
 
     // useEffect(() => {
     if (props.selected) {
-        // const [currentEditTextValue,] = useRecoilState(currentTextEditValueAtom)
-        // text = currentEditTextValue ?? ""
+        const [currentEditTextValue,] = useRecoilState(currentTextEditValueAtom)
+        // const currentEditTextValue = useRecoilValue(currentTextValueSelector)
+        if (currentEditTextValue !== undefined) {
+            text = currentEditTextValue
+        }
         // })
     }
 
 
-    const [translated, setTranslated] = useState<string>(text)
+    // const [translated, setTranslated] = useState<string>(text)
 
     return (
         <SelectableLayer {...props}>
             <Text
                 key={props.id}
                 id={props.id}
-                text={translated}
+                text={text}
                 align={props.manifest.textAlign}
                 verticalAlign={props.manifest.textAlignVertical}
                 fontSize={props.manifest.style.fontSize}
