@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Typography, TextField, Box, Button, CircularProgress } from "@material-ui/core";
-import { targetLayerSelector, currentTextEditValueAtom } from "../../states"
-import { useRecoilState, useRecoilValue } from "recoil";
-import { StorableLayer, StorableLayerType } from "@bridged.xyz/client-sdk/lib";
+import { targetLayerSelector } from "../../states"
+import { useRecoilValue } from "recoil";
+import { NestedAssetPutRequest, StorableLayer, StorableLayerType } from "@bridged.xyz/client-sdk/lib";
 import { TextManifest } from "@reflect.bridged.xyz/core";
 import { TranslationSetForKey } from "../../components/g11n/translation-set-for-key";
 import { DesignGlobalizationRepository } from "@bridged.xyz/client-sdk/lib/g11n/repository";
-import { IGlobalizedKey } from "@bridged.xyz/client-sdk/lib/g11n";
+import { IGlobalizedKey, Translations } from "@bridged.xyz/client-sdk/lib/g11n";
 
 type SingleKeyEditorMode = 'create-new' | 'edit-existing' | 'loading'
 /**
@@ -56,20 +56,22 @@ function SingleKeyEditorCreateNewState(props: {
   const { layer, repository } = props
   const [state, setState] = useState<string>('loaded')
   const [keyname, setkeyname] = useState<string>('')
+  const initialTranslations = new Map<string, NestedAssetPutRequest>()
 
   const handleKeyNameEdit = (e: any) => {
     const v = e.target.value
-    console.log('key name being edited as value of', v)
     setkeyname(v)
   }
 
   const handleCreateKeyClick = (e: any) => {
+    console.log('creating with', keyname, initialTranslations)
+
     setState('creating')
 
     repository.registerTextKey(layer.nodeId, {
       keyName: keyname,
       embeddable: false,
-      initialTranslations: new Map()
+      initialTranslations: initialTranslations
       // {
       //   'aa': {
       //     value: ''
@@ -82,6 +84,13 @@ function SingleKeyEditorCreateNewState(props: {
   }
 
   const textValue = layer?.type === StorableLayerType.text ? (layer?.data as TextManifest).text : 'this is not a text'
+
+
+  const handleInitialTranslationChange = (locale: string, value: string) => {
+    initialTranslations.set(locale, {
+      value: value
+    })
+  }
 
 
   return (
@@ -100,7 +109,7 @@ function SingleKeyEditorCreateNewState(props: {
             <TextField label='Key Name' onChange={handleKeyNameEdit} autoFocus fullWidth variant='outlined' />
           </Box>
           <Box m={2}>
-            <TranslationSetForKey key={keyname} />
+            <TranslationSetForKey key={keyname} locales={repository.locales} onSubmit={handleInitialTranslationChange} />
           </Box>
         </Box>
         <Button variant='contained' onClick={handleCreateKeyClick}>create key</Button>
@@ -115,11 +124,35 @@ function SingleKeyEditorEditExistingState(props: {
   gkey: IGlobalizedKey
   repository: DesignGlobalizationRepository
 }) {
+  const repository = props.repository
+
+  const [translations, setTranslations] = useState<Translations>()
+  // fetch initial translations
+  useEffect(() => {
+    repository.fetchTranslation(props.layer.nodeId).then((v) => {
+      console.log('SingleKeyEditorEditExistingState : fetched translation', v?.translations)
+      setTranslations(v?.translations)
+    })
+  }, [])
+
+  const handleTranslationUpdate = (locale: string, value: string) => {
+    repository.putTextTranslation(props.layer.nodeId, {
+      keyId: props.gkey.id,
+      locale: locale,
+      value: value
+    })
+  }
+
   return (
     <div>
       <Typography variant="h2">edit existing key</Typography>
       <Box m={2}>
-        <TranslationSetForKey key={props.gkey.key} />
+        {
+          translations !== undefined ?
+            <TranslationSetForKey key={props.gkey.key} locales={repository.locales} onSubmit={handleTranslationUpdate} translations={translations} />
+            :
+            <p>loading...</p>
+        }
       </Box>
     </div>
   )

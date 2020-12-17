@@ -16,6 +16,10 @@ export default function (props: {
     const [editorialLoclae] = useRecoilState(currentEditorialLocaleAtom)
     const defaultLocaleTranslationValue = (translation.translations as any)[editorialLoclae]?.value ?? 'no translation'
 
+    const handleOnTranslationValueChange = (locale: string, value: string) => {
+        console.log('handleOnTranslationValueChange', locale, value)
+    }
+
     return (
         <Accordion style={{ padding: "20px" }}>
             <AccordionSummary aria-controls="panel2a-content" id="panel2a-header">
@@ -34,7 +38,7 @@ export default function (props: {
                         const localekey = k
                         const localeTranslationAsset = (translation.translations as any)[localekey] as RawAsset
                         const localeTranslationValue = localeTranslationAsset.value
-                        return <TranslationFieldRow key={keyId} locale={localekey} initialValue={localeTranslationValue} />
+                        return <TranslationFieldRow key={keyId} locale={localekey} initialValue={localeTranslationValue} onSubmit={handleOnTranslationValueChange} />
                     })
                 }
             </AccordionDetails>

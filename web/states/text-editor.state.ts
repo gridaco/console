@@ -1,13 +1,27 @@
 import React from "react";
-import { atom } from "recoil";
+import { atom, selector } from "recoil";
+import { targetLayerIdAtom } from "./preview-canvas.state";
 
 /**
  * the very current value of focused edit text value. this is mostly used for displaying preview value on the canvas.
  */
 export const currentTextEditValueAtom = atom<string>({
-    key: 'current-text-edit-value',
+    key: 'current-text-edit-value-store',
     default: undefined!
 })
+
+// export const currentTextValueSelector = selector<string | undefined>({
+//     key: "current-text-edit-value-selector",
+//     get: ({ get }) => {
+//         // if layer id does not match, return undefined.
+//         const layerid = get(targetLayerIdAtom);
+//         const layerCurrentValueSet = get(currentTextEditValueAtom)
+//         if (layerCurrentValueSet.layerId == layerid) {
+//             return layerCurrentValueSet.value
+//         }
+//         return undefined
+//     },
+// })
 
 
 export const editorState = atom({
