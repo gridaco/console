@@ -148,6 +148,7 @@ function CGRect(props: {
     const opacity = fetchColrOpacity(props.data.fill)
     const borderRadius = props.data.borderRadius !== undefined ? convertBorderRadius(props.data.borderRadius) : undefined
     const shadow = props.data.shadow
+    console.log('fill', fill)
     return (
         // <SelectableLayer>
         <Rect
@@ -188,6 +189,7 @@ function StaticDesignImageDisplay(props: {
 };
 
 
+let chachedEditingText: string | undefined // this must be contained inside atom value
 function EditableG11nText(props: {
     id: string;
     locale: string
@@ -200,31 +202,37 @@ function EditableG11nText(props: {
     onFocusChange: (id: string, focus: boolean) => void;
 }) {
 
-
-    // let text = 
-    const [translatedText, setTranslatedText] = useState<string>(props.manifest.text)
-
-
-    props.repository.fetchLocaleTranslation(props.id, props.locale).then((t) => {
-        console.log('t', t)
-        if (t) {
-            setTranslatedText(t)
-            // text = t
-        }
-    })
+    let defaulttext = props.manifest.text
+    const [translatedText, setTranslatedText] = useState<string>(defaulttext)
 
 
+    // useEffect(() => {
+    // }, [])
     useEffect(() => {
-        if (props.selected) {
-            const [currentEditTextValue,] = useRecoilState(currentTextEditValueAtom)
-            // const currentEditTextValue = useRecoilValue(currentTextValueSelector)
-            if (currentEditTextValue !== undefined) {
-                setTranslatedText(currentEditTextValue)
-                // text = currentEditTextValue
+
+        props.repository.fetchLocaleTranslation(props.id, props.locale).then((t) => {
+            if (t) {
+                setTranslatedText(t)
+            }
+        })
+
+    }, [props.selected, props.locale])
+
+
+    const [currentEditTextValue,] = useRecoilState(currentTextEditValueAtom)
+    let editingText: string | undefined
+    if (props.selected) {
+        console.log('currentEditTextValue', currentEditTextValue)
+        // const currentEditTextValue = useRecoilValue(currentTextValueSelector)
+        if (currentEditTextValue !== undefined) {
+            if (currentEditTextValue !== chachedEditingText) {
+                editingText = currentEditTextValue
+                chachedEditingText = currentEditTextValue
             }
         }
-    }, [])
+    }
 
+    const displayText = editingText ?? translatedText ?? defaulttext
 
     // const [translated, setTranslated] = useState<string>(text)
 
@@ -233,7 +241,7 @@ function EditableG11nText(props: {
             <Text
                 key={props.id}
                 id={props.id}
-                text={translatedText}
+                text={displayText}
                 align={props.manifest.textAlign}
                 verticalAlign={props.manifest.textAlignVertical}
                 fontSize={props.manifest.style.fontSize}
