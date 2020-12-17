@@ -29,7 +29,11 @@ export default function CanvasPreview(props: {
   }}>
     <CanvasBackground onClick={props.onBackgroundClick} />
     {/* <motion.div animate={{ zoom: zoom }}> */}
-    <Stage sceneRepository={props.sceneRepository} />
+    <div style={{
+      margin: 'auto',
+    }}>
+      <Stage sceneRepository={props.sceneRepository} />
+    </div>
     {/* </motion.div> */}
     <CanvasLocaleSelect />
   </div>

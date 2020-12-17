@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Typography, FormControl, Select, MenuItem } from "@material-ui/core";
+import { Typography, FormControl, Select, MenuItem, Box } from "@material-ui/core";
 import EditableTextCard from "../../components/g11n/editable-text-card";
 import { currentEditorialLocaleAtom } from "../../states/editor-state"
 import { useRecoilState } from "recoil";
 import { DesignGlobalizationRepository } from "@bridged.xyz/client-sdk/lib/g11n/repository"
 import { LayerTranslation } from "@bridged.xyz/client-sdk/lib/g11n";
+import { SceneRepositoryStore } from "../../repositories";
 
 const SceneKeyEditor = (props: {
   repository: DesignGlobalizationRepository
@@ -17,11 +18,17 @@ const SceneKeyEditor = (props: {
     setLocale(e.target.value as string);
   };
 
+  let sceneName = 'loading...'
+  if (repository) {
+    sceneName = SceneRepositoryStore.find(repository.sceneId).scene.name ?? 'no-named scene'
+  }
 
   useEffect(() => {
     let mounted = true;
     console.log('fetching translations under scene', props.repository.sceneId)
     repository.fetchTranslations().then((d) => {
+
+
       console.log('fetched translations under scene', props.repository.sceneId, d)
       setTranslations(d)
     }).catch(e => {
@@ -33,12 +40,12 @@ const SceneKeyEditor = (props: {
     <>
       <div>
         <div className="fileDepthTitle">
-          <Typography variant="subtitle1">navigation1/</Typography>
+          <Typography variant="subtitle1">screens/</Typography>
         </div>
         <div className="screenName">
-          <Typography variant="h2">Screen Name</Typography>
+          <Typography variant="h5">{sceneName}</Typography>
         </div>
-        <div>
+        <Box m={2}>
           <Typography
             variant="subtitle1"
             align="left"
@@ -46,7 +53,7 @@ const SceneKeyEditor = (props: {
           >
             {translations.length} keys
           </Typography>
-          <Typography
+          {/* <Typography
             variant="subtitle1"
             align="left"
             style={{ float: "left" }}
@@ -55,9 +62,9 @@ const SceneKeyEditor = (props: {
           </Typography>
           <Typography variant="subtitle1" align="left">
             12 Components
-          </Typography>
-        </div>
-        <div style={{ marginTop: "10px", marginBottom: "40px" }}>
+          </Typography> */}
+        </Box>
+        <Box m={2}>
           <FormControl>
             <Select value={locale} onChange={handleLocaleSelectChange}>
               <MenuItem value="ko">Ko</MenuItem>
@@ -65,7 +72,7 @@ const SceneKeyEditor = (props: {
               <MenuItem value="ja">JP</MenuItem>
             </Select>
           </FormControl>
-        </div>
+        </Box>
         <div>
           {
             translations.map((t) => {

@@ -28,6 +28,7 @@ export default function (props: {
 
     const [isSelect, setIsSelect] = useRecoilState(editorState);
     const [targetLayerId, setTargetLayerId] = useRecoilState(targetLayerIdAtom);
+    const [currentEditorialLocale] = useRecoilState(currentEditorialLocaleAtom)
     const [selectionLayerId, setSelectionLayerId] = useState<string>();
 
     // https://github.com/konvajs/react-konva/issues/533
@@ -39,9 +40,15 @@ export default function (props: {
         return (
             <div
                 style={{
-                    backgroundColor: "#FFFFFF"
+                    margin: 'auto',
+                    position: 'relative',
+                    width: scene.width,
+                    paddingTop: 56
                 }}>
-                <Stage
+                <Stage style={{
+                    position: 'relative',
+                    margin: 'auto'
+                }}
                     width={scene.width}
                     height={scene.height}
                     onClick={(e) => {
@@ -71,6 +78,8 @@ export default function (props: {
                                         return (
                                             <Group key={e.nodeId} x={e.x} y={e.y}>
                                                 <EditableG11nText
+                                                    repository={designGlobalizationRepository}
+                                                    locale={currentEditorialLocale}
                                                     key={e.nodeId}
                                                     id={e.nodeId}
                                                     selected={selectionLayerId === e.nodeId}
@@ -139,7 +148,6 @@ function CGRect(props: {
     const opacity = fetchColrOpacity(props.data.fill)
     const borderRadius = props.data.borderRadius !== undefined ? convertBorderRadius(props.data.borderRadius) : undefined
     const shadow = props.data.shadow
-    console.log('fill', fill)
     return (
         // <SelectableLayer>
         <Rect
@@ -182,25 +190,40 @@ function StaticDesignImageDisplay(props: {
 
 function EditableG11nText(props: {
     id: string;
+    locale: string
     selected: boolean;
     manifest: TextManifest;
+    overrideText?: string
     width: number;
     height: number;
+    repository: DesignGlobalizationRepository
     onFocusChange: (id: string, focus: boolean) => void;
 }) {
-    // const [locale,] = useRecoilState(currentEditorialLocaleAtom)
-    // const translatedText = designGlobalizationRepository.fetchTranslation(id)
-    let text = props.manifest.text
 
-    // useEffect(() => {
-    if (props.selected) {
-        const [currentEditTextValue,] = useRecoilState(currentTextEditValueAtom)
-        // const currentEditTextValue = useRecoilValue(currentTextValueSelector)
-        if (currentEditTextValue !== undefined) {
-            text = currentEditTextValue
+
+    // let text = 
+    const [translatedText, setTranslatedText] = useState<string>(props.manifest.text)
+
+
+    props.repository.fetchLocaleTranslation(props.id, props.locale).then((t) => {
+        console.log('t', t)
+        if (t) {
+            setTranslatedText(t)
+            // text = t
         }
-        // })
-    }
+    })
+
+
+    useEffect(() => {
+        if (props.selected) {
+            const [currentEditTextValue,] = useRecoilState(currentTextEditValueAtom)
+            // const currentEditTextValue = useRecoilValue(currentTextValueSelector)
+            if (currentEditTextValue !== undefined) {
+                setTranslatedText(currentEditTextValue)
+                // text = currentEditTextValue
+            }
+        }
+    }, [])
 
 
     // const [translated, setTranslated] = useState<string>(text)
@@ -210,7 +233,7 @@ function EditableG11nText(props: {
             <Text
                 key={props.id}
                 id={props.id}
-                text={text}
+                text={translatedText}
                 align={props.manifest.textAlign}
                 verticalAlign={props.manifest.textAlignVertical}
                 fontSize={props.manifest.style.fontSize}
