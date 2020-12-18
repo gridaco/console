@@ -22,3 +22,6 @@ yarn
 yarn web
 ```
 
+
+## Build your plugin for console
+with our [plugin-sdk](https://github.com/bridgedxyz/plugin-sdk) you can customize, embed, extend console that best fits your situation.
