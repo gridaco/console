@@ -15,13 +15,16 @@ export function TranslationFieldRow(props: {
 }) {
     return <>
         <div>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} alignContent='stretch'>
                 <Grid item>
-                    <Box width={24}>
+                    <Box width={160} color={'#94959A'} component='div' style={{
+                        backgroundColor: '#F9F9F9',
+                        borderRadius: 4
+                    }} paddingX={3} paddingY={2}>
                         <Typography>{props.locale}</Typography>
                     </Box>
                 </Grid>
-                <Grid item xs={10}>
+                <Grid item>
                     <TranslationEditField {...props} onSubmit={(s) => {
                         props.onSubmit(props.locale, s)
                     }} />
@@ -50,10 +53,11 @@ export function TranslationEditField(props: {
         props.onSubmit(currentEditTextValue)
     }
 
-    return <TextField onKeyPress={(ev) => {
-        if (ev.key === 'Enter') {
-            handleOnSubmit(ev)
-            ev.preventDefault();
-        }
-    }} defaultValue={props.initialValue} onChange={handleEdit} fullWidth variant='outlined' />
+    return <TextField
+        onKeyPress={(ev) => {
+            if (ev.key === 'Enter') {
+                handleOnSubmit(ev)
+                ev.preventDefault();
+            }
+        }} defaultValue={props.initialValue} onChange={handleEdit} fullWidth variant='outlined' />
 }

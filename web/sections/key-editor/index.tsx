@@ -145,7 +145,7 @@ function SingleKeyEditorEditExistingState(props: {
 
   return (
     <div>
-      <Typography variant="h2">edit existing key</Typography>
+      <Typography variant="h5">{props.gkey.key}</Typography>
       <Box m={2}>
         {
           translations !== undefined ?

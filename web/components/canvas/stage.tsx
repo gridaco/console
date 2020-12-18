@@ -28,6 +28,7 @@ export default function (props: {
 
     const [isSelect, setIsSelect] = useRecoilState(editorState);
     const [targetLayerId, setTargetLayerId] = useRecoilState(targetLayerIdAtom);
+    const [currentEditorialLocale] = useRecoilState(currentEditorialLocaleAtom)
     const [selectionLayerId, setSelectionLayerId] = useState<string>();
 
     // https://github.com/konvajs/react-konva/issues/533
@@ -39,9 +40,15 @@ export default function (props: {
         return (
             <div
                 style={{
-                    backgroundColor: "#FFFFFF"
+                    margin: 'auto',
+                    position: 'relative',
+                    width: scene.width,
+                    paddingTop: 56
                 }}>
-                <Stage
+                <Stage style={{
+                    position: 'relative',
+                    margin: 'auto'
+                }}
                     width={scene.width}
                     height={scene.height}
                     onClick={(e) => {
@@ -71,6 +78,8 @@ export default function (props: {
                                         return (
                                             <Group key={e.nodeId} x={e.x} y={e.y}>
                                                 <EditableG11nText
+                                                    repository={designGlobalizationRepository}
+                                                    locale={currentEditorialLocale}
                                                     key={e.nodeId}
                                                     id={e.nodeId}
                                                     selected={selectionLayerId === e.nodeId}
@@ -180,28 +189,50 @@ function StaticDesignImageDisplay(props: {
 };
 
 
+let chachedEditingText: string | undefined // this must be contained inside atom value
 function EditableG11nText(props: {
     id: string;
+    locale: string
     selected: boolean;
     manifest: TextManifest;
+    overrideText?: string
     width: number;
     height: number;
+    repository: DesignGlobalizationRepository
     onFocusChange: (id: string, focus: boolean) => void;
 }) {
-    // const [locale,] = useRecoilState(currentEditorialLocaleAtom)
-    // const translatedText = designGlobalizationRepository.fetchTranslation(id)
-    let text = props.manifest.text
+
+    let defaulttext = props.manifest.text
+    const [translatedText, setTranslatedText] = useState<string>(defaulttext)
+
 
     // useEffect(() => {
+    // }, [])
+    useEffect(() => {
+
+        props.repository.fetchLocaleTranslation(props.id, props.locale).then((t) => {
+            if (t) {
+                setTranslatedText(t)
+            }
+        })
+
+    }, [props.selected, props.locale])
+
+
+    const [currentEditTextValue,] = useRecoilState(currentTextEditValueAtom)
+    let editingText: string | undefined
     if (props.selected) {
-        const [currentEditTextValue,] = useRecoilState(currentTextEditValueAtom)
+        console.log('currentEditTextValue', currentEditTextValue)
         // const currentEditTextValue = useRecoilValue(currentTextValueSelector)
         if (currentEditTextValue !== undefined) {
-            text = currentEditTextValue
+            if (currentEditTextValue !== chachedEditingText) {
+                editingText = currentEditTextValue
+                chachedEditingText = currentEditTextValue
+            }
         }
-        // })
     }
 
+    const displayText = editingText ?? translatedText ?? defaulttext
 
     // const [translated, setTranslated] = useState<string>(text)
 
@@ -210,7 +241,7 @@ function EditableG11nText(props: {
             <Text
                 key={props.id}
                 id={props.id}
-                text={text}
+                text={displayText}
                 align={props.manifest.textAlign}
                 verticalAlign={props.manifest.textAlignVertical}
                 fontSize={props.manifest.style.fontSize}
