@@ -1,28 +1,12 @@
-import React from "react"
-import List from "@material-ui/core/List"
-import ListItem from "@material-ui/core/ListItem"
-import ListItemText from "@material-ui/core/ListItemText"
-import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            height: '100%',
-            backgroundColor: theme.palette.background.paper,
-            position: 'fixed',
-            zIndex: 1,
-            top: 0,
-            left: 0,
-            overflowX: 'hidden',
-        },
-    }),
-);
+import React from "react";
+import { styled } from "@linaria/react";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
 
 export function DashboardSideNavigationBar() {
-    const classes = useStyles();
-
     return (
-        <div className={classes.root}>
+        <ListContainer>
             <List component="nav" aria-label="main mailbox folders">
                 <ListItem button>
                     <ListItemText primary="Screens" />
@@ -37,7 +21,17 @@ export function DashboardSideNavigationBar() {
                     <ListItemText primary="Icons" />
                 </ListItem>
             </List>
-        </div>
-    )
+        </ListContainer>
+    );
 }
 
+const ListContainer = styled.div`
+    height: 100%;
+    background-color: white;
+    width: 200px;
+    border-right: 1px solid #efefef;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    padding-top: 80px;
+`;

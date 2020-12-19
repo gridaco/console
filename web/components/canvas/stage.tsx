@@ -3,57 +3,71 @@ import { Stage, Layer, Text, Image, Group, Rect } from "react-konva";
 import useImage from "use-image";
 import { StorableLayerType } from "@bridged.xyz/client-sdk/lib";
 import { CGRectManifest, TextManifest } from "@reflect.bridged.xyz/core/lib";
-import { currentTextEditValueAtom, editorState } from "../../states/text-editor.state";
-import { targetLayerIdAtom } from "../../states/preview-canvas.state"
-import { useRecoilBridgeAcrossReactRoots_UNSTABLE, useRecoilState, useRecoilValue } from "recoil";
+import {
+    currentTextEditValueAtom,
+    editorState,
+} from "../../states/text-editor.state";
+import { targetLayerIdAtom } from "../../states/preview-canvas.state";
+import {
+    useRecoilBridgeAcrossReactRoots_UNSTABLE,
+    useRecoilState,
+    useRecoilValue,
+} from "recoil";
 import { SelectableLayer } from "../../components/canvas/selectable-layer";
 import { SceneLocalRepository } from "../../repositories";
-import { convertReflectColorToUniversal, fetchColrOpacity } from "@reflect.bridged.xyz/core/lib/converters/color.convert"
-import { convertBorderRadius } from "@reflect.bridged.xyz/core/lib/converters/border-radius.convert"
-import { convertOffsetToUniversal } from "@reflect.bridged.xyz/core/lib/converters/offset.convert"
+import {
+    convertReflectColorToUniversal,
+    fetchColrOpacity,
+} from "@reflect.bridged.xyz/core/lib/converters/color.convert";
+import { convertBorderRadius } from "@reflect.bridged.xyz/core/lib/converters/border-radius.convert";
+import { convertOffsetToUniversal } from "@reflect.bridged.xyz/core/lib/converters/offset.convert";
 import { ColorFormat } from "@reflect.bridged.xyz/core/lib/color";
-import { DesignGlobalizationRepositoriesStore, DesignGlobalizationRepository } from "@bridged.xyz/client-sdk/lib/g11n/repository";
+import {
+    DesignGlobalizationRepositoriesStore,
+    DesignGlobalizationRepository,
+} from "@bridged.xyz/client-sdk/lib/g11n/repository";
 import { currentEditorialLocaleAtom } from "../../states/editor-state";
 
-export default function (props: {
-    sceneRepository?: SceneLocalRepository
-}) {
-    const { sceneRepository } = props
+const CanvasStage = (props: { sceneRepository?: SceneLocalRepository }) => {
+    const { sceneRepository } = props;
     const scene = sceneRepository?.scene;
-    const designGlobalizationRepository = DesignGlobalizationRepositoriesStore.find(scene?.id!)
+    const designGlobalizationRepository = DesignGlobalizationRepositoriesStore.find(
+        scene?.id!
+    );
 
     // const [locale,] = useRecoilState(currentEditorialLocaleAtom)
     // const translatedText = designGlobalizationRepository.fetchTranslation(id)
 
-
     const [isSelect, setIsSelect] = useRecoilState(editorState);
     const [targetLayerId, setTargetLayerId] = useRecoilState(targetLayerIdAtom);
-    const [currentEditorialLocale] = useRecoilState(currentEditorialLocaleAtom)
+    const [currentEditorialLocale] = useRecoilState(currentEditorialLocaleAtom);
     const [selectionLayerId, setSelectionLayerId] = useState<string>();
 
     // https://github.com/konvajs/react-konva/issues/533
-    const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE()
+    const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE();
 
     if (scene && typeof window !== "undefined") {
-        console.log('sceneRepository', sceneRepository)
-        console.log('layers', scene.layers)
+        console.log("sceneRepository", sceneRepository);
+        console.log("layers", scene.layers);
         return (
             <div
                 style={{
-                    margin: 'auto',
-                    position: 'relative',
+                    margin: "auto",
+                    position: "relative",
                     width: scene.width,
-                    paddingTop: 56
-                }}>
-                <Stage style={{
-                    position: 'relative',
-                    margin: 'auto'
+                    paddingTop: 56,
                 }}
+            >
+                <Stage
+                    style={{
+                        position: "relative",
+                        margin: "auto",
+                    }}
                     width={scene.width}
                     height={scene.height}
                     onClick={(e) => {
                         const targetId = e.target.attrs.id;
-                        setTargetLayerId(targetId)
+                        setTargetLayerId(targetId);
                         /**
                          * since the stage gets click event callback,
                          * no regarding to its' child also have click event being called,
@@ -61,47 +75,75 @@ export default function (props: {
                          * and compare to actual selection event comming from the layer itself.
                          */
                         if (selectionLayerId !== targetId) {
-                            setSelectionLayerId(targetId)
+                            setSelectionLayerId(targetId);
                             setIsSelect(false);
                         }
                     }}
                 >
                     <RecoilBridge>
                         <Layer key="main-layer">
-                            <StageBG width={scene.width} height={scene.height} fill='white' />
+                            <StageBG
+                                width={scene.width}
+                                height={scene.height}
+                                fill="white"
+                            />
                             {scene.layers
                                 .sort((a, b) => a.index - b.index)
                                 .map((e) => {
-                                    console.log(e)
+                                    console.log(e);
                                     if (e.type == StorableLayerType.text) {
-                                        console.log('text layer', e)
+                                        console.log("text layer", e);
                                         return (
-                                            <Group key={e.nodeId} x={e.x} y={e.y}>
+                                            <Group
+                                                key={e.nodeId}
+                                                x={e.x}
+                                                y={e.y}
+                                            >
                                                 <EditableG11nText
-                                                    repository={designGlobalizationRepository}
-                                                    locale={currentEditorialLocale}
+                                                    repository={
+                                                        designGlobalizationRepository
+                                                    }
+                                                    locale={
+                                                        currentEditorialLocale
+                                                    }
                                                     key={e.nodeId}
                                                     id={e.nodeId}
-                                                    selected={selectionLayerId === e.nodeId}
-                                                    manifest={e.data as TextManifest}
+                                                    selected={
+                                                        selectionLayerId ===
+                                                        e.nodeId
+                                                    }
+                                                    manifest={
+                                                        e.data as TextManifest
+                                                    }
                                                     width={e.width}
                                                     height={e.height}
                                                     onFocusChange={(
                                                         id: string,
                                                         focus: boolean
                                                     ) => {
-                                                        console.log('focus change', id)
+                                                        console.log(
+                                                            "focus change",
+                                                            id
+                                                        );
                                                         if (focus) {
-                                                            setSelectionLayerId(id)
+                                                            setSelectionLayerId(
+                                                                id
+                                                            );
                                                             setIsSelect(true);
                                                         }
                                                     }}
                                                 />
                                             </Group>
                                         );
-                                    } else if (e.type == StorableLayerType.vanilla) {
+                                    } else if (
+                                        e.type == StorableLayerType.vanilla
+                                    ) {
                                         return (
-                                            <Group key={e.nodeId} x={e.x} y={e.y}>
+                                            <Group
+                                                key={e.nodeId}
+                                                x={e.x}
+                                                y={e.y}
+                                            >
                                                 <StaticDesignImageDisplay
                                                     url={(e.data as any)?.src}
                                                     width={e.width}
@@ -109,11 +151,20 @@ export default function (props: {
                                                 />
                                             </Group>
                                         );
-                                    } else if (e.type == StorableLayerType.rect) {
+                                    } else if (
+                                        e.type == StorableLayerType.rect
+                                    ) {
                                         return (
-                                            <Group key={e.nodeId} x={e.x} y={e.y}>
+                                            <Group
+                                                key={e.nodeId}
+                                                x={e.x}
+                                                y={e.y}
+                                            >
                                                 <CGRect
-                                                    key={e.nodeId} data={e.data as CGRectManifest}
+                                                    key={e.nodeId}
+                                                    data={
+                                                        e.data as CGRectManifest
+                                                    }
                                                 />
                                             </Group>
                                         );
@@ -122,39 +173,46 @@ export default function (props: {
                         </Layer>
                     </RecoilBridge>
                 </Stage>
-            </div >
+            </div>
         );
     } else {
         return <p>loading..</p>;
     }
+};
+
+export default CanvasStage;
+
+function StageBG(props: { width: number; height: number; fill: string }) {
+    return (
+        <Rect
+            width={props.width}
+            height={props.height}
+            fill={props.fill}
+        ></Rect>
+    );
 }
 
-function StageBG(props: {
-    width: number,
-    height: number,
-    fill: string
-}) {
-    return <Rect
-        width={props.width}
-        height={props.height}
-        fill={props.fill}
-    ></Rect>
-}
-
-function CGRect(props: {
-    data: CGRectManifest
-}) {
-    const fill = props.data.fill !== undefined ? convertReflectColorToUniversal(props.data.fill, ColorFormat.hex6) : undefined
-    const opacity = fetchColrOpacity(props.data.fill)
-    const borderRadius = props.data.borderRadius !== undefined ? convertBorderRadius(props.data.borderRadius) : undefined
-    const shadow = props.data.shadow
-    console.log('fill', fill)
+function CGRect(props: { data: CGRectManifest }) {
+    const fill =
+        props.data.fill !== undefined
+            ? convertReflectColorToUniversal(props.data.fill, ColorFormat.hex6)
+            : undefined;
+    const opacity = fetchColrOpacity(props.data.fill);
+    const borderRadius =
+        props.data.borderRadius !== undefined
+            ? convertBorderRadius(props.data.borderRadius)
+            : undefined;
+    const shadow = props.data.shadow;
+    console.log("fill", fill);
     return (
         // <SelectableLayer>
         <Rect
             opacit={opacity}
             fill={fill}
-            shadowColor={convertReflectColorToUniversal(shadow?.color, ColorFormat.hex6)}
+            shadowColor={convertReflectColorToUniversal(
+                shadow?.color,
+                ColorFormat.hex6
+            )}
             shadowOpacity={fetchColrOpacity(shadow?.color)}
             shadowBlur={shadow?.blurRadius}
             shadowOffset={convertOffsetToUniversal(shadow?.offset)}
@@ -163,7 +221,7 @@ function CGRect(props: {
             height={props.data.height}
         />
         // </SelectableLayer>
-    )
+    );
 }
 
 function StaticDesignImageDisplay(props: {
@@ -184,55 +242,50 @@ function StaticDesignImageDisplay(props: {
                 y={props.y}
             />
         </SelectableLayer>
-
     );
-};
+}
 
-
-let chachedEditingText: string | undefined // this must be contained inside atom value
+let chachedEditingText: string | undefined; // this must be contained inside atom value
 function EditableG11nText(props: {
     id: string;
-    locale: string
+    locale: string;
     selected: boolean;
     manifest: TextManifest;
-    overrideText?: string
+    overrideText?: string;
     width: number;
     height: number;
-    repository: DesignGlobalizationRepository
+    repository: DesignGlobalizationRepository;
     onFocusChange: (id: string, focus: boolean) => void;
 }) {
-
-    let defaulttext = props.manifest.text
-    const [translatedText, setTranslatedText] = useState<string>(defaulttext)
-
+    let defaulttext = props.manifest.text;
+    const [translatedText, setTranslatedText] = useState<string>(defaulttext);
 
     // useEffect(() => {
     // }, [])
     useEffect(() => {
+        props.repository
+            .fetchLocaleTranslation(props.id, props.locale)
+            .then((t) => {
+                if (t) {
+                    setTranslatedText(t);
+                }
+            });
+    }, [props.selected, props.locale]);
 
-        props.repository.fetchLocaleTranslation(props.id, props.locale).then((t) => {
-            if (t) {
-                setTranslatedText(t)
-            }
-        })
-
-    }, [props.selected, props.locale])
-
-
-    const [currentEditTextValue,] = useRecoilState(currentTextEditValueAtom)
-    let editingText: string | undefined
+    const [currentEditTextValue] = useRecoilState(currentTextEditValueAtom);
+    let editingText: string | undefined;
     if (props.selected) {
-        console.log('currentEditTextValue', currentEditTextValue)
+        console.log("currentEditTextValue", currentEditTextValue);
         // const currentEditTextValue = useRecoilValue(currentTextValueSelector)
         if (currentEditTextValue !== undefined) {
             if (currentEditTextValue !== chachedEditingText) {
-                editingText = currentEditTextValue
-                chachedEditingText = currentEditTextValue
+                editingText = currentEditTextValue;
+                chachedEditingText = currentEditTextValue;
             }
         }
     }
 
-    const displayText = editingText ?? translatedText ?? defaulttext
+    const displayText = editingText ?? translatedText ?? defaulttext;
 
     // const [translated, setTranslated] = useState<string>(text)
 
