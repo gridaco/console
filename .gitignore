@@ -3,6 +3,10 @@
 .vercel
 .next
 
+# You can remove .vscode someday if you happen to add settings related to the project,
+# that require all contributors to apply.
+.vscode
+
 # dependencies
 /node_modules
 /.pnp
