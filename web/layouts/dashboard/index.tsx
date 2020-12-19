@@ -22,4 +22,8 @@ const ContentWrapper = styled.div`
 
 const ContentPage = styled.div`
     flex: 1;
+    padding: 0 72px;
+    padding-top: 80px;
+    padding-bottom: 55px;
+    margin-left: 200px;
 `;

@@ -21,6 +21,11 @@ const Container = styled.header`
     align-items: center;
     justify-content: space-between;
     padding: 12px 24px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
 `;
 
 const LogoImage = styled.img`

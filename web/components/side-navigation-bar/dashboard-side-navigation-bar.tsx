@@ -30,4 +30,8 @@ const ListContainer = styled.div`
     background-color: white;
     width: 200px;
     border-right: 1px solid #efefef;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    padding-top: 80px;
 `;
