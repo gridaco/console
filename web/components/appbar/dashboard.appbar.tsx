@@ -5,16 +5,6 @@ import logoImage from "../../assets/brand/logo.png";
 
 export default function DashboardAppbar() {
     return (
-        // <div className={classes.root}>
-        //     <AppBar position="static">
-        //         <Toolbar>
-        //             <Typography variant="h6" className={classes.title}>
-        //                 console
-        //             </Typography>
-        //             <Button color="inherit">Run</Button>
-        //         </Toolbar>
-        //     </AppBar>
-        // </div>
         <Container>
             <LogoImage src={logoImage} />
             <Title>Overview</Title>
