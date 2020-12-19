@@ -9,6 +9,16 @@ export default function DashboardAppbar() {
             <LogoImage src={logoImage} />
             <Title>Overview</Title>
             <Toolbar>
+                <IconButton
+                    style={{
+                        marginRight: 17,
+                    }}
+                >
+                    <IconImage src="/assets/icons/mdi_ios_share.svg" />
+                </IconButton>
+                <IconButton>
+                    <IconImage src="/assets/icons/mdi_play_arrow.svg" />
+                </IconButton>
                 <ProfileImage src="/assets/examples/profile.png" />
             </Toolbar>
         </Container>
@@ -41,10 +51,34 @@ const Title = styled.span`
     letter-spacing: 0.3px;
 `;
 
-const Toolbar = styled.div``;
+const Toolbar = styled.div`
+    display: flex;
+    align-items: center;
+`;
+
+const IconButton = styled.button`
+    background: transparent;
+    border: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &:active,
+    &:focus {
+        outline: none;
+    }
+`;
+
+const IconImage = styled.img`
+    width: 24px;
+    height: 24px;
+`;
 
 const ProfileImage = styled.img`
     width: 32px;
     height: 32px;
     border-radius: 50%;
+    margin-left: 32px;
 `;
