@@ -1,45 +1,55 @@
-import React from 'react';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import React from "react";
+import { styled } from "@linaria/react";
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            width: '100%',
-            backgroundColor: theme.palette.background.paper,
-            position: 'fixed',
-            zIndex: 1,
-            top: 0,
-            left: 0,
-            right: 0,
-            overflowX: 'hidden',
-            flexGrow: 1,
-        },
-        menuButton: {
-            marginRight: theme.spacing(2),
-        },
-        title: {
-            flexGrow: 1,
-        },
-    }),
-);
+import logoImage from "../../assets/brand/logo.png";
 
 export default function DashboardAppbar() {
-    const classes = useStyles();
-
     return (
-        <div className={classes.root}>
-            <AppBar position="static">
-                <Toolbar>
-                    <Typography variant="h6" className={classes.title}>
-                        console
-          </Typography>
-                    <Button color="inherit">Run</Button>
-                </Toolbar>
-            </AppBar>
-        </div>
+        // <div className={classes.root}>
+        //     <AppBar position="static">
+        //         <Toolbar>
+        //             <Typography variant="h6" className={classes.title}>
+        //                 console
+        //             </Typography>
+        //             <Button color="inherit">Run</Button>
+        //         </Toolbar>
+        //     </AppBar>
+        // </div>
+        <Container>
+            <LogoImage src={logoImage} />
+            <Title>Overview</Title>
+            <Toolbar>
+                <ProfileImage src="/assets/examples/profile.png" />
+            </Toolbar>
+        </Container>
     );
 }
+
+const Container = styled.header`
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 24px;
+`;
+
+const LogoImage = styled.img`
+    width: 27.68px;
+    height: 28px;
+`;
+
+const Title = styled.span`
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 19px;
+    color: white;
+    letter-spacing: 0.3px;
+`;
+
+const Toolbar = styled.div``;
+
+const ProfileImage = styled.img`
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+`;
