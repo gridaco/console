@@ -39,6 +39,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
+    "@babel/plugin-transform-runtime": "^7.12.10",
     "@babel/preset-react": "^7.12.10",
     "@types/json-schema": "^7.0.6",
     "@types/next": "^9.0.0",

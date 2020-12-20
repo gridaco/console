@@ -1,92 +1,103 @@
-import React, { useState } from "react"
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles"
-import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
-import { Box } from "@material-ui/core";
-import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
+import React, { useState } from "react";
+import { ContextMenu, ContextMenuTrigger } from "react-contextmenu";
+import { styled } from "@linaria/react";
+
 import { SceneItemContextMenu } from "../context-menus";
 
-
 export interface ISceneItemDisplay {
-    name: string
-    description: string
-    lastEdit: string
-    preview: string
+    name: string;
+    description: string;
+    lastEdit: string;
+    preview: string;
 }
 
+interface ISceneItem {
+    id: string;
+    isSelected: boolean;
+    data: ISceneItemDisplay;
+    onSelected?: (id: string) => void;
+    onDoubleClick?: (id: string) => void;
+}
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            maxWidth: 360,
-            maxHeight: 800,
-            backgroundColor: theme.palette.background.paper,
-        },
-        preview: {
-            maxHeight: 500,
-            width: 'inherit',
-            objectFit: 'cover',
-        },
-        contentArea: {
-            boxSizing: 'border-box',
-            padding: 12
-        }
-    }),
-);
+export const SceneItem = ({
+    id,
+    isSelected,
+    data: { preview, name, description },
+    onSelected,
+    onDoubleClick,
+}: ISceneItem) => {
+    const [hover, setHover] = useState<boolean>(false);
 
+    const handleDoubleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+        onDoubleClick && onDoubleClick(id);
+    };
 
-export function SceneItem(props: {
-    id: string
-    selected: boolean
-    data: ISceneItemDisplay,
-    onSelected?: (id: string) => void,
-    onDoubleClick?: (id: string) => void
-}) {
-    const classes = useStyles();
-    const data = props.data;
-    const id = props.id
-    const [hover, setHover] = useState<boolean>(false)
+    const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+        onSelected && onSelected(id);
+    };
 
-    const handleDoubleClick = (e: any) => {
-        props.onDoubleClick && props.onDoubleClick(id)
-    }
+    const handleMouseEnter = () => setHover(true);
 
-    const handleClick = (e: any) => {
-        props.onSelected && props.onSelected(id)
-    }
-
-    const handleMouseEnter = (e: any) => {
-        setHover(true)
-    }
-    const handleMouseLeave = (e: any) => {
-        setHover(false)
-    }
+    const handleMouseLeave = () => setHover(false);
 
     return (
-        <div>
+        <Wrapper>
             <ContextMenuTrigger id={id}>
-                <div className={classes.root}
+                <ItemContainer
                     onClick={handleClick}
                     onDoubleClick={handleDoubleClick}
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                 >
-                    <Paper
-                        elevation={hover ? 3 : 0}
-                    >
-                        <Box
-                            className={classes.contentArea}
-                            border={props.selected ? 1 : 0}>
-                            <img className={classes.preview} src={data.preview}></img>
-                            <Typography variant="h6">{data.name}</Typography>
-                            <Typography variant="body2">{data.description}</Typography>
-                        </Box>
-                    </Paper>
-                </div >
+                    <PreviewImageWrapper>
+                        <PreviewImage
+                            src={preview}
+                            data-selected={isSelected && "true"}
+                        />
+                    </PreviewImageWrapper>
+                    <Name>{name}</Name>
+                </ItemContainer>
             </ContextMenuTrigger>
             <ContextMenu id={id}>
                 <SceneItemContextMenu />
             </ContextMenu>
-        </div>
-    )
-}
+        </Wrapper>
+    );
+};
+
+const Wrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+`;
+
+const ItemContainer = styled.div`
+    max-width: 360px;
+    max-height: 800px;
+    margin: 5px;
+`;
+
+const PreviewImageWrapper = styled.div`
+    border: 1px solid #e7e7e7;
+`;
+
+const PreviewImage = styled.img`
+    max-height: 500px;
+    display: flex;
+    width: inherit;
+    object-fit: cover;
+    background-color: #f5f5f5;
+
+    &[data-selected="true"] {
+        outline: 2px solid #2f80ed;
+    }
+`;
+
+const Name = styled.h6`
+    margin: 0;
+    margin-top: 12px;
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 1.2;
+`;

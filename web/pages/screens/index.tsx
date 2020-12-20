@@ -1,63 +1,55 @@
-import React, { useState } from "react"
-import { useRouter } from "next/router"
-import DashboardLayout from "../../layouts/dashboard"
-import { SceneItem } from "../../components/scene-item"
-import { makeStyles } from "@material-ui/core"
-import { Theme } from "@material-ui/core/styles"
-import { createStyles } from "@material-ui/core/styles"
-import Grid from "@material-ui/core/Grid"
-import SearchBox from "../../components/search/search-box"
+import React, { useState } from "react";
+import { useRouter } from "next/router";
+import { styled } from "@linaria/react";
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            flexGrow: 1,
-        },
-    }),
-);
+import DashboardLayout from "../../layouts/dashboard";
+import { SceneItem } from "../../components/scene-item";
+import SearchBox from "../../components/search/search-box";
 
 export default function ScreensPage() {
-    const classes = useStyles()
-    const router = useRouter()
-    const [focusedScreenId, setFocusedScreenId] = useState<string>()
-    const testsrc = "https://support.apple.com/library/content/dam/edam/applecare/images/en_US/iOS/ios14-iphone-11pro-edit-home-screen.jpg"
+    const router = useRouter();
+    const [focusedScreenId, setFocusedScreenId] = useState<string>();
     const data = {
-        name: 'screen1',
-        description: 'my first scene',
-        lastEdit: '2 days ago',
-        preview: testsrc
-    }
+        name: "screen1",
+        description: "my first scene",
+        lastEdit: "2 days ago",
+        preview: "/assets/examples/scene.png",
+    };
 
-    const datas = [data, data, data, data, data, data, data, data, data, data, data]
+    const datas = Array(12).fill(data);
 
     const handleSelection = (id: string) => {
-        setFocusedScreenId(id)
-    }
+        setFocusedScreenId(id);
+    };
 
     const handleDoubleClick = (id: string) => {
-        router.push(`/globalization/?scene=${id}`)
-    }
+        router.push(`/globalization/?scene=${id}`);
+    };
 
     return (
         <DashboardLayout>
-            <div>
-                <SearchBox />
-                <Grid container className={classes.root} spacing={2}>
-                    {
-                        datas.map((d, i) => {
-                            const id = i.toString()
-                            return <SceneItem
-                                key={id}
-                                id={id}
-                                onSelected={handleSelection}
-                                onDoubleClick={handleDoubleClick}
-                                selected={focusedScreenId === id}
-                                data={d} />
-                        })
-                    }
-                </Grid>
-            </div>
-
-        </DashboardLayout >
-    )
+            <SearchBox />
+            <Grid>
+                {datas.map((d, i) => {
+                    const id = i.toString();
+                    return (
+                        <SceneItem
+                            key={id}
+                            id={id}
+                            onSelected={handleSelection}
+                            onDoubleClick={handleDoubleClick}
+                            isSelected={focusedScreenId === id}
+                            data={d}
+                        />
+                    );
+                })}
+            </Grid>
+        </DashboardLayout>
+    );
 }
+
+const Grid = styled.div`
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(224px, 1fr));
+    grid-gap: 1.5rem;
+`;

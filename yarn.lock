@@ -761,7 +761,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.10.4"
 
-"@babel/plugin-transform-runtime@>=7":
+"@babel/plugin-transform-runtime@>=7", "@babel/plugin-transform-runtime@^7.12.10":
   version "7.12.10"
   resolved "https://registry.npmjs.org/@babel/plugin-transform-runtime/-/plugin-transform-runtime-7.12.10.tgz#af0fded4e846c4b37078e8e5d06deac6cd848562"
   integrity sha512-xOrUfzPxw7+WDm9igMgQCbO3cJKymX7dFdsgRr1eu9n3KjjyU4pptIXbXPseQDquw+W+RuJEJMHKHNsPNNm3CA==
