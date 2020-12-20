@@ -1,6 +1,7 @@
 import React from "react";
 import { styled } from "@linaria/react";
 
+import IconButton from "../../components/icon-button";
 import logoImage from "../../assets/brand/logo.png";
 
 export default function DashboardAppbar() {
@@ -54,21 +55,6 @@ const Title = styled.span`
 const Toolbar = styled.div`
     display: flex;
     align-items: center;
-`;
-
-const IconButton = styled.button`
-    background: transparent;
-    border: 0;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-
-    &:active,
-    &:focus {
-        outline: none;
-    }
 `;
 
 const IconImage = styled.img`
