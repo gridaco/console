@@ -88,6 +88,8 @@ const PreviewImage = styled.img`
     width: inherit;
     object-fit: cover;
     background-color: #f5f5f5;
+    user-select: none;
+    -webkit-user-drag: none;
 
     &[data-selected="true"] {
         outline: 2px solid #2f80ed;

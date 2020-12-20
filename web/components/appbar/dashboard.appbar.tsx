@@ -42,6 +42,8 @@ const Container = styled.header`
 const LogoImage = styled.img`
     width: 27.68px;
     height: 28px;
+    user-select: none;
+    -webkit-user-drag: none;
 `;
 
 const Title = styled.span`
@@ -60,6 +62,8 @@ const Toolbar = styled.div`
 const IconImage = styled.img`
     width: 24px;
     height: 24px;
+    user-select: none;
+    -webkit-user-drag: none;
 `;
 
 const ProfileImage = styled.img`
@@ -67,4 +71,6 @@ const ProfileImage = styled.img`
     height: 32px;
     border-radius: 50%;
     margin-left: 32px;
+    user-select: none;
+    -webkit-user-drag: none;
 `;
