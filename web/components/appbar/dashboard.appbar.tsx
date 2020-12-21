@@ -4,11 +4,15 @@ import { styled } from "@linaria/react";
 import IconButton from "../../components/icon-button";
 import logoImage from "../../assets/brand/logo.png";
 
-export default function DashboardAppbar() {
+export interface IDashboardAppBar {
+    title?: string;
+}
+
+export default function DashboardAppbar({ title }: IDashboardAppBar) {
     return (
         <Container>
             <LogoImage src={logoImage} />
-            <Title>Overview</Title>
+            {title && <Title>{title}</Title>}
             <Toolbar>
                 <IconButton
                     style={{

@@ -27,7 +27,7 @@ export default function ScreensPage() {
     };
 
     return (
-        <DashboardLayout>
+        <DashboardLayout title="Overview">
             <SearchBox />
             <Grid>
                 {datas.map((d, i) => {

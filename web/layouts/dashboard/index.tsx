@@ -1,16 +1,21 @@
 import React from "react";
 import { styled } from "@linaria/react";
-import DashboardAppbar from "../../components/appbar/dashboard.appbar";
+import DashboardAppbar, {
+    IDashboardAppBar,
+} from "../../components/appbar/dashboard.appbar";
 import { DashboardSideNavigationBar } from "../../components/side-navigation-bar/dashboard-side-navigation-bar";
 
-interface IDashboardLayout {
+interface IDashboardLayout extends IDashboardAppBar {
     children?: React.ReactNode;
 }
 
-export default function DashboardLayout({ children }: IDashboardLayout) {
+export default function DashboardLayout({
+    children,
+    ...dashboardProps
+}: IDashboardLayout) {
     return (
         <>
-            <DashboardAppbar />
+            <DashboardAppbar {...dashboardProps} />
             <ContentWrapper>
                 <DashboardSideNavigationBar />
                 <ContentPage>{children}</ContentPage>
@@ -24,7 +29,7 @@ const ContentWrapper = styled.div`
     flex: 1;
 `;
 
-const ContentPage = styled.div`
+const ContentPage = styled.main`
     flex: 1;
     padding: 0 72px;
     padding-top: 80px;
