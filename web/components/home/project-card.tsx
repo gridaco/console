@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { styled } from "@linaria/react";
 
 export interface IProjectCard {
@@ -9,13 +10,15 @@ export interface IProjectCard {
 
 const ProjectCard: React.FC<IProjectCard> = ({ title, preview, lastEdit }) => {
     return (
-        <Container>
-            <PreviewImage src={preview} />
-            <Information>
-                <Title>{title}</Title>
-                <LastEdit>{lastEdit}</LastEdit>
-            </Information>
-        </Container>
+        <Link href="/screens">
+            <Container>
+                <PreviewImage src={preview} />
+                <Information>
+                    <Title>{title}</Title>
+                    <LastEdit>{lastEdit}</LastEdit>
+                </Information>
+            </Container>
+        </Link>
     );
 };
 
@@ -26,6 +29,7 @@ const Container = styled.li`
     display: flex;
     flex-direction: column;
     box-shadow: 0px 4px 16px 2px rgba(157, 157, 157, 0.12);
+    cursor: pointer;
 `;
 
 const PreviewImage = styled.img`
@@ -34,6 +38,8 @@ const PreviewImage = styled.img`
     background-color: #f0f0f0;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
+    user-select: none;
+    -webkit-user-drag: none;
 `;
 
 const Information = styled.div`

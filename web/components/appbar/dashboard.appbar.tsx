@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { styled } from "@linaria/react";
 
 import IconButton from "../../components/icon-button";
@@ -11,7 +12,9 @@ export interface IDashboardAppBar {
 export default function DashboardAppbar({ title }: IDashboardAppBar) {
     return (
         <Container>
-            <LogoImage src={logoImage} />
+            <Link href="/">
+                <LogoImage src={logoImage} />
+            </Link>
             {title && <Title>{title}</Title>}
             <Toolbar>
                 <IconButton
@@ -48,6 +51,7 @@ const LogoImage = styled.img`
     height: 28px;
     user-select: none;
     -webkit-user-drag: none;
+    cursor: pointer;
 `;
 
 const Title = styled.span`
@@ -77,4 +81,5 @@ const ProfileImage = styled.img`
     margin-left: 32px;
     user-select: none;
     -webkit-user-drag: none;
+    cursor: pointer;
 `;
