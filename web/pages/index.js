@@ -1,18 +1,47 @@
-import React from "react"
-import Link from 'next/link'
+import React from "react";
+import { styled } from "@linaria/react";
 
-function Index(){
+import DashboardAppbar from "../components/appbar/dashboard.appbar";
+import Button from "../components/button";
+
+const Home = () => {
     return (
-        <ul>
-            <li>
-            <Link href="/globalization">globalization</Link>
-            </li>
-            <li>
-            <Link href="/screens">screens</Link>
-            </li>
-        </ul>
-    )
-}
+        <>
+            <DashboardAppbar />
+            <Wrapper>
+                <BannerWrapper>
+                    <BannerContainer>
+                        <CreateButton>Create New</CreateButton>
+                    </BannerContainer>
+                </BannerWrapper>
+            </Wrapper>
+        </>
+    );
+};
 
+export default Home;
 
-export default Index
+const Wrapper = styled.main`
+    flex: 1;
+    padding-top: 55px;
+    padding-bottom: 55px;
+`;
+
+const BannerWrapper = styled.div`
+    background-color: #f4f4f4;
+    width: 100%;
+    height: 32vh;
+    display: flex;
+`;
+
+const BannerContainer = styled.div`
+    width: 92%;
+    margin: 0 auto;
+    position: relative;
+`;
+
+const CreateButton = styled(Button)`
+    position: absolute;
+    bottom: -26px;
+    right: 0;
+`;
