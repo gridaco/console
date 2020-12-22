@@ -28,7 +28,11 @@ export default function ScreensPage() {
 
     return (
         <DashboardLayout title="Overview">
-            <SearchBox />
+            <SearchBox
+                style={{
+                    marginBottom: 24,
+                }}
+            />
             <Grid>
                 {datas.map((d, i) => {
                     const id = i.toString();

@@ -4,10 +4,12 @@ import { styled } from "@linaria/react";
 import IconButton from "../icon-button";
 
 interface ISearchBox {
+    style?: React.CSSProperties;
     placeholder?: string;
 }
 
 export default function SearchBox({
+    style,
     placeholder = "Search your stuff",
 }: ISearchBox) {
     const inputRef = useRef<HTMLInputElement>(null);
@@ -15,7 +17,7 @@ export default function SearchBox({
     const onClickInputWrapper = () => inputRef?.current?.focus();
 
     return (
-        <Form>
+        <Form style={style}>
             <InputWrapper onClick={onClickInputWrapper}>
                 <Input
                     ref={inputRef}
@@ -30,14 +32,12 @@ export default function SearchBox({
     );
 }
 
-const Form = styled.form`
-    margin-bottom: 24px;
-`;
+const Form = styled.form``;
 
 const InputWrapper = styled.div`
     background: #f4f4f4;
     border-radius: 8px;
-    padding: 10px 16px;
+    padding: 14px 16px;
     width: 400px;
     display: flex;
     align-items: center;
