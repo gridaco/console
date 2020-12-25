@@ -9,33 +9,30 @@ import { SceneLocalRepository, SceneRepositoryStore } from "../../repositories";
 import { DesignGlobalizationRepositoriesStore } from "@bridged.xyz/client-sdk/lib/g11n/repository";
 import { targetLayerSelector } from "../../states";
 
-
-type EditorMode = "translation" | "preview" | "prototype" | "*"
+type EditorMode = "translation" | "preview" | "prototype" | "*";
 interface EditorProps {
-  mode: EditorMode
-  projectId?: string
-  sceneId: string
+  mode: EditorMode;
+  projectId?: string;
+  sceneId: string;
 }
 
 function Editor(props: EditorProps) {
   const [isSelect, setIsSelect] = useRecoilState(editorState);
-  const targetLayer = useRecoilValue(targetLayerSelector)
+  const targetLayer = useRecoilValue(targetLayerSelector);
 
   const editorSwitch = (): boolean => {
-    return targetLayer !== undefined
+    return targetLayer !== undefined;
   };
 
-  const repository = DesignGlobalizationRepositoriesStore.find(props.sceneId)
+  const repository = DesignGlobalizationRepositoriesStore.find(props.sceneId);
 
   return (
     <>
       <Preview
-        onBackgroundClick={
-          (e) => {
-            console.log(e);
-            setIsSelect(false);
-          }
-        }
+        onBackgroundClick={(e) => {
+          console.log(e);
+          setIsSelect(false);
+        }}
         sceneRepository={SceneRepositoryStore.find(props.sceneId)}
       />
       <Resizable
@@ -53,11 +50,14 @@ function Editor(props: EditorProps) {
         minWidth="20%"
         minHeight="100vh"
       >
-        {editorSwitch() ? <SingleKeyEditor key={targetLayer.nodeId} repository={repository} /> : <SceneKeyEditor repository={repository} />}
+        {editorSwitch() ? (
+          <SingleKeyEditor key={targetLayer.nodeId} repository={repository} />
+        ) : (
+          <SceneKeyEditor repository={repository} />
+        )}
       </Resizable>
-
     </>
   );
-};
+}
 
 export default Editor;

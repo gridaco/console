@@ -4,67 +4,67 @@ import { styled } from "@linaria/react";
 import IconButton from "../icon-button";
 
 interface ISearchBox {
-    style?: React.CSSProperties;
-    placeholder?: string;
+  style?: React.CSSProperties;
+  placeholder?: string;
 }
 
 export default function SearchBox({
-    style,
-    placeholder = "Search your stuff",
+  style,
+  placeholder = "Search your stuff",
 }: ISearchBox) {
-    const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-    const onClickInputWrapper = () => inputRef?.current?.focus();
+  const onClickInputWrapper = () => inputRef?.current?.focus();
 
-    return (
-        <Form style={style}>
-            <InputWrapper onClick={onClickInputWrapper}>
-                <Input
-                    ref={inputRef}
-                    placeholder={placeholder}
-                    aria-label={placeholder}
-                />
-                <IconButton type="submit" aria-label="search">
-                    <IconImage src="/assets/icons/mdi_search.svg" />
-                </IconButton>
-            </InputWrapper>
-        </Form>
-    );
+  return (
+    <Form style={style}>
+      <InputWrapper onClick={onClickInputWrapper}>
+        <Input
+          ref={inputRef}
+          placeholder={placeholder}
+          aria-label={placeholder}
+        />
+        <IconButton type="submit" aria-label="search">
+          <IconImage src="/assets/icons/mdi_search.svg" />
+        </IconButton>
+      </InputWrapper>
+    </Form>
+  );
 }
 
 const Form = styled.form``;
 
 const InputWrapper = styled.div`
-    background: #f4f4f4;
-    border-radius: 8px;
-    padding: 14px 16px;
-    width: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  background: #f4f4f4;
+  border-radius: 8px;
+  padding: 14px 16px;
+  width: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const Input = styled.input`
-    border: 0;
-    background-color: transparent;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 1.14;
-    display: flex;
-    align-items: center;
-    flex: 1;
+  border: 0;
+  background-color: transparent;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.14;
+  display: flex;
+  align-items: center;
+  flex: 1;
 
-    &::placeholder {
-        color: #cbcbcb;
-    }
+  &::placeholder {
+    color: #cbcbcb;
+  }
 
-    &:active,
-    &:focus {
-        outline: 0;
-    }
+  &:active,
+  &:focus {
+    outline: 0;
+  }
 `;
 
 const IconImage = styled.img`
-    width: 24px;
-    height: 24px;
+  width: 24px;
+  height: 24px;
 `;

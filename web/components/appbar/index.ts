@@ -1,1 +1,1 @@
-export * from "./dashboard.appbar"
+export * from "./dashboard.appbar";

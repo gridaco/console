@@ -1,6 +1,6 @@
-import { atom } from "recoil"
+import { atom } from "recoil";
 
 export const currentEditorialLocaleAtom = atom({
-    key: "current-editorial-locale-atom",
-    default: "en"
-})
+  key: "current-editorial-locale-atom",
+  default: "en",
+});

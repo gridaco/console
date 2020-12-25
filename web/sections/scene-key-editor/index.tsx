@@ -1,40 +1,55 @@
 import React, { useEffect, useState } from "react";
-import { Typography, FormControl, Select, MenuItem, Box } from "@material-ui/core";
+import {
+  Typography,
+  FormControl,
+  Select,
+  MenuItem,
+  Box,
+} from "@material-ui/core";
 import EditableTextCard from "../../components/g11n/editable-text-card";
-import { currentEditorialLocaleAtom } from "../../states/editor-state"
+import { currentEditorialLocaleAtom } from "../../states/editor-state";
 import { useRecoilState } from "recoil";
-import { DesignGlobalizationRepository } from "@bridged.xyz/client-sdk/lib/g11n/repository"
+import { DesignGlobalizationRepository } from "@bridged.xyz/client-sdk/lib/g11n/repository";
 import { LayerTranslation } from "@bridged.xyz/client-sdk/lib/g11n";
 import { SceneRepositoryStore } from "../../repositories";
 
 const SceneKeyEditor = (props: {
-  repository: DesignGlobalizationRepository
+  repository: DesignGlobalizationRepository;
 }) => {
-  const { repository } = props
+  const { repository } = props;
 
-  const [translations, setTranslations] = useState<ReadonlyArray<LayerTranslation>>([])
+  const [translations, setTranslations] = useState<
+    ReadonlyArray<LayerTranslation>
+  >([]);
   const [locale, setLocale] = useRecoilState(currentEditorialLocaleAtom);
   const handleLocaleSelectChange = (e: any) => {
     setLocale(e.target.value as string);
   };
 
-  let sceneName = 'loading...'
+  let sceneName = "loading...";
   if (repository) {
-    sceneName = SceneRepositoryStore.find(repository.sceneId).scene.name ?? 'no-named scene'
+    sceneName =
+      SceneRepositoryStore.find(repository.sceneId).scene.name ??
+      "no-named scene";
   }
 
   useEffect(() => {
     let mounted = true;
-    console.log('fetching translations under scene', props.repository.sceneId)
-    repository.fetchTranslations().then((d) => {
-
-
-      console.log('fetched translations under scene', props.repository.sceneId, d)
-      setTranslations(d)
-    }).catch(e => {
-      console.error(e)
-    })
-  }, [])
+    console.log("fetching translations under scene", props.repository.sceneId);
+    repository
+      .fetchTranslations()
+      .then((d) => {
+        console.log(
+          "fetched translations under scene",
+          props.repository.sceneId,
+          d
+        );
+        setTranslations(d);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  }, []);
 
   return (
     <>
@@ -74,11 +89,9 @@ const SceneKeyEditor = (props: {
           </FormControl>
         </Box>
         <div>
-          {
-            translations.map((t) => {
-              return <EditableTextCard translation={t.translation} />
-            })
-          }
+          {translations.map((t) => {
+            return <EditableTextCard translation={t.translation} />;
+          })}
         </div>
       </div>
     </>
