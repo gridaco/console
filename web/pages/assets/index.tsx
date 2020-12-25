@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useQueryParam, StringParam, withDefault } from 'use-query-params';
 import { styled } from '@linaria/react';
 
@@ -6,6 +6,7 @@ import DashboardLayout from '../../layouts/dashboard';
 import Button from '../../components/button';
 import SearchBox from '../../components/search/search-box';
 import { AssetListItem } from '../../components/asset-item';
+import IconButton from '../../components/icon-button';
 
 const tabs = [
   { name: 'ALL', value: 'all' },
@@ -14,11 +15,22 @@ const tabs = [
   { name: 'Text', value: 'text' },
 ];
 
-export default function ScreensPage() {
+const exampleAssets = Array(7).fill({
+  title: 'Asset Name',
+  preview: '/assets/examples/project.png',
+});
+
+export default function AssetsPage() {
+  const [currentView, setCurrentView] = useQueryParam(
+    'view',
+    withDefault(StringParam, 'grid')
+  );
   const [currentTab, setCurrentTab] = useQueryParam(
     'tab',
     withDefault(StringParam, 'all')
   );
+
+  const isGridView = useMemo(() => currentView === 'grid', [currentView]);
 
   return (
     <DashboardLayout title="Overview">
@@ -38,13 +50,29 @@ export default function ScreensPage() {
             </TabItem>
           ))}
         </TabList>
+        <IconList>
+          <IconButton
+            onClick={() => setCurrentView('list')}
+            style={{ marginRight: 9 }}
+          >
+            <IconImage
+              src={`/assets/icons/${isGridView ? 'list' : 'list_view'}.svg`}
+            />
+          </IconButton>
+          <IconButton onClick={() => setCurrentView('grid')}>
+            <IconImage
+              src={`/assets/icons/${isGridView ? 'grid_view' : 'grid'}.svg`}
+            />
+          </IconButton>
+        </IconList>
       </TabBar>
-      <Grid>
-        <AssetListItem
-          title="Asset Name"
-          preview="/assets/examples/project.png"
-        />
-      </Grid>
+      {isGridView ? null : (
+        <List>
+          {exampleAssets.map(({ title, preview }) => (
+            <AssetListItem title={title} preview={preview} />
+          ))}
+        </List>
+      )}
     </DashboardLayout>
   );
 }
@@ -61,10 +89,15 @@ const Toolbar = styled.div`
   }
 `;
 
-const TabBar = styled.div``;
+const TabBar = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
 
 const TabList = styled.ul`
   display: flex;
+  align-items: center;
   list-style-type: none;
   padding: 0;
 `;
@@ -84,4 +117,29 @@ const TabItem = styled.li<ITabItem>`
   }
 `;
 
+const IconList = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const IconImage = styled.img`
+  width: 28px;
+  height: 28px;
+`;
+
 const Grid = styled.div``;
+
+const List = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+
+  & > div {
+    width: calc(50% - 8px);
+    margin-bottom: 16px;
+
+    &:nth-child(2n + 1) {
+      margin-right: auto;
+    }
+  }
+`;
