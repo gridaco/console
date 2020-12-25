@@ -1,16 +1,18 @@
-import React, { useRef } from "react";
-import { styled } from "@linaria/react";
+import React, { useRef } from 'react';
+import { styled } from '@linaria/react';
 
-import IconButton from "../icon-button";
+import IconButton from '../icon-button';
 
 interface ISearchBox {
   style?: React.CSSProperties;
+  inputStyle?: React.CSSProperties;
   placeholder?: string;
 }
 
 export default function SearchBox({
   style,
-  placeholder = "Search your stuff",
+  inputStyle,
+  placeholder = 'Search your stuff',
 }: ISearchBox) {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -18,7 +20,7 @@ export default function SearchBox({
 
   return (
     <Form style={style}>
-      <InputWrapper onClick={onClickInputWrapper}>
+      <InputWrapper style={inputStyle} onClick={onClickInputWrapper}>
         <Input
           ref={inputRef}
           placeholder={placeholder}
