@@ -1,4 +1,5 @@
 import React from 'react';
+import { useQueryParam, StringParam, withDefault } from 'use-query-params';
 import { styled } from '@linaria/react';
 
 import DashboardLayout from '../../layouts/dashboard';
@@ -6,13 +7,18 @@ import Button from '../../components/button';
 import SearchBox from '../../components/search/search-box';
 
 const tabs = [
-  { name: 'ALL' },
-  { name: 'Illustrations' },
-  { name: 'Images' },
-  { name: 'Text' },
+  { name: 'ALL', value: 'all' },
+  { name: 'Illustrations', value: 'illustrations' },
+  { name: 'Images', value: 'images' },
+  { name: 'Text', value: 'text' },
 ];
 
 export default function ScreensPage() {
+  const [currentTab, setCurrentTab] = useQueryParam(
+    'tab',
+    withDefault(StringParam, 'all')
+  );
+
   return (
     <DashboardLayout title="Overview">
       <Toolbar>
@@ -21,8 +27,10 @@ export default function ScreensPage() {
       </Toolbar>
       <TabBar>
         <TabList>
-          {tabs.map(({ name }) => (
-            <TabItem key={name}>{name}</TabItem>
+          {tabs.map(({ name, value }) => (
+            <TabItem key={value} onClick={() => setCurrentTab(value)}>
+              {name}
+            </TabItem>
           ))}
         </TabList>
       </TabBar>
@@ -55,6 +63,7 @@ const TabItem = styled.li`
   font-size: 16px;
   line-height: 1.2;
   color: #9a9a9a;
+  cursor: pointer;
 
   &:first-child {
     color: black;

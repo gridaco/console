@@ -24,6 +24,7 @@
     "next": "10.0.3",
     "next-transpile-modules": "^6.0.0",
     "p5": "^1.1.9",
+    "query-string": "^6.13.7",
     "re-resizable": "^6.9.0",
     "react": "17.0.1",
     "react-contextmenu": "^2.14.0",
@@ -35,7 +36,8 @@
     "react-use-gesture": "^8.0.1",
     "recoil": "^0.1.2",
     "sass": "^1.30.0",
-    "use-image": "^1.0.6"
+    "use-image": "^1.0.6",
+    "use-query-params": "^1.1.9"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",

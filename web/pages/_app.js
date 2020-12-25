@@ -3,6 +3,8 @@ import { RecoilRoot } from 'recoil';
 import { JssProvider } from 'react-jss';
 import { createGenerateClassName } from '@material-ui/core/styles';
 
+import QueryParamProvider from '../components/query-param-provider';
+
 import '../styles/globals.css';
 
 const generateClassName = createGenerateClassName({
@@ -14,7 +16,9 @@ function MyApp({ Component, pageProps }) {
   return (
     <JssProvider generateClassName={generateClassName}>
       <RecoilRoot>
-        <Component {...pageProps} />
+        <QueryParamProvider>
+          <Component {...pageProps} />
+        </QueryParamProvider>
       </RecoilRoot>
     </JssProvider>
   );
