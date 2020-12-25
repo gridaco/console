@@ -1,18 +1,18 @@
-import React from "react";
-import Head from "next/head";
-import Editor from "../../sections/editor";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { SceneLocalRepository, SceneRepositoryStore } from "../../repositories";
-import { StorableScene } from "@bridged.xyz/client-sdk/lib";
-import { SceneStoreService } from "@bridged.xyz/client-sdk/lib";
-import ErrorPage from "next/error";
-import { useRecoilState } from "recoil";
-import { targetSceneIdAtom } from "../../states/preview-canvas.state";
+import React from 'react';
+import Head from 'next/head';
+import Editor from '../../sections/editor';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { SceneLocalRepository, SceneRepositoryStore } from '../../repositories';
+import { StorableScene } from '@bridged.xyz/client-sdk/lib';
+import { SceneStoreService } from '@bridged.xyz/client-sdk/lib';
+import ErrorPage from 'next/error';
+import { useRecoilState } from 'recoil';
+import { targetSceneIdAtom } from '../../states/preview-canvas.state';
 import {
   DesignGlobalizationRepository,
   DesignGlobalizationRepositoriesStore,
-} from "@bridged.xyz/client-sdk/lib/g11n/repository";
+} from '@bridged.xyz/client-sdk/lib/g11n/repository';
 
 export default function Home() {
   const router = useRouter();
@@ -30,14 +30,14 @@ export default function Home() {
 
   useEffect(() => {
     if (sceneId && !sceneRepository) {
-      console.log("fetching scene data");
-      const service = new SceneStoreService("temp", "");
+      console.log('fetching scene data');
+      const service = new SceneStoreService('temp', '');
       service.fetchScene(sceneId).then((response) => {
-        console.log("response", response);
+        console.log('response', response);
         const scene = response.data.data as StorableScene;
         const sceneRepository = SceneRepositoryStore.make(scene);
         const desingGlobalizationRepository = DesignGlobalizationRepositoriesStore.make(
-          "temp",
+          'temp',
           scene.id!
         );
         setTargetSceneId(sceneRepository.id);

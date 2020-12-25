@@ -1,19 +1,19 @@
-import React, { useState } from "react";
-import { useRouter } from "next/router";
-import { styled } from "@linaria/react";
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+import { styled } from '@linaria/react';
 
-import DashboardLayout from "../../layouts/dashboard";
-import { SceneItem } from "../../components/scene-item";
-import SearchBox from "../../components/search/search-box";
+import DashboardLayout from '../../layouts/dashboard';
+import { SceneItem } from '../../components/scene-item';
+import SearchBox from '../../components/search/search-box';
 
 export default function ScreensPage() {
   const router = useRouter();
   const [focusedScreenId, setFocusedScreenId] = useState<string>();
   const data = {
-    name: "screen1",
-    description: "my first scene",
-    lastEdit: "2 days ago",
-    preview: "/assets/examples/scene.png",
+    name: 'screen1',
+    description: 'my first scene',
+    lastEdit: '2 days ago',
+    preview: '/assets/examples/scene.png',
   };
 
   const datas = Array(12).fill(data);

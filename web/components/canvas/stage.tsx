@@ -1,32 +1,32 @@
-import React, { useEffect, useState } from "react";
-import { Stage, Layer, Text, Image, Group, Rect } from "react-konva";
-import useImage from "use-image";
-import { StorableLayerType } from "@bridged.xyz/client-sdk/lib";
-import { CGRectManifest, TextManifest } from "@reflect.bridged.xyz/core/lib";
+import React, { useEffect, useState } from 'react';
+import { Stage, Layer, Text, Image, Group, Rect } from 'react-konva';
+import useImage from 'use-image';
+import { StorableLayerType } from '@bridged.xyz/client-sdk/lib';
+import { CGRectManifest, TextManifest } from '@reflect.bridged.xyz/core/lib';
 import {
   currentTextEditValueAtom,
   editorState,
-} from "../../states/text-editor.state";
-import { targetLayerIdAtom } from "../../states/preview-canvas.state";
+} from '../../states/text-editor.state';
+import { targetLayerIdAtom } from '../../states/preview-canvas.state';
 import {
   useRecoilBridgeAcrossReactRoots_UNSTABLE,
   useRecoilState,
   useRecoilValue,
-} from "recoil";
-import { SelectableLayer } from "../../components/canvas/selectable-layer";
-import { SceneLocalRepository } from "../../repositories";
+} from 'recoil';
+import { SelectableLayer } from '../../components/canvas/selectable-layer';
+import { SceneLocalRepository } from '../../repositories';
 import {
   convertReflectColorToUniversal,
   fetchColrOpacity,
-} from "@reflect.bridged.xyz/core/lib/converters/color.convert";
-import { convertBorderRadius } from "@reflect.bridged.xyz/core/lib/converters/border-radius.convert";
-import { convertOffsetToUniversal } from "@reflect.bridged.xyz/core/lib/converters/offset.convert";
-import { ColorFormat } from "@reflect.bridged.xyz/core/lib/color";
+} from '@reflect.bridged.xyz/core/lib/converters/color.convert';
+import { convertBorderRadius } from '@reflect.bridged.xyz/core/lib/converters/border-radius.convert';
+import { convertOffsetToUniversal } from '@reflect.bridged.xyz/core/lib/converters/offset.convert';
+import { ColorFormat } from '@reflect.bridged.xyz/core/lib/color';
 import {
   DesignGlobalizationRepositoriesStore,
   DesignGlobalizationRepository,
-} from "@bridged.xyz/client-sdk/lib/g11n/repository";
-import { currentEditorialLocaleAtom } from "../../states/editor-state";
+} from '@bridged.xyz/client-sdk/lib/g11n/repository';
+import { currentEditorialLocaleAtom } from '../../states/editor-state';
 
 const CanvasStage = (props: { sceneRepository?: SceneLocalRepository }) => {
   const { sceneRepository } = props;
@@ -46,22 +46,22 @@ const CanvasStage = (props: { sceneRepository?: SceneLocalRepository }) => {
   // https://github.com/konvajs/react-konva/issues/533
   const RecoilBridge = useRecoilBridgeAcrossReactRoots_UNSTABLE();
 
-  if (scene && typeof window !== "undefined") {
-    console.log("sceneRepository", sceneRepository);
-    console.log("layers", scene.layers);
+  if (scene && typeof window !== 'undefined') {
+    console.log('sceneRepository', sceneRepository);
+    console.log('layers', scene.layers);
     return (
       <div
         style={{
-          margin: "auto",
-          position: "relative",
+          margin: 'auto',
+          position: 'relative',
           width: scene.width,
           paddingTop: 56,
         }}
       >
         <Stage
           style={{
-            position: "relative",
-            margin: "auto",
+            position: 'relative',
+            margin: 'auto',
           }}
           width={scene.width}
           height={scene.height}
@@ -88,7 +88,7 @@ const CanvasStage = (props: { sceneRepository?: SceneLocalRepository }) => {
                 .map((e) => {
                   console.log(e);
                   if (e.type == StorableLayerType.text) {
-                    console.log("text layer", e);
+                    console.log('text layer', e);
                     return (
                       <Group key={e.nodeId} x={e.x} y={e.y}>
                         <EditableG11nText
@@ -101,7 +101,7 @@ const CanvasStage = (props: { sceneRepository?: SceneLocalRepository }) => {
                           width={e.width}
                           height={e.height}
                           onFocusChange={(id: string, focus: boolean) => {
-                            console.log("focus change", id);
+                            console.log('focus change', id);
                             if (focus) {
                               setSelectionLayerId(id);
                               setIsSelect(true);
@@ -160,7 +160,7 @@ function CGRect(props: { data: CGRectManifest }) {
       ? convertBorderRadius(props.data.borderRadius)
       : undefined;
   const shadow = props.data.shadow;
-  console.log("fill", fill);
+  console.log('fill', fill);
   return (
     // <SelectableLayer>
     <Rect
@@ -232,7 +232,7 @@ function EditableG11nText(props: {
   const [currentEditTextValue] = useRecoilState(currentTextEditValueAtom);
   let editingText: string | undefined;
   if (props.selected) {
-    console.log("currentEditTextValue", currentEditTextValue);
+    console.log('currentEditTextValue', currentEditTextValue);
     // const currentEditTextValue = useRecoilValue(currentTextValueSelector)
     if (currentEditTextValue !== undefined) {
       if (currentEditTextValue !== chachedEditingText) {

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Group, Rect } from "react-konva";
+import React, { useState } from 'react';
+import { Group, Rect } from 'react-konva';
 
 export function SelectableLayer(props: {
   children: JSX.Element;
@@ -44,14 +44,14 @@ export function SelectableLayer(props: {
       <Rect
         width={props.width}
         height={props.height}
-        stroke={"#FF2B5E"}
+        stroke={'#FF2B5E'}
         strokeWidth={props.selected ? 2 : 0}
       />
       {/* hover indicator */}
       <Rect
         width={props.width}
         height={props.height}
-        stroke={"#5900B2"}
+        stroke={'#5900B2'}
         strokeWidth={hover ? 1 : 0}
       />
       {props.children}

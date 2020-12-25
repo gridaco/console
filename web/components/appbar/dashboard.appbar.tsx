@@ -1,9 +1,9 @@
-import React from "react";
-import Link from "next/link";
-import { styled } from "@linaria/react";
+import React from 'react';
+import Link from 'next/link';
+import { styled } from '@linaria/react';
 
-import IconButton from "../../components/icon-button";
-import logoImage from "../../assets/brand/logo.png";
+import IconButton from '../../components/icon-button';
+import logoImage from '../../assets/brand/logo.png';
 
 export interface IDashboardAppBar {
   title?: string;

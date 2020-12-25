@@ -1,4 +1,4 @@
-import { StorableLayer, StorableScene } from "@bridged.xyz/client-sdk/lib";
+import { StorableLayer, StorableScene } from '@bridged.xyz/client-sdk/lib';
 
 // NOT USING
 export class SceneRepositoryStore {
@@ -11,7 +11,7 @@ export class SceneRepositoryStore {
   static make(scene: StorableScene) {
     const newRepository = new SceneLocalRepository(scene);
     this.repositories.push(newRepository);
-    console.log("made sceneRepository", newRepository);
+    console.log('made sceneRepository', newRepository);
     return newRepository;
   }
 }

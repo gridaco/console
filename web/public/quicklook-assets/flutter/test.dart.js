@@ -1,32 +1,32 @@
-var testKey = "__TESTRESULT__ ";
+var testKey = '__TESTRESULT__ ';
 
 function dartPrint(message) {
   if (message.startsWith(testKey)) {
     var resultMsg = JSON.parse(message.substring(testKey.length));
-    resultMsg.sender = "frame";
-    resultMsg.type = "testResult";
-    parent.postMessage(resultMsg, "*");
+    resultMsg.sender = 'frame';
+    resultMsg.type = 'testResult';
+    parent.postMessage(resultMsg, '*');
   } else {
     parent.postMessage(
-      { sender: "frame", type: "stdout", message: message.toString() },
-      "*"
+      { sender: 'frame', type: 'stdout', message: message.toString() },
+      '*'
     );
   }
 }
 // Unload previous version.
-require.undef("dartpad_main");
+require.undef('dartpad_main');
 
 var _thrownDartMainRunner = false;
 
 window.onerror = function (message, url, lineNumber, colno, error) {
   if (!_thrownDartMainRunner) {
-    var errorMessage = "";
+    var errorMessage = '';
     if (error != null) {
-      errorMessage = "Error: " + error;
+      errorMessage = 'Error: ' + error;
     }
     parent.postMessage(
-      { sender: "frame", type: "stderr", message: message + errorMessage },
-      "*"
+      { sender: 'frame', type: 'stderr', message: message + errorMessage },
+      '*'
     );
   }
   _thrownDartMainRunner = false;
@@ -34,15 +34,15 @@ window.onerror = function (message, url, lineNumber, colno, error) {
 
 require.config({
   baseUrl:
-    "https://storage.googleapis.com/compilation_artifacts/2.11.0-213.1.beta/",
+    'https://storage.googleapis.com/compilation_artifacts/2.11.0-213.1.beta/',
   waitSeconds: 60,
 });
 
-define("dartpad_main", ["dart_sdk", "flutter_web"], function load__dartpad_main(
+define('dartpad_main', ['dart_sdk', 'flutter_web'], function load__dartpad_main(
   dart_sdk,
   flutter_web
 ) {
-  "use strict";
+  'use strict';
   const core = dart_sdk.core;
   const ui = dart_sdk.ui;
   const async = dart_sdk.async;
@@ -86,14 +86,14 @@ define("dartpad_main", ["dart_sdk", "flutter_web"], function load__dartpad_main(
   var doubleLToNullN = () =>
     (doubleLToNullN = dart.constFn(dart.fnType(core.Null, [doubleL()])))();
   const CT = Object.create(null);
-  var L0 = "file:///tmp/dartpadCSJXKZ/main.dart";
+  var L0 = 'file:///tmp/dartpadCSJXKZ/main.dart';
   bootstrap.main = function main$() {
     return async.async(dart.void, function* main$() {
       yield ui.webOnlyInitializePlatform();
       main.main();
     });
   };
-  var seeds$ = dart.privateName(main, "SunflowerPainter.seeds");
+  var seeds$ = dart.privateName(main, 'SunflowerPainter.seeds');
   main.SunflowerPainter = class SunflowerPainter extends custom_paint.CustomPainter {
     get seeds() {
       return this[seeds$];
@@ -223,7 +223,7 @@ define("dartpad_main", ["dart_sdk", "flutter_web"], function load__dartpad_main(
         }),
         home: new scaffold.Scaffold.new({
           appBar: new app_bar.AppBar.new({
-            title: new text.Text.new("Sunflower"),
+            title: new text.Text.new('Sunflower'),
           }),
           drawer: new drawer.Drawer.new({
             child: new scroll_view.ListView.new({
@@ -231,7 +231,7 @@ define("dartpad_main", ["dart_sdk", "flutter_web"], function load__dartpad_main(
                 new drawer_header.DrawerHeader.new({
                   child: new basic.Center.new({
                     child: new container.Container.new({
-                      child: new text.Text.new("Sunflower 🌻", {
+                      child: new text.Text.new('Sunflower 🌻', {
                         style: new text_style.TextStyle.new({ fontSize: 32.0 }),
                       }),
                     }),
@@ -266,7 +266,7 @@ define("dartpad_main", ["dart_sdk", "flutter_web"], function load__dartpad_main(
                   }),
                 }),
                 new text.Text.new(
-                  "Showing " + dart.str(this.seedCount) + " seeds"
+                  'Showing ' + dart.str(this.seedCount) + ' seeds'
                 ),
                 new basic.ConstrainedBox.new({
                   constraints: new box.BoxConstraints.tightFor({
@@ -329,10 +329,10 @@ define("dartpad_main", ["dart_sdk", "flutter_web"], function load__dartpad_main(
     true
   );
   dart.trackLibraries(
-    "dartpad_main",
+    'dartpad_main',
     {
-      "file:///tmp/dartpadCSJXKZ/bootstrap.dart": bootstrap,
-      "file:///tmp/dartpadCSJXKZ/main.dart": main,
+      'file:///tmp/dartpadCSJXKZ/bootstrap.dart': bootstrap,
+      'file:///tmp/dartpadCSJXKZ/main.dart': main,
     },
     {},
     null
@@ -346,13 +346,13 @@ define("dartpad_main", ["dart_sdk", "flutter_web"], function load__dartpad_main(
 
 //# sourceMappingURL=main.dart.js.map
 
-require(["dart_sdk"], function (sdk) {
-  "use strict";
+require(['dart_sdk'], function (sdk) {
+  'use strict';
   sdk.developer._extensions.clear();
   sdk.dart.hotRestart();
 });
 
-require(["dartpad_main", "dart_sdk"], function (dartpad_main, dart_sdk) {
+require(['dartpad_main', 'dart_sdk'], function (dartpad_main, dart_sdk) {
   // SDK initialization.
   dart_sdk.dart.setStartAsyncSynchronously(true);
   dart_sdk._isolate_helper.startRootIsolate(() => {}, []);
@@ -377,7 +377,7 @@ require(["dartpad_main", "dart_sdk"], function (dartpad_main, dart_sdk) {
   // (presumably) calls runApp and starts Flutter's rendering.
 
   for (var prop in dartpad_main) {
-    if (prop.endsWith("__bootstrap")) {
+    if (prop.endsWith('__bootstrap')) {
       dartpad_main[prop].main();
     }
   }

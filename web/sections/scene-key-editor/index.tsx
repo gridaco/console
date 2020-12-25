@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   Typography,
   FormControl,
   Select,
   MenuItem,
   Box,
-} from "@material-ui/core";
-import EditableTextCard from "../../components/g11n/editable-text-card";
-import { currentEditorialLocaleAtom } from "../../states/editor-state";
-import { useRecoilState } from "recoil";
-import { DesignGlobalizationRepository } from "@bridged.xyz/client-sdk/lib/g11n/repository";
-import { LayerTranslation } from "@bridged.xyz/client-sdk/lib/g11n";
-import { SceneRepositoryStore } from "../../repositories";
+} from '@material-ui/core';
+import EditableTextCard from '../../components/g11n/editable-text-card';
+import { currentEditorialLocaleAtom } from '../../states/editor-state';
+import { useRecoilState } from 'recoil';
+import { DesignGlobalizationRepository } from '@bridged.xyz/client-sdk/lib/g11n/repository';
+import { LayerTranslation } from '@bridged.xyz/client-sdk/lib/g11n';
+import { SceneRepositoryStore } from '../../repositories';
 
 const SceneKeyEditor = (props: {
   repository: DesignGlobalizationRepository;
@@ -26,21 +26,21 @@ const SceneKeyEditor = (props: {
     setLocale(e.target.value as string);
   };
 
-  let sceneName = "loading...";
+  let sceneName = 'loading...';
   if (repository) {
     sceneName =
       SceneRepositoryStore.find(repository.sceneId).scene.name ??
-      "no-named scene";
+      'no-named scene';
   }
 
   useEffect(() => {
     let mounted = true;
-    console.log("fetching translations under scene", props.repository.sceneId);
+    console.log('fetching translations under scene', props.repository.sceneId);
     repository
       .fetchTranslations()
       .then((d) => {
         console.log(
-          "fetched translations under scene",
+          'fetched translations under scene',
           props.repository.sceneId,
           d
         );
@@ -64,7 +64,7 @@ const SceneKeyEditor = (props: {
           <Typography
             variant="subtitle1"
             align="left"
-            style={{ float: "left" }}
+            style={{ float: 'left' }}
           >
             {translations.length} keys
           </Typography>

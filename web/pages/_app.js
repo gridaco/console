@@ -1,13 +1,13 @@
-import React from "react";
-import { RecoilRoot } from "recoil";
-import { JssProvider } from "react-jss";
-import { createGenerateClassName } from "@material-ui/core/styles";
+import React from 'react';
+import { RecoilRoot } from 'recoil';
+import { JssProvider } from 'react-jss';
+import { createGenerateClassName } from '@material-ui/core/styles';
 
-import "../styles/globals.css";
+import '../styles/globals.css';
 
 const generateClassName = createGenerateClassName({
   dangerouslyUseGlobalCSS: true,
-  productionPrefix: "c",
+  productionPrefix: 'c',
 });
 
 function MyApp({ Component, pageProps }) {

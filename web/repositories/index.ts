@@ -1,1 +1,1 @@
-export * from "./scene.repository";
+export * from './scene.repository';

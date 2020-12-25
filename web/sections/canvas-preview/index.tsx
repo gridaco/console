@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { CanvasBackground } from "../../components/canvas/background";
-import CanvasStage from "../../components/canvas/stage";
-import { usePinch } from "react-use-gesture";
-import { motion } from "framer-motion";
-import { SceneLocalRepository } from "../../repositories";
-import { CanvasLocaleSelect } from "../../components/canvas/locale-select";
+import React, { useState } from 'react';
+import { CanvasBackground } from '../../components/canvas/background';
+import CanvasStage from '../../components/canvas/stage';
+import { usePinch } from 'react-use-gesture';
+import { motion } from 'framer-motion';
+import { SceneLocalRepository } from '../../repositories';
+import { CanvasLocaleSelect } from '../../components/canvas/locale-select';
 
 export default function CanvasPreview(props: {
   onBackgroundClick: (e: any) => void;
@@ -24,17 +24,17 @@ export default function CanvasPreview(props: {
     <div
       {...bind()}
       style={{
-        width: "50%",
-        float: "left",
-        height: "100vh",
-        overflow: "scroll",
+        width: '50%',
+        float: 'left',
+        height: '100vh',
+        overflow: 'scroll',
       }}
     >
       <CanvasBackground onClick={props.onBackgroundClick} />
       {/* <motion.div animate={{ zoom: zoom }}> */}
       <div
         style={{
-          margin: "auto",
+          margin: 'auto',
         }}
       >
         <CanvasStage sceneRepository={props.sceneRepository} />

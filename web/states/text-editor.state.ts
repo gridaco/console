@@ -1,12 +1,12 @@
-import React from "react";
-import { atom, selector } from "recoil";
-import { targetLayerIdAtom } from "./preview-canvas.state";
+import React from 'react';
+import { atom, selector } from 'recoil';
+import { targetLayerIdAtom } from './preview-canvas.state';
 
 /**
  * the very current value of focused edit text value. this is mostly used for displaying preview value on the canvas.
  */
 export const currentTextEditValueAtom = atom<string>({
-  key: "current-text-edit-value-store",
+  key: 'current-text-edit-value-store',
   default: undefined!,
 });
 
@@ -24,55 +24,55 @@ export const currentTextEditValueAtom = atom<string>({
 // })
 
 export const editorState = atom({
-  key: "editorState",
+  key: 'editorState',
   default: false,
 });
 
 export const previewLang = atom({
-  key: "previewLang",
-  default: "en",
+  key: 'previewLang',
+  default: 'en',
 });
 
 export const dummyData = atom({
-  key: "dummyData",
+  key: 'dummyData',
   default: [
     {
-      key: "a/a",
-      value: "call now1",
+      key: 'a/a',
+      value: 'call now1',
     },
     {
-      key: "a/b",
-      value: "call now2",
+      key: 'a/b',
+      value: 'call now2',
     },
     {
-      key: "a/c",
-      value: "call now3",
+      key: 'a/c',
+      value: 'call now3',
     },
     {
-      key: "a/d",
-      value: "call now4",
+      key: 'a/d',
+      value: 'call now4',
     },
     {
-      key: "a/e",
-      value: "call now5",
+      key: 'a/e',
+      value: 'call now5',
     },
   ],
 });
 
 export const langColumns = atom({
-  key: "langColumns",
+  key: 'langColumns',
   default: [
     {
-      type: "en",
-      value: "Call Now",
+      type: 'en',
+      value: 'Call Now',
     },
     {
-      type: "ko",
-      value: "지금 전화하세요",
+      type: 'ko',
+      value: '지금 전화하세요',
     },
     {
-      type: "jp",
-      value: "今すぐお電話ください",
+      type: 'jp',
+      value: '今すぐお電話ください',
     },
   ],
 });

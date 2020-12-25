@@ -1,32 +1,32 @@
-import { RawAsset } from "@bridged.xyz/client-sdk/lib/assets";
+import { RawAsset } from '@bridged.xyz/client-sdk/lib/assets';
 import {
   GlobalizedKey,
   IGlobalizedKey,
-} from "@bridged.xyz/client-sdk/lib/g11n";
-import { Grid } from "@material-ui/core";
-import Accordion from "@material-ui/core/Accordion";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
-import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
-import React from "react";
-import { useRecoilState } from "recoil";
-import { currentEditorialLocaleAtom } from "../../states/editor-state";
-import { TranslationFieldRow } from "./translation-field";
+} from '@bridged.xyz/client-sdk/lib/g11n';
+import { Grid } from '@material-ui/core';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+import React from 'react';
+import { useRecoilState } from 'recoil';
+import { currentEditorialLocaleAtom } from '../../states/editor-state';
+import { TranslationFieldRow } from './translation-field';
 
 export default function (props: { translation: IGlobalizedKey }) {
   const { translation } = props;
   const [editorialLoclae] = useRecoilState(currentEditorialLocaleAtom);
   const defaultLocaleTranslationValue =
     (translation.translations as any)[editorialLoclae]?.value ??
-    "no translation";
+    'no translation';
 
   const handleOnTranslationValueChange = (locale: string, value: string) => {
-    console.log("handleOnTranslationValueChange", locale, value);
+    console.log('handleOnTranslationValueChange', locale, value);
   };
 
   return (
-    <Accordion style={{ padding: "20px" }}>
+    <Accordion style={{ padding: '20px' }}>
       <AccordionSummary aria-controls="panel2a-content" id="panel2a-header">
         <Grid container>
           <Grid item xs>
@@ -39,10 +39,10 @@ export default function (props: { translation: IGlobalizedKey }) {
           <Grid item xs={1}>
             <Box
               p={1}
-              color={"#62D066"}
+              color={'#62D066'}
               style={{
                 borderRadius: 4,
-                backgroundColor: "#DDFFDE",
+                backgroundColor: '#DDFFDE',
               }}
             >
               <Typography align="center">3/3</Typography>

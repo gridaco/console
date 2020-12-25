@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { ContextMenu, ContextMenuTrigger } from "react-contextmenu";
-import { styled } from "@linaria/react";
+import React, { useState } from 'react';
+import { ContextMenu, ContextMenuTrigger } from 'react-contextmenu';
+import { styled } from '@linaria/react';
 
-import { SceneItemContextMenu } from "../context-menus";
+import { SceneItemContextMenu } from '../context-menus';
 
 export interface ISceneItemDisplay {
   name: string;
@@ -50,7 +50,7 @@ export const SceneItem = ({
           onMouseLeave={handleMouseLeave}
         >
           <PreviewImageWrapper>
-            <PreviewImage src={preview} data-selected={isSelected && "true"} />
+            <PreviewImage src={preview} data-selected={isSelected && 'true'} />
           </PreviewImageWrapper>
           <Name>{name}</Name>
         </ItemContainer>
@@ -89,7 +89,7 @@ const PreviewImage = styled.img`
   user-select: none;
   -webkit-user-drag: none;
 
-  &[data-selected="true"] {
+  &[data-selected='true'] {
     outline: 2px solid #2f80ed;
   }
 `;

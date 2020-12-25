@@ -1,14 +1,14 @@
-import React from "react";
-import { styled } from "@linaria/react";
+import React from 'react';
+import { styled } from '@linaria/react';
 
-import DashboardAppbar from "../components/appbar/dashboard.appbar";
-import ProjectCard from "../components/home/project-card";
-import Button from "../components/button";
+import DashboardAppbar from '../components/appbar/dashboard.appbar';
+import ProjectCard from '../components/home/project-card';
+import Button from '../components/button';
 
 const exampleProjects = Array(6).fill({
-  title: "My New Project",
-  lastEdit: "Updated A Day ago",
-  preview: "/assets/examples/project.png",
+  title: 'My New Project',
+  lastEdit: 'Updated A Day ago',
+  preview: '/assets/examples/project.png',
 });
 
 const Home = () => {

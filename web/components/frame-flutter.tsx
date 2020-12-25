@@ -1,19 +1,19 @@
-import { NumberSize, Resizable } from "re-resizable";
-import { Direction } from "re-resizable/lib/resizer";
-import React from "react";
-import { compileFlutterApp } from "@bridged.xyz/client-sdk/lib/build/flutter";
+import { NumberSize, Resizable } from 're-resizable';
+import { Direction } from 're-resizable/lib/resizer';
+import React from 'react';
+import { compileFlutterApp } from '@bridged.xyz/client-sdk/lib/build/flutter';
 
 const isIFrame = (input: HTMLElement | null): input is HTMLIFrameElement =>
-  input !== null && input.tagName === "IFRAME";
+  input !== null && input.tagName === 'IFRAME';
 
 type flutterLoadingState =
-  | "pre-warming"
-  | "compiling"
-  | "js-compiled"
-  | "engine-loaded"
-  | "drawing"
-  | "complete"
-  | "failed";
+  | 'pre-warming'
+  | 'compiling'
+  | 'js-compiled'
+  | 'engine-loaded'
+  | 'drawing'
+  | 'complete'
+  | 'failed';
 
 interface State {
   viewportWidth: number;
@@ -39,7 +39,7 @@ export default class FrameFlutter extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      compileState: "pre-warming",
+      compileState: 'pre-warming',
       viewportHeight: 812,
       viewportWidth: 375,
     };
@@ -50,7 +50,7 @@ export default class FrameFlutter extends React.Component<Props, State> {
   async getCompiledJsSource(): Promise<string> {
     if (this.props.js) {
       this.setState(() => {
-        return { compileState: "js-compiled" };
+        return { compileState: 'js-compiled' };
       });
       return this.props.js;
     } else if (this.props.dart) {
@@ -61,49 +61,49 @@ export default class FrameFlutter extends React.Component<Props, State> {
         });
 
         var blob = new Blob([app.js!], {
-          type: "application/javascript",
+          type: 'application/javascript',
         });
         var url = URL.createObjectURL(blob);
 
         this.setState(() => {
-          return { compileState: "js-compiled" };
+          return { compileState: 'js-compiled' };
         });
 
         return url;
       } catch (e) {
         this.setState(() => {
-          return { compileState: "failed" };
+          return { compileState: 'failed' };
         });
-        return "";
+        return '';
       }
     } else {
-      throw "one of dart or js should be provided";
+      throw 'one of dart or js should be provided';
     }
   }
 
   onIframeLoaded = () => {
     this.setState(() => {
-      return { compileState: "compiling" };
+      return { compileState: 'compiling' };
     });
 
-    let iframe = document.getElementById("frame") as HTMLIFrameElement;
+    let iframe = document.getElementById('frame') as HTMLIFrameElement;
 
     // get the compiled js source
     this.getCompiledJsSource().then((js) => {
       // post message to iframe to execute js source
       iframe.contentWindow!.postMessage(
         {
-          command: "execute",
+          command: 'execute',
           js: js,
         },
-        "*"
+        '*'
       );
 
       this.setState(() => {
-        return { compileState: "drawing" };
+        return { compileState: 'drawing' };
       });
       this.setState(() => {
-        return { compileState: "complete" };
+        return { compileState: 'complete' };
       });
     });
 
@@ -114,7 +114,7 @@ export default class FrameFlutter extends React.Component<Props, State> {
       colno?: number,
       error?: Error
     ) => {
-      console.error("error from flutter js", source);
+      console.error('error from flutter js', source);
     };
   };
 
@@ -141,9 +141,9 @@ export default class FrameFlutter extends React.Component<Props, State> {
 
   message() {
     switch (this.state.compileState) {
-      case "failed":
+      case 'failed':
         return <p>failed to compile. check your code</p>;
-      case "complete":
+      case 'complete':
         return <p>complete</p>;
       default:
         return <p>{this.state.compileState} ... </p>;
@@ -200,14 +200,14 @@ const BottomRightHandle = () => (
 const CustomHandle = (props: any) => (
   <div
     style={{
-      background: "#fff",
-      borderRadius: "2px",
-      border: "1px solid #ddd",
-      height: "100%",
-      width: "100%",
+      background: '#fff',
+      borderRadius: '2px',
+      border: '1px solid #ddd',
+      height: '100%',
+      width: '100%',
       padding: 0,
     }}
-    className={"SomeCustomHandle"}
+    className={'SomeCustomHandle'}
     {...props}
   />
 );

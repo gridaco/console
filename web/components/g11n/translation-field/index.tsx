@@ -1,8 +1,8 @@
-import { Box, Grid, Typography } from "@material-ui/core";
-import TextField from "@material-ui/core/TextField";
-import React, { useEffect } from "react";
-import { currentTextEditValueAtom } from "../../../states";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { Box, Grid, Typography } from '@material-ui/core';
+import TextField from '@material-ui/core/TextField';
+import React, { useEffect } from 'react';
+import { currentTextEditValueAtom } from '../../../states';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 /**
  * single field with translation compatability
@@ -20,10 +20,10 @@ export function TranslationFieldRow(props: {
           <Grid item>
             <Box
               width={160}
-              color={"#94959A"}
+              color={'#94959A'}
               component="div"
               style={{
-                backgroundColor: "#F9F9F9",
+                backgroundColor: '#F9F9F9',
                 borderRadius: 4,
               }}
               paddingX={3}
@@ -62,14 +62,14 @@ export function TranslationEditField(props: {
 
   // on key down, when enter key is pressed via keyboard or save button clicked.
   const handleOnSubmit = (e: any) => {
-    console.log("saving translation - ", currentEditTextValue);
+    console.log('saving translation - ', currentEditTextValue);
     props.onSubmit(currentEditTextValue);
   };
 
   return (
     <TextField
       onKeyPress={(ev) => {
-        if (ev.key === "Enter") {
+        if (ev.key === 'Enter') {
           handleOnSubmit(ev);
           ev.preventDefault();
         }
