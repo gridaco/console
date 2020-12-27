@@ -7,22 +7,29 @@ import { DashboardSideNavigationBar } from '../../components/side-navigation-bar
 
 interface IDashboardLayout extends IDashboardAppBar {
   children?: React.ReactNode;
+  rightChildren?: React.ReactNode;
 }
 
 export default function DashboardLayout({
   children,
+  rightChildren,
   ...dashboardProps
 }: IDashboardLayout) {
   return (
-    <>
+    <Wrapper>
       <DashboardAppbar {...dashboardProps} />
       <ContentWrapper>
         <DashboardSideNavigationBar />
         <ContentPage>{children}</ContentPage>
       </ContentWrapper>
-    </>
+      {rightChildren}
+    </Wrapper>
   );
 }
+
+const Wrapper = styled.div`
+  display: flex;
+`;
 
 const ContentWrapper = styled.div`
   display: flex;

@@ -7,6 +7,7 @@ import Button from '../../components/button';
 import SearchBox from '../../components/search/search-box';
 import { AssetListItem, AssetGridItem } from '../../components/asset-item';
 import IconButton from '../../components/icon-button';
+import SelectedAssetInformation from '../../components/assets/selected-asset-information';
 
 const tabs = [
   { name: 'ALL', value: 'all' },
@@ -33,7 +34,10 @@ export default function AssetsPage() {
   const isGridView = useMemo(() => currentView === 'grid', [currentView]);
 
   return (
-    <DashboardLayout title="Overview">
+    <DashboardLayout
+      title="Overview"
+      rightChildren={<SelectedAssetInformation />}
+    >
       <Toolbar>
         <SearchBox inputStyle={{ width: 264 }} />
         <Button>UPLOAD NEW</Button>
