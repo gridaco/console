@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useQueryParam, StringParam, withDefault } from 'use-query-params';
 import { styled } from '@linaria/react';
 
@@ -16,7 +16,13 @@ const tabs = [
   { name: 'Text', value: 'text' },
 ];
 
-const exampleAssets = Array(7).fill({
+interface IAsset {
+  id: string;
+  title: string;
+  preview: string;
+}
+
+const exampleAssets: IAsset[] = Array(7).fill({
   title: 'Asset Name',
   preview: '/assets/examples/project.png',
 });
@@ -30,13 +36,22 @@ export default function AssetsPage() {
     'tab',
     withDefault(StringParam, 'all')
   );
+  const [selectedAsset, setSelectedAsset] = useState<IAsset>();
 
   const isGridView = useMemo(() => currentView === 'grid', [currentView]);
+
+  const onClickAsset = (asset: IAsset) => {
+    if (asset.id === selectedAsset?.id) {
+      setSelectedAsset(undefined);
+      return;
+    }
+    setSelectedAsset(asset);
+  };
 
   return (
     <DashboardLayout
       title="Overview"
-      rightChildren={<SelectedAssetInformation />}
+      rightChildren={selectedAsset && <SelectedAssetInformation />}
     >
       <Toolbar>
         <SearchBox inputStyle={{ width: 264 }} />
@@ -72,15 +87,41 @@ export default function AssetsPage() {
       </TabBar>
       {isGridView ? (
         <Grid>
-          {exampleAssets.map(({ title, preview }, assetIndex) => (
-            <AssetGridItem key={assetIndex} title={title} preview={preview} />
-          ))}
+          {exampleAssets.map((asset, assetIndex) => {
+            const { title, preview } = asset;
+            return (
+              <AssetGridItem
+                key={assetIndex}
+                title={title}
+                preview={preview}
+                onClick={() =>
+                  onClickAsset({
+                    ...asset,
+                    id: assetIndex.toString(),
+                  })
+                }
+              />
+            );
+          })}
         </Grid>
       ) : (
         <List>
-          {exampleAssets.map(({ title, preview }, assetIndex) => (
-            <AssetListItem key={assetIndex} title={title} preview={preview} />
-          ))}
+          {exampleAssets.map((asset, assetIndex) => {
+            const { title, preview } = asset;
+            return (
+              <AssetListItem
+                key={assetIndex}
+                title={title}
+                preview={preview}
+                onClick={() =>
+                  onClickAsset({
+                    ...asset,
+                    id: assetIndex.toString(),
+                  })
+                }
+              />
+            );
+          })}
         </List>
       )}
     </DashboardLayout>

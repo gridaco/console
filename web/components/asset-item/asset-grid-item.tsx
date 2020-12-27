@@ -3,9 +3,9 @@ import { styled } from '@linaria/react';
 
 import { IAssetItem } from './types';
 
-const AssetGridItem: React.FC<IAssetItem> = ({ preview, title }) => {
+const AssetGridItem: React.FC<IAssetItem> = ({ preview, title, onClick }) => {
   return (
-    <Container>
+    <Container onClick={onClick}>
       <Image src={preview} />
       <Information>
         <Title>{title}</Title>

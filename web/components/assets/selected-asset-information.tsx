@@ -58,6 +58,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  transition: all 0.2s ease;
 `;
 
 const Title = styled.h6`
