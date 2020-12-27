@@ -5,7 +5,7 @@ import { styled } from '@linaria/react';
 import DashboardLayout from '../../layouts/dashboard';
 import Button from '../../components/button';
 import SearchBox from '../../components/search/search-box';
-import { AssetListItem } from '../../components/asset-item';
+import { AssetListItem, AssetGridItem } from '../../components/asset-item';
 import IconButton from '../../components/icon-button';
 
 const tabs = [
@@ -66,10 +66,16 @@ export default function AssetsPage() {
           </IconButton>
         </IconList>
       </TabBar>
-      {isGridView ? null : (
+      {isGridView ? (
+        <Grid>
+          {exampleAssets.map(({ title, preview }, assetIndex) => (
+            <AssetGridItem key={assetIndex} title={title} preview={preview} />
+          ))}
+        </Grid>
+      ) : (
         <List>
-          {exampleAssets.map(({ title, preview }) => (
-            <AssetListItem title={title} preview={preview} />
+          {exampleAssets.map(({ title, preview }, assetIndex) => (
+            <AssetListItem key={assetIndex} title={title} preview={preview} />
           ))}
         </List>
       )}
@@ -127,7 +133,11 @@ const IconImage = styled.img`
   height: 28px;
 `;
 
-const Grid = styled.div``;
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(224px, 1fr));
+  grid-gap: 1.5rem;
+`;
 
 const List = styled.div`
   display: flex;
