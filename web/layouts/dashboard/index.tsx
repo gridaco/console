@@ -3,7 +3,7 @@ import { styled } from '@linaria/react';
 import DashboardAppbar, {
   IDashboardAppBar,
 } from '../../components/appbar/dashboard.appbar';
-import { DashboardSideNavigationBar } from '../../components/side-navigation-bar/dashboard-side-navigation-bar';
+import { DashboardSideNavigationBar } from '../../components/side-navigation-bar/dashboard.side-navigation-bar';
 
 interface IDashboardLayout extends IDashboardAppBar {
   children?: React.ReactNode;
