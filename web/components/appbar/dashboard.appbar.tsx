@@ -34,7 +34,8 @@ export default function DashboardAppbar({ title }: IDashboardAppBar) {
 }
 
 const Container = styled.header`
-  background-color: black;
+  background: #ffffff;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.12);
   display: flex;
   align-items: center;
   justify-content: space-between;
