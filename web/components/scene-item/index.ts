@@ -1,1 +1,1 @@
-export * from "./scene-item"
+export * from './scene-item';

@@ -1,1 +1,1 @@
-export * from "./scene-item.context-menu"
+export * from './scene-item.context-menu';
