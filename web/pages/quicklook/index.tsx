@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
-import { useRouter } from 'next/router';
-import FrameFlutter from '../../components/frame-flutter';
-import dynamic from 'next/dynamic';
+import { styled } from '@linaria/react';
 import Axios from 'axios';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
+
+import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
+
 import {
   QuicklookQueryParams,
   framework,
   language,
 } from '@bridged.xyz/client-sdk/lib/projects/quicklook';
+import * as monacoEditor from 'monaco-editor/esm/vs/editor/editor.api';
+
+import FrameFlutter from '../../components/frame-flutter';
+import DashboardAppbar from '../../components/appbar/dashboard.appbar';
 
 const MonacoEditor = dynamic(import('react-monaco-editor'), { ssr: false });
-import * as monacoEditor from 'monaco-editor/esm/vs/editor/editor.api';
 
 let IS_LOADED_ONCE: boolean = false;
 /**
@@ -71,87 +74,92 @@ export default function Frame() {
   };
 
   return (
-    <div style={{ margin: 48 }}>
-      <Grid
-        container
-        direction="row"
-        justify="space-between"
-        alignItems="stretch"
-      >
-        <Grid item>
-          {appFrame({
-            id: q.id,
-            framework: q.framework,
-            source: source,
-            language: q.language,
-          })}
-        </Grid>
-        <Grid item>
-          <div style={{ width: '50vw' }}>
-            <MonacoEditor
-              height={'860px'}
-              language="dart"
-              theme="vs-dark"
-              value={source}
-              options={{ unusualLineTerminators: 'off' }}
-              onChange={(value: string) => {
-                editingSource = value;
-              }}
-              editorDidMount={(
-                editor: monacoEditor.editor.IStandaloneCodeEditor
-              ) => {
-                // @ts-ignore
-                window.MonacoEnvironment.getWorkerUrl = (moduleId, label) => {
-                  if (label === 'json') return '/_next/static/json.worker.js';
-                  if (label === 'css') return '/_next/static/css.worker.js';
-                  if (label === 'html') return '/_next/static/html.worker.js';
-                  if (label === 'typescript' || label === 'javascript')
-                    return '/_next/static/ts.worker.js';
-                  return '/_next/static/editor.worker.js';
-                };
-              }}
-            />
-            {/* disabled={hasDiff()}  */}
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => {
-                run();
-              }}
-            >
-              RE-RUN
-            </Button>
-            <Button
-              variant="contained"
-              onClick={() => {
-                navigator.clipboard.writeText(window.location.href);
-                alert('copied to clipboard');
-              }}
-            >
-              copy sharable link
-            </Button>
-            <Button
-              variant="outlined"
-              onClick={() => {
-                open('https://github.com/bridgedxyz/console.bridged.xyz');
-              }}
-            >
-              improve this page on github
-            </Button>
-            <Button
-              variant="outlined"
-              onClick={() => {
-                open(
-                  'https://github.com/bridgedxyz/assistant/issues/new/choose'
-                );
-              }}
-            >
-              report bug
-            </Button>
-          </div>
-        </Grid>
-      </Grid>
-    </div>
+    <>
+      <DashboardAppbar
+        title="Screen Name"
+        backButton="DASHBOARD"
+        onClickShare={() => {
+          navigator.clipboard.writeText(window.location.href);
+          alert('copied to clipboard');
+        }}
+        onClickPlay={run}
+      />
+      <Wrapper>
+        <SideContainer>
+          <FrameBackground>
+            {appFrame({
+              id: q.id,
+              framework: q.framework,
+              source: source,
+              language: q.language,
+            })}
+          </FrameBackground>
+        </SideContainer>
+        <SideContainer style={{ width: '45vw' }}>
+          <Toolbar>
+            <TabList>
+              <TabButton style={{ color: '#000000', marginRight: 8 }}>
+                <TabIconImage src="/assets/icons/mdi_code_round.svg" />
+                Code Editor
+              </TabButton>
+              <TabButton>
+                <TabIconImage src="/assets/icons/mdi_language_round.svg" />
+                Language translation
+              </TabButton>
+            </TabList>
+            <ButtonList>
+              <Button
+                style={{
+                  backgroundColor: '#333333',
+                  marginRight: 12,
+                }}
+                onClick={() =>
+                  open('https://github.com/bridgedxyz/console.bridged.xyz')
+                }
+              >
+                <ButtonIconImage src="/assets/icons/github.svg" />
+                <span>improve this page on github</span>
+              </Button>
+              <Button
+                style={{
+                  backgroundColor: '#2562FF',
+                }}
+                onClick={() => {
+                  open(
+                    'https://github.com/bridgedxyz/assistant/issues/new/choose'
+                  );
+                }}
+              >
+                <ButtonIconImage src="/assets/icons/mdi_play_circle_filled_round.svg" />
+                <span>copy share to link</span>
+              </Button>
+            </ButtonList>
+          </Toolbar>
+          <MonacoEditor
+            language="dart"
+            theme="vs-dark"
+            value={source}
+            options={{ unusualLineTerminators: 'off' }}
+            onChange={(value: string) => {
+              editingSource = value;
+            }}
+            editorDidMount={(
+              editor: monacoEditor.editor.IStandaloneCodeEditor
+            ) => {
+              // @ts-ignore
+              window.MonacoEnvironment.getWorkerUrl = (moduleId, label) => {
+                if (label === 'json') return '/_next/static/json.worker.js';
+                if (label === 'css') return '/_next/static/css.worker.js';
+                if (label === 'html') return '/_next/static/html.worker.js';
+                if (label === 'typescript' || label === 'javascript')
+                  return '/_next/static/ts.worker.js';
+                return '/_next/static/editor.worker.js';
+              };
+            }}
+          />
+        </SideContainer>
+      </Wrapper>
+    </>
   );
 }
 
@@ -188,3 +196,100 @@ function appFrame(props: {
       return loading;
   }
 }
+
+const Wrapper = styled.div`
+  margin-top: 56px;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  min-height: calc(100vh - 56px);
+  overflow-y: hidden;
+`;
+
+const SideContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+`;
+
+const FrameBackground = styled.div`
+  flex: 1;
+  display: flex;
+  background: linear-gradient(90deg, #f1f1f1 20px, transparent 1%) center,
+    linear-gradient(#f1f1f1 20px, transparent 1%) center, #e8e1e1;
+  background-size: 24px 24px;
+`;
+
+const Toolbar = styled.div`
+  padding: 10px 12px;
+  background: #ffffff;
+  box-shadow: inset 0px -1px 0px #e3e3e3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const TabList = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const TabButton = styled.button`
+  border: 0;
+  background-color: transparent;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.2;
+  color: #dadadc;
+  border-radius: 4px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  &:active,
+  &:focus {
+    outline: 0;
+  }
+`;
+
+const TabIconImage = styled.img`
+  margin-right: 8px;
+  width: 24px;
+  height: 24px;
+`;
+
+const ButtonList = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Button = styled.button`
+  color: white;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  span {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.2;
+    text-transform: capitalize;
+  }
+
+  &:active,
+  &:focus {
+    outline: 0;
+  }
+`;
+
+const ButtonIconImage = styled.img`
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+`;

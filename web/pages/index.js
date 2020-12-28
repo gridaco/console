@@ -18,7 +18,8 @@ const Home = () => {
       <Wrapper>
         <BannerWrapper>
           <BannerContainer>
-            <CreateButton>Create New</CreateButton>
+            <BrandImage src="/assets/images/bridged.svg" />
+            <CreateButton>+ Create New</CreateButton>
           </BannerContainer>
         </BannerWrapper>
         <ProjectList>
@@ -43,7 +44,7 @@ const Wrapper = styled.main`
 `;
 
 const BannerWrapper = styled.div`
-  background-color: #f4f4f4;
+  background-color: black;
   width: 100%;
   height: 32vh;
   display: flex;
@@ -53,12 +54,21 @@ const BannerContainer = styled.div`
   width: 92%;
   margin: 0 auto;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const BrandImage = styled.img`
+  width: 123px;
+  height: 93px;
 `;
 
 const CreateButton = styled(Button)`
   position: absolute;
   bottom: -26px;
   right: 0;
+  background-color: #2562ff;
 `;
 
 const ProjectList = styled.ul`
