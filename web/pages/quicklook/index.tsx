@@ -78,12 +78,14 @@ export default function Frame() {
       <DashboardAppbar />
       <Wrapper>
         <SideContainer>
-          {appFrame({
-            id: q.id,
-            framework: q.framework,
-            source: source,
-            language: q.language,
-          })}
+          <FrameBackground>
+            {appFrame({
+              id: q.id,
+              framework: q.framework,
+              source: source,
+              language: q.language,
+            })}
+          </FrameBackground>
         </SideContainer>
         <SideContainer style={{ width: '45vw' }}>
           <Toolbar>
@@ -126,7 +128,6 @@ export default function Frame() {
             </ButtonList>
           </Toolbar>
           <MonacoEditor
-            height={'calc(100vh - 56px)'}
             language="dart"
             theme="vs-dark"
             value={source}
@@ -208,11 +209,22 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: stretch;
-  background-color: rgba(196, 196, 196, 0.23);
   min-height: calc(100vh - 56px);
 `;
 
-const SideContainer = styled.div``;
+const SideContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+`;
+
+const FrameBackground = styled.div`
+  flex: 1;
+  display: flex;
+  background: linear-gradient(90deg, #f1f1f1 20px, transparent 1%) center,
+    linear-gradient(#f1f1f1 20px, transparent 1%) center, #e8e1e1;
+  background-size: 24px 24px;
+`;
 
 const Toolbar = styled.div`
   padding: 10px 12px;
