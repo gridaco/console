@@ -210,6 +210,7 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: stretch;
   min-height: calc(100vh - 56px);
+  overflow-y: hidden;
 `;
 
 const SideContainer = styled.div`
