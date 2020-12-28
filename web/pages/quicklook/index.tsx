@@ -75,7 +75,15 @@ export default function Frame() {
 
   return (
     <>
-      <DashboardAppbar />
+      <DashboardAppbar
+        title="Screen Name"
+        backButton="DASHBOARD"
+        onClickShare={() => {
+          navigator.clipboard.writeText(window.location.href);
+          alert('copied to clipboard');
+        }}
+        onClickPlay={run}
+      />
       <Wrapper>
         <SideContainer>
           <FrameBackground>
@@ -149,21 +157,6 @@ export default function Frame() {
               };
             }}
           />
-          {/* <Button
-            onClick={() => {
-              run();
-            }}
-          >
-            RE-RUN
-          </Button>
-          <Button
-            onClick={() => {
-              navigator.clipboard.writeText(window.location.href);
-              alert('copied to clipboard');
-            }}
-          >
-            copy sharable link
-          </Button> */}
         </SideContainer>
       </Wrapper>
     </>
@@ -254,6 +247,11 @@ const TabButton = styled.button`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+
+  &:active,
+  &:focus {
+    outline: 0;
+  }
 `;
 
 const TabIconImage = styled.img`
@@ -282,6 +280,11 @@ const Button = styled.button`
     font-size: 14px;
     line-height: 1.2;
     text-transform: capitalize;
+  }
+
+  &:active,
+  &:focus {
+    outline: 0;
   }
 `;
 

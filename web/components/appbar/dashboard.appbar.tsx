@@ -7,13 +7,28 @@ import logoImage from '../../assets/brand/logo.png';
 
 export interface IDashboardAppBar {
   title?: string;
+  backButton?: string;
+  onClickShare?: () => void;
+  onClickPlay?: () => void;
 }
 
-export default function DashboardAppbar({ title }: IDashboardAppBar) {
+export default function DashboardAppbar({
+  title,
+  backButton,
+  onClickShare,
+  onClickPlay,
+}: IDashboardAppBar) {
   return (
     <Container>
       <Link href="/">
-        <LogoImage src={logoImage} />
+        {!!backButton ? (
+          <BackButton>
+            <BackButtonIconImage src="/assets/icons/mdi_navigate_before.svg" />
+            <span>{backButton}</span>
+          </BackButton>
+        ) : (
+          <LogoImage src={logoImage} />
+        )}
       </Link>
       {title && <Title>{title}</Title>}
       <Toolbar>
@@ -21,10 +36,11 @@ export default function DashboardAppbar({ title }: IDashboardAppBar) {
           style={{
             marginRight: 17,
           }}
+          onClick={onClickShare}
         >
           <IconImage src="/assets/icons/mdi_ios_share.svg" />
         </IconButton>
-        <IconButton>
+        <IconButton onClick={onClickPlay}>
           <IconImage src="/assets/icons/mdi_play_arrow.svg" />
         </IconButton>
         <ProfileImage src="/assets/examples/profile.png" />
@@ -47,6 +63,33 @@ const Container = styled.header`
   z-index: 1;
 `;
 
+const BackButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+
+  span {
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 1.2;
+    letter-spacing: 0.3px;
+    color: #a2a2a2;
+  }
+
+  &:active,
+  &:focus {
+    outline: 0;
+  }
+`;
+
+const BackButtonIconImage = styled.img`
+  width: 24px;
+  height: 24px;
+`;
+
 const LogoImage = styled.img`
   width: 27.68px;
   height: 28px;
@@ -59,7 +102,7 @@ const Title = styled.span`
   font-weight: bold;
   font-size: 16px;
   line-height: 19px;
-  color: white;
+  color: black;
   letter-spacing: 0.3px;
 `;
 
