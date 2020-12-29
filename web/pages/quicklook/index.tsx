@@ -18,6 +18,10 @@ import DashboardAppbar from '../../components/appbar/dashboard.appbar';
 
 const MonacoEditor = dynamic(import('react-monaco-editor'), { ssr: false });
 
+interface IQuicklookQueries extends QuicklookQueryParams {
+  globalizationRedirect?: string;
+}
+
 let IS_LOADED_ONCE: boolean = false;
 /**
  * frame or url is required
@@ -29,7 +33,7 @@ export default function Frame() {
   const [source, setSource] = useState<string>();
   let editingSource: string;
 
-  const query: QuicklookQueryParams = {
+  const query: IQuicklookQueries = {
     id: (router.query.id as string) ?? '',
     framework: (router.query.framework as 'flutter' | 'react') ?? 'flutter',
     language: (router.query.language as 'dart' | 'js') ?? 'js',
@@ -37,7 +41,6 @@ export default function Frame() {
     name: router.query.name as string,
     w: Number.parseInt(router.query.w as string) ?? 375,
     h: Number.parseInt(router.query.h as string) ?? 812,
-    screenRedirect: (router.query['screen-redirect'] as string) ?? '#',
     globalizationRedirect:
       (router.query['globalization-redirect'] as string) ?? '#',
   };

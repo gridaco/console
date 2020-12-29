@@ -1,7 +1,10 @@
 import { NumberSize, Resizable } from 're-resizable';
 import { Direction } from 're-resizable/lib/resizer';
 import React from 'react';
+import { styled } from '@linaria/react';
+
 import { compileFlutterApp } from '@bridged.xyz/client-sdk/lib/build/flutter';
+import Alert from '@material-ui/lab/Alert';
 
 const isIFrame = (input: HTMLElement | null): input is HTMLIFrameElement =>
   input !== null && input.tagName === 'IFRAME';
@@ -142,11 +145,26 @@ export default class FrameFlutter extends React.Component<Props, State> {
   message() {
     switch (this.state.compileState) {
       case 'failed':
-        return <p>failed to compile. check your code</p>;
+        return (
+          <Alert severity="error" style={{ border: '1px solid #f44336' }}>
+            Failed to compile. check your code
+          </Alert>
+        );
       case 'complete':
-        return <p>complete</p>;
+        return (
+          <Alert severity="success" style={{ border: '1px solid #4caf50' }}>
+            Complete
+          </Alert>
+        );
       default:
-        return <p>{this.state.compileState} ... </p>;
+        return (
+          <Alert
+            severity="info"
+            style={{ textTransform: 'capitalize', border: '1px solid #2196f3' }}
+          >
+            {this.state.compileState}...
+          </Alert>
+        );
     }
   }
 
@@ -172,8 +190,9 @@ export default class FrameFlutter extends React.Component<Props, State> {
           src="/quicklook-assets/flutter/frame-flutter.html"
           sandbox="allow-scripts allow-same-origin"
           onLoad={this.onIframeLoaded}
+          style={{ border: 0, marginBottom: 12 }}
         ></iframe>
-        {this.message()}
+        <MessageWrapper>{this.message()}</MessageWrapper>
       </Resizable>
     );
   }
@@ -211,3 +230,7 @@ const CustomHandle = (props: any) => (
     {...props}
   />
 );
+
+const MessageWrapper = styled.div`
+  margin-bottom: 16px;
+`;
