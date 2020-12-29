@@ -11,6 +11,7 @@ import {
   language,
 } from '@bridged.xyz/client-sdk/lib/projects/quicklook';
 import * as monacoEditor from 'monaco-editor/esm/vs/editor/editor.api';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import FrameFlutter from '../../components/frame-flutter';
 import DashboardAppbar from '../../components/appbar/dashboard.appbar';
@@ -36,6 +37,9 @@ export default function Frame() {
     name: router.query.name as string,
     w: Number.parseInt(router.query.w as string) ?? 375,
     h: Number.parseInt(router.query.h as string) ?? 812,
+    screenRedirect: (router.query['screen-redirect'] as string) ?? '#',
+    globalizationRedirect:
+      (router.query['globalization-redirect'] as string) ?? '#',
   };
 
   if (!IS_LOADED_ONCE) {
@@ -102,10 +106,12 @@ export default function Frame() {
                 <TabIconImage src="/assets/icons/mdi_code_round.svg" />
                 Code Editor
               </TabButton>
-              <TabButton>
-                <TabIconImage src="/assets/icons/mdi_language_round.svg" />
-                Language translation
-              </TabButton>
+              <a href={query.globalizationRedirect}>
+                <TabButton>
+                  <TabIconImage src="/assets/icons/mdi_language_round.svg" />
+                  Language translation
+                </TabButton>
+              </a>
             </TabList>
             <ButtonList>
               <Button
@@ -170,7 +176,7 @@ function appFrame(props: {
   language: language;
 }) {
   console.log(props);
-  const loading = <div>loading..</div>;
+  const loading = <CircularProgress />;
 
   if (!props.source) {
     return loading;
@@ -215,6 +221,8 @@ const SideContainer = styled.div`
 const FrameBackground = styled.div`
   flex: 1;
   display: flex;
+  align-items: center;
+  justify-content: center;
   background: linear-gradient(90deg, #f1f1f1 20px, transparent 1%) center,
     linear-gradient(#f1f1f1 20px, transparent 1%) center, #e8e1e1;
   background-size: 24px 24px;
