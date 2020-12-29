@@ -119,28 +119,12 @@ export default function Frame() {
             <ButtonList>
               <Button
                 style={{
-                  backgroundColor: '#333333',
-                  marginRight: 12,
-                }}
-                onClick={() =>
-                  open('https://github.com/bridgedxyz/console.bridged.xyz')
-                }
-              >
-                <ButtonIconImage src="/assets/icons/github.svg" />
-                <span>improve this page on github</span>
-              </Button>
-              <Button
-                style={{
                   backgroundColor: '#2562FF',
                 }}
-                onClick={() => {
-                  open(
-                    'https://github.com/bridgedxyz/assistant/issues/new/choose'
-                  );
-                }}
+                onClick={run}
               >
                 <ButtonIconImage src="/assets/icons/mdi_play_circle_filled_round.svg" />
-                <span>copy share to link</span>
+                <span>Run</span>
               </Button>
             </ButtonList>
           </Toolbar>
