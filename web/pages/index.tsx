@@ -7,11 +7,7 @@ import DashboardAppbar from '../components/appbar/dashboard.appbar';
 import ProjectCard from '../components/home/project-card';
 import Button from '../components/button';
 
-const exampleProjects = Array(6).fill({
-  title: 'My New Project',
-  lastEdit: 'Updated A Day ago',
-  preview: '/assets/examples/project.png',
-});
+import mockups from '../mockups/projects';
 
 interface IProject {
   name: string;
@@ -20,34 +16,35 @@ interface IProject {
   href: string;
 }
 
-const DEFAULT_JSON_API =
-  'https://gist.githubusercontent.com/junhoyeo/743e50c861bfa308ea5ccecae00b1c01/raw/a769c85d81eb4408e87471ed1799bb5df50774e0/projects.json';
-
 const Home = () => {
   const router = useRouter();
   const query = {
-    src: (router.query.src as string) || DEFAULT_JSON_API,
+    src: router.query.src as string,
     // Queries could be added here
   };
 
   const [projects, setProjects] = useState<IProject[]>([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const {
-        data: { onclick, ...data },
-      } = await axios.get(query.src);
-      console.log(data);
-      setProjects([
-        {
-          ...data,
+    const updateProjects = (projects: any) =>
+      setProjects(
+        projects.map(({ onclick, ...project }) => ({
+          ...project,
           href: onclick,
-        },
-      ]);
+        }))
+      );
+
+    const fetchData = async () => {
+      if (!query.src) {
+        updateProjects(mockups);
+        return;
+      }
+      const { data } = await axios.get(query.src);
+      updateProjects(data);
     };
 
     fetchData();
-  }, []);
+  }, [query.src]);
 
   return (
     <>

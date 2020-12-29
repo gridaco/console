@@ -7,6 +7,8 @@ import DashboardLayout from '../../layouts/dashboard';
 import { SceneItem } from '../../components/scene-item';
 import SearchBox from '../../components/search/search-box';
 
+import mockups from '../../mockups/screens';
+
 interface IScreen {
   name: string;
   source: string;
@@ -14,13 +16,10 @@ interface IScreen {
   updatedAt: string;
 }
 
-const DEFAULT_JSON_API =
-  'https://gist.githubusercontent.com/junhoyeo/743e50c861bfa308ea5ccecae00b1c01/raw/afa9151a830eeaab4e6632b785eb642876c8e096/screens.json';
-
 export default function ScreensPage() {
   const router = useRouter();
   const query = {
-    src: (router.query.src as string) || DEFAULT_JSON_API,
+    src: router.query.src as string,
     screenRedirect: (router.query.screenRedirect as string) || '',
   };
 
@@ -28,21 +27,25 @@ export default function ScreensPage() {
   const [screens, setScreens] = useState<IScreen[]>([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const {
-        data: { onclick, ...data },
-      } = await axios.get(query.src);
-      console.log(data);
-      setScreens([
-        {
-          ...data,
+    const updateScreens = (screens: any) =>
+      setScreens(
+        screens.map(({ onclick, ...screen }) => ({
+          ...screen,
           source: query.screenRedirect || onclick,
-        },
-      ]);
+        }))
+      );
+
+    const fetchData = async () => {
+      if (!query.src) {
+        updateScreens(mockups);
+        return;
+      }
+      const { data } = await axios.get(query.src);
+      updateScreens(data);
     };
 
     fetchData();
-  }, []);
+  }, [query.src]);
 
   const handleSelection = (id: string) => {
     setFocusedScreenId(id);
