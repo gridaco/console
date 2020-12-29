@@ -6,8 +6,8 @@ import { SceneItemContextMenu } from '../context-menus';
 
 export interface ISceneItemDisplay {
   name: string;
-  description: string;
-  lastEdit: string;
+  description?: string;
+  updatedAt: string;
   preview: string;
 }
 

@@ -17,7 +17,7 @@ import {
 export default function Home() {
   const router = useRouter();
 
-  const query = router.query;
+  const { query } = router;
   const sceneId: string = query.scene as string;
   const [
     sceneRepository,
