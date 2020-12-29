@@ -28,7 +28,7 @@ export default function Frame() {
   const [source, setSource] = useState<string>();
   let editingSource: string;
 
-  const q: QuicklookQueryParams = {
+  const query: QuicklookQueryParams = {
     id: (router.query.id as string) ?? '',
     framework: (router.query.framework as 'flutter' | 'react') ?? 'flutter',
     language: (router.query.language as 'dart' | 'js') ?? 'js',
@@ -39,14 +39,14 @@ export default function Frame() {
   };
 
   if (!IS_LOADED_ONCE) {
-    switch (q.framework) {
+    switch (query.framework) {
       case 'flutter':
-        if (q.url) {
-          if (q.language == 'js') {
-            setSource(q.url);
-          } else if (q.language == 'dart') {
+        if (query.url) {
+          if (query.language == 'js') {
+            setSource(query.url);
+          } else if (query.language == 'dart') {
             // fetch dart file and set as source
-            Axios.get(q.url).then((r) => {
+            Axios.get(query.url).then((r) => {
               IS_LOADED_ONCE = true;
 
               const dartSource = r.data;
@@ -76,7 +76,7 @@ export default function Frame() {
   return (
     <>
       <DashboardAppbar
-        title="Screen Name"
+        title={query.name || 'No Name'}
         backButton="DASHBOARD"
         onClickShare={() => {
           navigator.clipboard.writeText(window.location.href);
@@ -88,10 +88,10 @@ export default function Frame() {
         <SideContainer>
           <FrameBackground>
             {appFrame({
-              id: q.id,
-              framework: q.framework,
+              id: query.id,
+              framework: query.framework,
               source: source,
-              language: q.language,
+              language: query.language,
             })}
           </FrameBackground>
         </SideContainer>
