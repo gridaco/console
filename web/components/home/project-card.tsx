@@ -4,18 +4,24 @@ import { styled } from '@linaria/react';
 
 export interface IProjectCard {
   preview?: string;
-  title: string;
-  lastEdit?: string;
+  name: string;
+  updatedAt?: string;
+  href: string;
 }
 
-const ProjectCard: React.FC<IProjectCard> = ({ title, preview, lastEdit }) => {
+const ProjectCard: React.FC<IProjectCard> = ({
+  name,
+  preview,
+  updatedAt,
+  href,
+}) => {
   return (
-    <Link href="/screens">
+    <Link href={href}>
       <Container>
         <PreviewImage src={preview} />
         <Information>
-          <Title>{title}</Title>
-          <LastEdit>{lastEdit}</LastEdit>
+          <Name>{name}</Name>
+          <UpdatedAt>{updatedAt}</UpdatedAt>
         </Information>
       </Container>
     </Link>
@@ -53,7 +59,7 @@ const Information = styled.div`
   border-bottom-right-radius: 4px;
 `;
 
-const Title = styled.h3`
+const Name = styled.h3`
   margin: 0;
   font-weight: 500;
   font-size: 20px;
@@ -61,7 +67,7 @@ const Title = styled.h3`
   color: #000000;
 `;
 
-const LastEdit = styled.span`
+const UpdatedAt = styled.span`
   font-size: 14px;
   line-height: 1.2;
   color: #000000;
