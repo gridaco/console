@@ -56,7 +56,6 @@ export default function Home() {
     <div>
       <Head>
         <title>G11n by bridged</title>
-        <link rel="icon" href="/favicon.png" />
       </Head>
 
       <main>
