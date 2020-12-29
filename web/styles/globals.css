@@ -6,6 +6,11 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+@font-face {
+	font-family: "codicon";
+	src: url('/fonts/codicon.ttf') format("truetype");
+}
+
 a {
   color: inherit;
   text-decoration: none;
