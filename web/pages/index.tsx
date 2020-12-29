@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import { styled } from '@linaria/react';
+import axios from 'axios';
 
 import DashboardAppbar from '../components/appbar/dashboard.appbar';
 import ProjectCard from '../components/home/project-card';
@@ -11,7 +13,42 @@ const exampleProjects = Array(6).fill({
   preview: '/assets/examples/project.png',
 });
 
+interface IProject {
+  name: string;
+  updatedAt: string;
+  preview: string;
+  href: string;
+}
+
+const DEFAULT_JSON_API =
+  'https://gist.githubusercontent.com/junhoyeo/743e50c861bfa308ea5ccecae00b1c01/raw/a769c85d81eb4408e87471ed1799bb5df50774e0/projects.json';
+
 const Home = () => {
+  const router = useRouter();
+  const query = {
+    src: (router.query.src as string) || DEFAULT_JSON_API,
+    // Queries could be added here
+  };
+
+  const [projects, setProjects] = useState<IProject[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const {
+        data: { onclick, ...data },
+      } = await axios.get(query.src);
+      console.log(data);
+      setProjects([
+        {
+          ...data,
+          href: onclick,
+        },
+      ]);
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <>
       <DashboardAppbar />
@@ -23,7 +60,7 @@ const Home = () => {
           </BannerContainer>
         </BannerWrapper>
         <ProjectList>
-          {exampleProjects.map((project, projectIndex) => (
+          {projects.map((project, projectIndex) => (
             <ProjectCard key={projectIndex} {...project} />
           ))}
         </ProjectList>

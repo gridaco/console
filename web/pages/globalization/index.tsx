@@ -17,11 +17,12 @@ import {
 export default function Home() {
   const router = useRouter();
 
-  const query = router.query;
+  const { query } = router;
   const sceneId: string = query.scene as string;
-  const [sceneRepository, setScreenRepository] = useState<
-    SceneLocalRepository
-  >();
+  const [
+    sceneRepository,
+    setScreenRepository,
+  ] = useState<SceneLocalRepository>();
   const [
     desingGlobalizationRepository,
     setdesingGlobalizationRepository,
@@ -55,7 +56,6 @@ export default function Home() {
     <div>
       <Head>
         <title>G11n by bridged</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>

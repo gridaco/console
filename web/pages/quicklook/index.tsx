@@ -11,11 +11,16 @@ import {
   language,
 } from '@bridged.xyz/client-sdk/lib/projects/quicklook';
 import * as monacoEditor from 'monaco-editor/esm/vs/editor/editor.api';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import FrameFlutter from '../../components/frame-flutter';
 import DashboardAppbar from '../../components/appbar/dashboard.appbar';
 
 const MonacoEditor = dynamic(import('react-monaco-editor'), { ssr: false });
+
+interface IQuicklookQueries extends QuicklookQueryParams {
+  globalizationRedirect?: string;
+}
 
 let IS_LOADED_ONCE: boolean = false;
 /**
@@ -28,7 +33,7 @@ export default function Frame() {
   const [source, setSource] = useState<string>();
   let editingSource: string;
 
-  const q: QuicklookQueryParams = {
+  const query: IQuicklookQueries = {
     id: (router.query.id as string) ?? '',
     framework: (router.query.framework as 'flutter' | 'react') ?? 'flutter',
     language: (router.query.language as 'dart' | 'js') ?? 'js',
@@ -36,17 +41,19 @@ export default function Frame() {
     name: router.query.name as string,
     w: Number.parseInt(router.query.w as string) ?? 375,
     h: Number.parseInt(router.query.h as string) ?? 812,
+    globalizationRedirect:
+      (router.query['globalization-redirect'] as string) ?? '#',
   };
 
   if (!IS_LOADED_ONCE) {
-    switch (q.framework) {
+    switch (query.framework) {
       case 'flutter':
-        if (q.url) {
-          if (q.language == 'js') {
-            setSource(q.url);
-          } else if (q.language == 'dart') {
+        if (query.url) {
+          if (query.language == 'js') {
+            setSource(query.url);
+          } else if (query.language == 'dart') {
             // fetch dart file and set as source
-            Axios.get(q.url).then((r) => {
+            Axios.get(query.url).then((r) => {
               IS_LOADED_ONCE = true;
 
               const dartSource = r.data;
@@ -76,7 +83,7 @@ export default function Frame() {
   return (
     <>
       <DashboardAppbar
-        title="Screen Name"
+        title={query.name || 'No Name'}
         backButton="DASHBOARD"
         onClickShare={() => {
           navigator.clipboard.writeText(window.location.href);
@@ -88,10 +95,10 @@ export default function Frame() {
         <SideContainer>
           <FrameBackground>
             {appFrame({
-              id: q.id,
-              framework: q.framework,
+              id: query.id,
+              framework: query.framework,
               source: source,
-              language: q.language,
+              language: query.language,
             })}
           </FrameBackground>
         </SideContainer>
@@ -102,10 +109,12 @@ export default function Frame() {
                 <TabIconImage src="/assets/icons/mdi_code_round.svg" />
                 Code Editor
               </TabButton>
-              <TabButton>
-                <TabIconImage src="/assets/icons/mdi_language_round.svg" />
-                Language translation
-              </TabButton>
+              <a href={query.globalizationRedirect}>
+                <TabButton>
+                  <TabIconImage src="/assets/icons/mdi_language_round.svg" />
+                  Language translation
+                </TabButton>
+              </a>
             </TabList>
             <ButtonList>
               <Button
@@ -170,7 +179,7 @@ function appFrame(props: {
   language: language;
 }) {
   console.log(props);
-  const loading = <div>loading..</div>;
+  const loading = <CircularProgress />;
 
   if (!props.source) {
     return loading;
@@ -215,6 +224,8 @@ const SideContainer = styled.div`
 const FrameBackground = styled.div`
   flex: 1;
   display: flex;
+  align-items: center;
+  justify-content: center;
   background: linear-gradient(90deg, #f1f1f1 20px, transparent 1%) center,
     linear-gradient(#f1f1f1 20px, transparent 1%) center, #e8e1e1;
   background-size: 24px 24px;
