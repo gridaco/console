@@ -3,17 +3,17 @@ import { styled } from '@linaria/react';
 
 import IconButton from '../icon-button';
 
-interface ISearchBox {
+interface ISearchFormBox {
   style?: React.CSSProperties;
   inputStyle?: React.CSSProperties;
   placeholder?: string;
 }
 
-export default function SearchBox({
+export default function SearchFormBox({
   style,
   inputStyle,
   placeholder = 'Search your stuff',
-}: ISearchBox) {
+}: ISearchFormBox) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const onClickInputWrapper = () => inputRef?.current?.focus();

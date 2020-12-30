@@ -7,6 +7,7 @@ import { LayerTranslation } from '@bridged.xyz/client-sdk/lib/g11n';
 
 import Toolbar from '../../components/toolbar';
 import EditableTextCard from '../../components/g11n/editable-text-card';
+import SearchInputBox from '../../components/search/search-input-box';
 import { currentEditorialLocaleAtom } from '../../states/editor-state';
 import { SceneRepositoryStore } from '../../repositories';
 
@@ -69,13 +70,14 @@ const SceneKeyEditor = (props: {
         </ButtonList>
       </Header>
       <KeyContainer>
-        <FormControl>
+        <KeyToolbar>
+          <SearchInputBox />
           <Select value={locale} onChange={handleLocaleSelectChange}>
             <MenuItem value="ko">Ko</MenuItem>
             <MenuItem value="en">English</MenuItem>
             <MenuItem value="ja">JP</MenuItem>
           </Select>
-        </FormControl>
+        </KeyToolbar>
         <div>
           {translations.map((t) => {
             return <EditableTextCard translation={t.translation} />;
@@ -184,5 +186,13 @@ const KeyLengthBadge = styled.div`
 const KeyContainer = styled.div`
   padding: 24px 32px;
   overflow-y: scroll;
+  width: 100%;
+`;
+
+const KeyToolbar = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
   width: 100%;
 `;
