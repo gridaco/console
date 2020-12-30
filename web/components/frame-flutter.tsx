@@ -170,30 +170,31 @@ export default class FrameFlutter extends React.Component<Props, State> {
 
   render() {
     return (
-      <Resizable
-        ref={(c) => {
-          this.resizable = c;
-        }}
-        defaultSize={{
-          width: 375,
-          height: 812,
-        }}
-        onResize={this.onResize}
-        handleComponent={{
-          bottomRight: BottomRightHandle(),
-        }}
-      >
-        <iframe
-          id="frame"
-          width={this.state.viewportWidth}
-          height={this.state.viewportHeight}
-          src="/quicklook-assets/flutter/frame-flutter.html"
-          sandbox="allow-scripts allow-same-origin"
-          onLoad={this.onIframeLoaded}
-          style={{ border: 0, marginBottom: 12 }}
-        ></iframe>
+      <ResizableWrapper>
+        <Resizable
+          ref={(c) => {
+            this.resizable = c;
+          }}
+          defaultSize={{
+            width: 375,
+            height: 812,
+          }}
+          onResize={this.onResize}
+          handleComponent={{
+            bottomRight: BottomRightHandle(),
+          }}
+        >
+          <Iframe
+            id="frame"
+            width={this.state.viewportWidth}
+            height={this.state.viewportHeight}
+            src="/quicklook-assets/flutter/frame-flutter.html"
+            sandbox="allow-scripts allow-same-origin"
+            onLoad={this.onIframeLoaded}
+          />
+        </Resizable>
         <MessageWrapper>{this.message()}</MessageWrapper>
-      </Resizable>
+      </ResizableWrapper>
     );
   }
 }
@@ -231,6 +232,15 @@ const CustomHandle = (props: any) => (
   />
 );
 
+const ResizableWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Iframe = styled.iframe`
+  border: 0;
+`;
+
 const MessageWrapper = styled.div`
-  margin-bottom: 16px;
+  margin-top: 12px;
 `;
