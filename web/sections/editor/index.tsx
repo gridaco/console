@@ -40,7 +40,6 @@ function Editor(props: EditorProps) {
       />
       <Resizable
         style={{
-          float: 'right',
           padding: '65px',
           paddingBottom: '0',
           backgroundColor: '#F8F8F8',
@@ -68,4 +67,5 @@ export default Editor;
 const Wrapper = styled.div`
   display: flex;
   overflow-y: hidden;
+  justify-content: space-between;
 `;

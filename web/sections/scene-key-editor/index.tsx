@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
 import {
   Typography,
   FormControl,
@@ -6,11 +7,12 @@ import {
   MenuItem,
   Box,
 } from '@material-ui/core';
-import EditableTextCard from '../../components/g11n/editable-text-card';
-import { currentEditorialLocaleAtom } from '../../states/editor-state';
-import { useRecoilState } from 'recoil';
 import { DesignGlobalizationRepository } from '@bridged.xyz/client-sdk/lib/g11n/repository';
 import { LayerTranslation } from '@bridged.xyz/client-sdk/lib/g11n';
+
+import Toolbar from '../../components/toolbar';
+import EditableTextCard from '../../components/g11n/editable-text-card';
+import { currentEditorialLocaleAtom } from '../../states/editor-state';
 import { SceneRepositoryStore } from '../../repositories';
 
 const SceneKeyEditor = (props: {
@@ -54,6 +56,7 @@ const SceneKeyEditor = (props: {
   return (
     <>
       <div>
+        <Toolbar />
         <div className="fileDepthTitle">
           <Typography variant="subtitle1">screens/</Typography>
         </div>
