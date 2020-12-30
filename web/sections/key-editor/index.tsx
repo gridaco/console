@@ -18,6 +18,7 @@ import { TextManifest } from '@reflect.bridged.xyz/core';
 import { TranslationSetForKey } from '../../components/g11n/translation-set-for-key';
 import { DesignGlobalizationRepository } from '@bridged.xyz/client-sdk/lib/g11n/repository';
 import { IGlobalizedKey, Translations } from '@bridged.xyz/client-sdk/lib/g11n';
+import Header from './header';
 
 type SingleKeyEditorMode = 'create-new' | 'edit-existing' | 'loading';
 /**
@@ -190,8 +191,8 @@ function SingleKeyEditorEditExistingState(props: {
   };
 
   return (
-    <div>
-      <Typography variant="h5">{props.gkey.key}</Typography>
+    <>
+      <Header title="Rename Key" />
       <Box m={2}>
         {translations !== undefined ? (
           <TranslationSetForKey
@@ -201,10 +202,12 @@ function SingleKeyEditorEditExistingState(props: {
             translations={translations}
           />
         ) : (
-          <p>loading...</p>
+          <ProgressContainer>
+            <CircularProgress />
+          </ProgressContainer>
         )}
       </Box>
-    </div>
+    </>
   );
 }
 
