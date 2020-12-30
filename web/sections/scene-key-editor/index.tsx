@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { styled } from '@linaria/react';
-import { FormControl, Select, MenuItem } from '@material-ui/core';
+import { FormControl, MenuItem } from '@material-ui/core';
 import { DesignGlobalizationRepository } from '@bridged.xyz/client-sdk/lib/g11n/repository';
 import { LayerTranslation } from '@bridged.xyz/client-sdk/lib/g11n';
 
@@ -10,6 +10,7 @@ import EditableTextCard from '../../components/g11n/editable-text-card';
 import SearchInputBox from '../../components/search/search-input-box';
 import { currentEditorialLocaleAtom } from '../../states/editor-state';
 import { SceneRepositoryStore } from '../../repositories';
+import Select from './select';
 
 const SceneKeyEditor = (props: {
   repository: DesignGlobalizationRepository;
@@ -73,9 +74,9 @@ const SceneKeyEditor = (props: {
         <KeyToolbar>
           <SearchInputBox />
           <Select value={locale} onChange={handleLocaleSelectChange}>
-            <MenuItem value="ko">Ko</MenuItem>
-            <MenuItem value="en">English</MenuItem>
-            <MenuItem value="ja">JP</MenuItem>
+            <option value="ko">Ko</option>
+            <option value="en">English</option>
+            <option value="ja">JP</option>
           </Select>
         </KeyToolbar>
         <div>
