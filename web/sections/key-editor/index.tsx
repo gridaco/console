@@ -7,8 +7,8 @@ import {
   Button,
   CircularProgress,
 } from '@material-ui/core';
-import { targetLayerSelector } from '../../states';
-import { useRecoilValue } from 'recoil';
+import { targetLayerIdAtom, targetLayerSelector } from '../../states';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   NestedAssetPutRequest,
   StorableLayer,
@@ -30,12 +30,18 @@ export default function SingleKeyEditor(props: {
 }) {
   const { repository } = props;
   const targetLayer = useRecoilValue(targetLayerSelector);
+  const setTargetLayerId = useSetRecoilState(targetLayerIdAtom);
   const [mode, setMode] = useState<SingleKeyEditorMode>('loading');
   const [existingKey, setExistingKey] = useState<IGlobalizedKey>(undefined!);
 
+  const goBack = () => {
+    setTargetLayerId(undefined);
+  };
+
   useEffect(() => {
     repository
-      .fetchTranslation(targetLayer.nodeId)
+      // FIXME: layerId type to 'string | undefined' (client-sdk)
+      .fetchTranslation(targetLayer?.nodeId || '')
       .then((d) => {
         if (d) {
           setExistingKey(d);
@@ -48,6 +54,11 @@ export default function SingleKeyEditor(props: {
         setMode('create-new');
       });
   }, []);
+
+  if (!targetLayer) {
+    goBack();
+    return null;
+  }
 
   switch (mode) {
     case 'loading':
@@ -65,6 +76,7 @@ export default function SingleKeyEditor(props: {
           layer={targetLayer}
           repository={repository}
           gkey={existingKey}
+          goBack={goBack}
         />
       );
   }
@@ -168,6 +180,7 @@ function SingleKeyEditorEditExistingState(props: {
   layer: StorableLayer;
   gkey: IGlobalizedKey;
   repository: DesignGlobalizationRepository;
+  goBack: () => void;
 }) {
   const repository = props.repository;
 
@@ -193,7 +206,7 @@ function SingleKeyEditorEditExistingState(props: {
 
   return (
     <>
-      <Header title="Rename Key" />
+      <Header title="Rename Key" onClickBack={props.goBack} />
       <EditorContent>
         <FieldWrapper>
           <InputField>Key Name</InputField>

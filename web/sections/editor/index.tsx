@@ -54,7 +54,7 @@ function Editor(props: EditorProps) {
         maxHeight="calc(100vh - 56px)"
       >
         {editorSwitch() ? (
-          <SingleKeyEditor key={targetLayer.nodeId} repository={repository} />
+          <SingleKeyEditor key={targetLayer?.nodeId} repository={repository} />
         ) : (
           <SceneKeyEditor repository={repository} />
         )}
