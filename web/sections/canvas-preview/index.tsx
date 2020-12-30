@@ -44,5 +44,5 @@ export default function CanvasPreview(props: {
 const PreviewWrapper = styled.div`
   flex: 1;
   display: flex;
-  height: 100vh;
+  height: calc(100vh - 56px);
 `;

@@ -57,7 +57,7 @@ const SceneKeyEditor = (props: {
   return (
     <>
       <Toolbar />
-      <div className="fileDepthTitle">
+      {/* <div className="fileDepthTitle">
         <Typography variant="subtitle1">screens/</Typography>
       </div>
       <div className="screenName">
@@ -67,7 +67,7 @@ const SceneKeyEditor = (props: {
         <Typography variant="subtitle1" align="left" style={{ float: 'left' }}>
           {translations.length} keys
         </Typography>
-      </Box>
+      </Box> */}
       <KeyContainer>
         <Box m={2}>
           <FormControl>
@@ -93,4 +93,5 @@ export default SceneKeyEditor;
 const KeyContainer = styled.div`
   padding: 24px 32px;
   overflow-y: scroll;
+  width: 100%;
 `;

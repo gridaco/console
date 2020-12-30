@@ -40,16 +40,18 @@ function Editor(props: EditorProps) {
       />
       <Resizable
         style={{
-          paddingBottom: '0',
+          paddingBottom: 0,
           backgroundColor: '#fff',
+          display: 'flex',
+          flexDirection: 'column',
         }}
         defaultSize={{
           width: '50%',
-          height: '100vh',
+          height: 'calc(100vh - 56px)',
         }}
         maxWidth="50%"
         minWidth="20%"
-        minHeight="100vh"
+        maxHeight="calc(100vh - 56px)"
       >
         {editorSwitch() ? (
           <SingleKeyEditor key={targetLayer.nodeId} repository={repository} />

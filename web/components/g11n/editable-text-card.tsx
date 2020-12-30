@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useRecoilState } from 'recoil';
 import { styled } from '@linaria/react';
 
@@ -12,12 +12,18 @@ import { Grid, Box, Typography } from '@material-ui/core';
 import { currentEditorialLocaleAtom } from '../../states/editor-state';
 import { TranslationFieldRow } from './translation-field';
 
+const availableLocales = ['ko', 'en', 'ja'];
+
 interface IEditableTextCard {
   translation: IGlobalizedKey;
 }
 
 const EditableTextCard: React.FC<IEditableTextCard> = ({ translation }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const translations = useMemo(() => Object.keys(translation.translations), [
+    translation.translations,
+  ]);
 
   const [editorialLoclae] = useRecoilState(currentEditorialLocaleAtom);
   const defaultLocaleTranslationValue =
@@ -28,6 +34,16 @@ const EditableTextCard: React.FC<IEditableTextCard> = ({ translation }) => {
     console.log('handleOnTranslationValueChange', locale, value);
   };
 
+  const [translationLength, availableLocaleLength, isComplete] = useMemo(() => {
+    const translationLength = translations.length;
+    const availableLocaleLength = availableLocales.length;
+    return [
+      translationLength,
+      availableLocaleLength,
+      translationLength === availableLocaleLength,
+    ];
+  }, []);
+
   return (
     <Container>
       <Summary onClick={() => setIsOpen(!isOpen)}>
@@ -35,22 +51,23 @@ const EditableTextCard: React.FC<IEditableTextCard> = ({ translation }) => {
           <KeyName>{translation.key}</KeyName>
           <KeyTranslation>{defaultLocaleTranslationValue}</KeyTranslation>
         </KeyInformation>
-        <Box
-          p={1}
-          color={'#62D066'}
-          style={{
-            borderRadius: 4,
-            backgroundColor: '#DDFFDE',
-          }}
-        >
-          <Typography align="center">3/3</Typography>
-        </Box>
+        <BadgeRow>
+          <Badge data-success={isComplete && 'true'}>
+            {`${translationLength}/${availableLocaleLength}`}
+          </Badge>
+          <DropdownIcon
+            src="/assets/icons/mdi_arrow_drop_down_round.svg"
+            style={{
+              transform: isOpen ? 'rotate(180deg)' : undefined,
+            }}
+          />
+        </BadgeRow>
       </Summary>
       {isOpen && (
         <KeyList>
-          {Object.keys(translation.translations).map((k) => {
+          {translations.map((key) => {
             const keyId = translation.id;
-            const localekey = k;
+            const localekey = key;
             const localeTranslationAsset = (translation.translations as any)[
               localekey
             ] as RawAsset;
@@ -105,6 +122,37 @@ const KeyTranslation = styled.p`
   font-size: 14px;
   line-height: 1.2;
   color: #717278;
+`;
+
+const BadgeRow = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: auto;
+`;
+
+const Badge = styled.span`
+  background-color: #fcd6d6;
+  border-radius: 4px;
+  font-size: 12px;
+  line-height: 1.2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 8px;
+  color: #ff5353;
+
+  &[data-success='true'] {
+    background-color: #ddffde;
+    color: #62d066;
+  }
+`;
+
+const DropdownIcon = styled.img`
+  height: 20px;
+  width: 20px;
+  margin-left: 4px;
+  user-select: none;
+  -webkit-user-drag: none;
 `;
 
 const KeyList = styled.ul`
