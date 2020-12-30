@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import React from 'react';
+import { useRecoilState } from 'recoil';
 import { styled } from '@linaria/react';
 
+import TextInput from './text-input';
 import { currentTextEditValueAtom } from '../../states';
 
 /**
@@ -53,7 +54,7 @@ export const TranslationEditField = ({
   };
 
   return (
-    <TextField
+    <StyledTextInput
       onKeyPress={(event) => {
         if (event.key === 'Enter') {
           handleOnSubmit(event);
@@ -88,20 +89,10 @@ const LocaleText = styled.div`
   }
 `;
 
-const TextField = styled.input`
-  background: #f9f9f9;
-  border: 1px solid #dadadc;
-  border-radius: 4px;
-  padding: 9px 12px;
-  font-size: 13px;
-  line-height: 1.2;
-  color: #151617;
-  flex: 1;
+const StyledTextInput = styled(TextInput)`
   margin-left: 12px;
 
   &[data-auto-translate='true'] {
-    background: #edf2ff;
-    border: 1px solid #2562ff;
     margin-right: 16px;
   }
 `;

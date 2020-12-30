@@ -19,6 +19,7 @@ import { TranslationSetForKey } from '../../components/g11n/translation-set-for-
 import { DesignGlobalizationRepository } from '@bridged.xyz/client-sdk/lib/g11n/repository';
 import { IGlobalizedKey, Translations } from '@bridged.xyz/client-sdk/lib/g11n';
 import Header from './header';
+import TextInput from '../../components/g11n/text-input';
 
 type SingleKeyEditorMode = 'create-new' | 'edit-existing' | 'loading';
 /**
@@ -193,20 +194,27 @@ function SingleKeyEditorEditExistingState(props: {
   return (
     <>
       <Header title="Rename Key" />
-      <Box m={2}>
-        {translations !== undefined ? (
-          <TranslationSetForKey
-            key={props.gkey.key}
-            locales={repository.locales}
-            onSubmit={handleTranslationUpdate}
-            translations={translations}
-          />
-        ) : (
-          <ProgressContainer>
-            <CircularProgress />
-          </ProgressContainer>
-        )}
-      </Box>
+      <EditorContent>
+        <FieldWrapper>
+          <InputField>Key Name</InputField>
+          <TextInput value={props.gkey.key} disabled />
+        </FieldWrapper>
+        <FieldWrapper>
+          <InputField>Value</InputField>
+          {translations !== undefined ? (
+            <TranslationSetForKey
+              key={props.gkey.key}
+              locales={repository.locales}
+              onSubmit={handleTranslationUpdate}
+              translations={translations}
+            />
+          ) : (
+            <ProgressContainer>
+              <CircularProgress />
+            </ProgressContainer>
+          )}
+        </FieldWrapper>
+      </EditorContent>
     </>
   );
 }
@@ -216,4 +224,23 @@ const ProgressContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+const EditorContent = styled.div`
+  padding: 24px 32px;
+`;
+
+const FieldWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 32px;
+`;
+
+const InputField = styled.h2`
+  margin: 0;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 1.2;
+  color: #888888;
+  margin-bottom: 16px;
 `;
