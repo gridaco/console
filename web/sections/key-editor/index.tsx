@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { styled } from '@linaria/react';
 import {
   Typography,
   TextField,
@@ -6,8 +7,8 @@ import {
   Button,
   CircularProgress,
 } from '@material-ui/core';
-import { targetLayerSelector } from '../../states';
-import { useRecoilValue } from 'recoil';
+import { targetLayerIdAtom, targetLayerSelector } from '../../states';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   NestedAssetPutRequest,
   StorableLayer,
@@ -17,6 +18,8 @@ import { TextManifest } from '@reflect.bridged.xyz/core';
 import { TranslationSetForKey } from '../../components/g11n/translation-set-for-key';
 import { DesignGlobalizationRepository } from '@bridged.xyz/client-sdk/lib/g11n/repository';
 import { IGlobalizedKey, Translations } from '@bridged.xyz/client-sdk/lib/g11n';
+import Header from './header';
+import TextInput from '../../components/g11n/text-input';
 
 type SingleKeyEditorMode = 'create-new' | 'edit-existing' | 'loading';
 /**
@@ -27,12 +30,18 @@ export default function SingleKeyEditor(props: {
 }) {
   const { repository } = props;
   const targetLayer = useRecoilValue(targetLayerSelector);
+  const setTargetLayerId = useSetRecoilState(targetLayerIdAtom);
   const [mode, setMode] = useState<SingleKeyEditorMode>('loading');
   const [existingKey, setExistingKey] = useState<IGlobalizedKey>(undefined!);
 
+  const goBack = () => {
+    setTargetLayerId(undefined);
+  };
+
   useEffect(() => {
     repository
-      .fetchTranslation(targetLayer.nodeId)
+      // FIXME: layerId type to 'string | undefined' (client-sdk)
+      .fetchTranslation(targetLayer?.nodeId || '')
       .then((d) => {
         if (d) {
           setExistingKey(d);
@@ -46,6 +55,11 @@ export default function SingleKeyEditor(props: {
       });
   }, []);
 
+  if (!targetLayer) {
+    goBack();
+    return null;
+  }
+
   switch (mode) {
     case 'loading':
       return <SingleKeyEditorLoadingState />;
@@ -54,6 +68,7 @@ export default function SingleKeyEditor(props: {
         <SingleKeyEditorCreateNewState
           layer={targetLayer}
           repository={repository}
+          goBack={goBack}
         />
       );
     case 'edit-existing':
@@ -62,18 +77,24 @@ export default function SingleKeyEditor(props: {
           layer={targetLayer}
           repository={repository}
           gkey={existingKey}
+          goBack={goBack}
         />
       );
   }
 }
 
 function SingleKeyEditorLoadingState() {
-  return <CircularProgress></CircularProgress>;
+  return (
+    <ProgressContainer>
+      <CircularProgress />
+    </ProgressContainer>
+  );
 }
 
 function SingleKeyEditorCreateNewState(props: {
   layer: StorableLayer;
   repository: DesignGlobalizationRepository;
+  goBack: () => void;
 }) {
   const { layer, repository } = props;
   const [state, setState] = useState<string>('loaded');
@@ -120,12 +141,12 @@ function SingleKeyEditorCreateNewState(props: {
 
   return (
     <>
-      <div>
+      <Header title="Add Key" onClickBack={props.goBack} />
+      <EditorContent>
         <div className="fileDepthTitle">
           <Typography variant="subtitle1">navigation1/</Typography>
         </div>
         <div className="textKey">
-          <Typography variant="h2">Add Key</Typography>
           <Typography variant="h6">
             no key is set for selected layer "{textValue}"
           </Typography>
@@ -152,7 +173,7 @@ function SingleKeyEditorCreateNewState(props: {
         <Button variant="contained" onClick={handleCreateKeyClick}>
           create key
         </Button>
-      </div>
+      </EditorContent>
     </>
   );
 }
@@ -161,6 +182,7 @@ function SingleKeyEditorEditExistingState(props: {
   layer: StorableLayer;
   gkey: IGlobalizedKey;
   repository: DesignGlobalizationRepository;
+  goBack: () => void;
 }) {
   const repository = props.repository;
 
@@ -185,20 +207,55 @@ function SingleKeyEditorEditExistingState(props: {
   };
 
   return (
-    <div>
-      <Typography variant="h5">{props.gkey.key}</Typography>
-      <Box m={2}>
-        {translations !== undefined ? (
-          <TranslationSetForKey
-            key={props.gkey.key}
-            locales={repository.locales}
-            onSubmit={handleTranslationUpdate}
-            translations={translations}
-          />
-        ) : (
-          <p>loading...</p>
-        )}
-      </Box>
-    </div>
+    <>
+      <Header title="Rename Key" onClickBack={props.goBack} />
+      <EditorContent>
+        <FieldWrapper>
+          <InputField>Key Name</InputField>
+          <TextInput value={props.gkey.key} disabled />
+        </FieldWrapper>
+        <FieldWrapper>
+          <InputField>Value</InputField>
+          {translations !== undefined ? (
+            <TranslationSetForKey
+              key={props.gkey.key}
+              locales={repository.locales}
+              onSubmit={handleTranslationUpdate}
+              translations={translations}
+            />
+          ) : (
+            <ProgressContainer>
+              <CircularProgress />
+            </ProgressContainer>
+          )}
+        </FieldWrapper>
+      </EditorContent>
+    </>
   );
 }
+
+const ProgressContainer = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const EditorContent = styled.div`
+  padding: 24px 32px;
+`;
+
+const FieldWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 32px;
+`;
+
+const InputField = styled.h2`
+  margin: 0;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 1.2;
+  color: #888888;
+  margin-bottom: 16px;
+`;

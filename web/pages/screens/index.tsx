@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import DashboardLayout from '../../layouts/dashboard';
 import { SceneItem } from '../../components/scene-item';
-import SearchBox from '../../components/search/search-box';
+import SearchFormBox from '../../components/search/search-form-box';
 
 import mockups from '../../mockups/screens';
 
@@ -61,7 +61,7 @@ export default function ScreensPage() {
 
   return (
     <DashboardLayout title="Overview">
-      <SearchBox
+      <SearchFormBox
         style={{
           marginBottom: 24,
         }}

@@ -1,42 +1,44 @@
-import React, { useEffect } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import React from 'react';
+import { useRecoilState } from 'recoil';
 import { styled } from '@linaria/react';
 
+import TextInput from './text-input';
 import { currentTextEditValueAtom } from '../../states';
 
 /**
  * single field with translation compatability
  */
-export function TranslationFieldRow(props: {
+interface ITranslationFieldRow {
   key: string;
   locale: string;
   initialValue?: string;
   onSubmit: (locale: string, value: string) => void;
-}) {
-  const onSubmit = (value: string) => {
-    props.onSubmit(props.locale, value);
-  };
+  isAutoTranslate?: boolean;
+}
 
+export const TranslationFieldRow: React.FC<ITranslationFieldRow> = ({
+  isAutoTranslate,
+  ...props
+}) => {
   return (
     <Wrapper>
       <LocaleText>
         <span>{props.locale}</span>
       </LocaleText>
-      <TranslationEditField {...props} onSubmit={onSubmit} />
-      {/* TODO: onClick for Button */}
-      <Button>
-        <span>Accept</span>
-      </Button>
+      <TranslationEditField isAutoTranslate={isAutoTranslate} {...props} />
+      {isAutoTranslate && (
+        <Button>
+          <span>Accept</span>
+        </Button>
+      )}
     </Wrapper>
   );
-}
+};
 
-export function TranslationEditField(props: {
-  key: string;
-  locale: string;
-  initialValue?: string;
-  onSubmit: (s: string) => void;
-}) {
+export const TranslationEditField = ({
+  isAutoTranslate,
+  ...props
+}: ITranslationFieldRow) => {
   const [currentEditTextValue, setCurrentEditTextValue] = useRecoilState(
     currentTextEditValueAtom
   );
@@ -48,22 +50,23 @@ export function TranslationEditField(props: {
   // on key down, when enter key is pressed via keyboard or save button clicked.
   const handleOnSubmit = (e: any) => {
     console.log('saving translation - ', currentEditTextValue);
-    props.onSubmit(currentEditTextValue);
+    props.onSubmit(props.locale, currentEditTextValue);
   };
 
   return (
-    <TextField
-      onKeyPress={(ev) => {
-        if (ev.key === 'Enter') {
-          handleOnSubmit(ev);
-          ev.preventDefault();
+    <StyledTextInput
+      onKeyPress={(event) => {
+        if (event.key === 'Enter') {
+          handleOnSubmit(event);
+          event.preventDefault();
         }
       }}
       defaultValue={props.initialValue}
       onChange={handleEdit}
+      data-auto-translate={isAutoTranslate && 'true'}
     />
   );
-}
+};
 
 const Wrapper = styled.li`
   display: flex;
@@ -86,17 +89,12 @@ const LocaleText = styled.div`
   }
 `;
 
-const TextField = styled.input`
-  background: #edf2ff;
-  border: 1px solid #2562ff;
-  border-radius: 4px;
-  padding: 9px 12px;
-  font-size: 13px;
-  line-height: 1.2;
-  color: #151617;
-  flex: 1;
+const StyledTextInput = styled(TextInput)`
   margin-left: 12px;
-  margin-right: 16px;
+
+  &[data-auto-translate='true'] {
+    margin-right: 16px;
+  }
 `;
 
 const Button = styled.button`

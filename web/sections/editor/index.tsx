@@ -54,7 +54,7 @@ function Editor(props: EditorProps) {
         maxHeight="calc(100vh - 56px)"
       >
         {editorSwitch() ? (
-          <SingleKeyEditor key={targetLayer.nodeId} repository={repository} />
+          <SingleKeyEditor key={targetLayer?.nodeId} repository={repository} />
         ) : (
           <SceneKeyEditor repository={repository} />
         )}
@@ -67,7 +67,7 @@ export default Editor;
 
 const Wrapper = styled.div`
   display: flex;
-  overflow-y: hidden;
+  overflow: hidden;
   justify-content: space-between;
   margin-top: 56px;
 `;

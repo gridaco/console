@@ -4,7 +4,7 @@ import { styled } from '@linaria/react';
 
 import DashboardLayout from '../../layouts/dashboard';
 import Button from '../../components/button';
-import SearchBox from '../../components/search/search-box';
+import SearchFormBox from '../../components/search/search-form-box';
 import { AssetListItem, AssetGridItem } from '../../components/asset-item';
 import IconButton from '../../components/icon-button';
 import SelectedAssetInformation from '../../components/assets/selected-asset-information';
@@ -54,7 +54,7 @@ export default function AssetsPage() {
       rightChildren={selectedAsset && <SelectedAssetInformation />}
     >
       <Toolbar>
-        <SearchBox inputStyle={{ width: 264 }} />
+        <SearchFormBox containerStyle={{ width: 264 }} />
         <Button>UPLOAD NEW</Button>
       </Toolbar>
       <TabBar>

@@ -1,10 +1,12 @@
 import React from 'react';
 import { styled } from '@linaria/react';
 
-const Select: React.FC = ({ children }) => {
+interface ISelect extends React.SelectHTMLAttributes<HTMLSelectElement> {}
+
+const Select: React.FC<ISelect> = ({ children, ...props }) => {
   return (
     <SelectContainer>
-      <LargeSelect>{children}</LargeSelect>
+      <LargeSelect {...props}>{children}</LargeSelect>
       <SelectIconWrapper>
         <SelectIconImage src="/assets/icons/mdi_keyboard_arrow_down.svg" />
       </SelectIconWrapper>
@@ -15,11 +17,11 @@ const Select: React.FC = ({ children }) => {
 export default Select;
 
 const SelectContainer = styled.div`
-  background: #3491ff;
+  background: #151617;
+  border-radius: 6px;
   display: flex;
   align-items: center;
   position: relative;
-  border-radius: 6px;
   cursor: pointer;
 `;
 
@@ -27,21 +29,22 @@ const LargeSelect = styled.select`
   appearance: none;
   background: transparent;
   color: white;
+  font-weight: 500;
   font-size: 14px;
   line-height: 1.2;
   letter-spacing: 0.3px;
   border: 0;
-  padding: 4px 9px;
-  padding-right: 36px;
-  min-height: 31px;
+  padding: 8px 12px;
+  padding-right: 44px;
+  min-height: 40px;
 `;
 
 const SelectIconWrapper = styled.div`
   position: absolute;
   top: 0;
   bottom: 0;
-  right: 8px;
-  padding: 4px 0;
+  right: 12px;
+  padding: 8px 0;
 `;
 
 const SelectIconImage = styled.img`

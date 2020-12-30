@@ -7,7 +7,6 @@ import {
   IGlobalizedKey,
 } from '@bridged.xyz/client-sdk/lib/g11n';
 import { RawAsset } from '@bridged.xyz/client-sdk/lib/assets';
-import { Grid, Box, Typography } from '@material-ui/core';
 
 import { currentEditorialLocaleAtom } from '../../states/editor-state';
 import { TranslationFieldRow } from './translation-field';
