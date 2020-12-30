@@ -55,7 +55,6 @@ const CanvasStage = (props: { sceneRepository?: SceneLocalRepository }) => {
           margin: 'auto',
           position: 'relative',
           width: scene.width,
-          paddingTop: 56,
         }}
       >
         <Stage
