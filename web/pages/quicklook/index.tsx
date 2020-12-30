@@ -78,6 +78,14 @@ export default function Frame() {
     }
   };
 
+  // opens vs code; code editor for editing this source on developer's local environment.
+  const openVSCode = () => {
+    // todo -- pass params for rerouting on the editor
+    window.location.href = 'vscode://file';
+    // not using this line since its purpose on oppening app on same window.
+    // open('vscode://file')
+  }
+
   const hasDiff = () => {
     return editingSource !== source;
   };
@@ -107,6 +115,16 @@ export default function Frame() {
         <SideContainer style={{ width: '45vw' }}>
           <Toolbar toGlobalization={query.globalizationRedirect}>
             <ButtonList>
+              <Button
+                style={{
+                  backgroundColor: '#151617',
+                }}
+                onClick={openVSCode}
+              >
+                <ButtonIconImage src="/assets/icons/bridged_brand_icons_vscode_white.svg" />
+                <span>VS CODE</span>
+              </Button>
+              <div style={{ marginLeft: 12 }}></div>
               <Button
                 style={{
                   backgroundColor: '#2562FF',
