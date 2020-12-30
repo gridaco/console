@@ -256,7 +256,10 @@ function EditableG11nText(props: {
         verticalAlign={props.manifest.textAlignVertical}
         fontSize={props.manifest.style.fontSize}
         ellipsis={true}
-        // TODO implement font loading
+        fill={convertReflectColorToUniversal(
+          props.manifest.style.color,
+          ColorFormat.hex6
+        )}
         fontFamily="'Arial'" //{`"${props.text.style.fontFamily}"`}
         width={props.width}
         height={props.height}
