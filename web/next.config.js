@@ -29,6 +29,16 @@ module.exports = withCSS(
         })
       );
 
+      config.module.rules.map((rule) => {
+        if (rule.test !== undefined && rule.test.source.includes('|svg|')) {
+          rule.test = new RegExp(rule.test.source.replace('|svg|', '|'));
+        }
+      });
+      config.module.rules.push({
+        test: /\.svg$/,
+        use: ['@svgr/webpack'],
+      });
+
       const jsLoaderRule = config.module.rules.find(
         (rule) => rule.test instanceof RegExp && rule.test.test('.js')
       );

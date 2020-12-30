@@ -15,6 +15,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 import FrameFlutter from '../../components/frame-flutter';
 import DashboardAppbar from '../../components/appbar/dashboard.appbar';
+import Background from '../../components/canvas/background';
+import Toolbar from '../../components/toolbar';
 
 const MonacoEditor = dynamic(import('react-monaco-editor'), { ssr: false });
 
@@ -76,6 +78,14 @@ export default function Frame() {
     }
   };
 
+  // opens vs code; code editor for editing this source on developer's local environment.
+  const openVSCode = () => {
+    // todo -- pass params for rerouting on the editor
+    window.location.href = 'vscode://file';
+    // not using this line since its purpose on oppening app on same window.
+    // open('vscode://file')
+  }
+
   const hasDiff = () => {
     return editingSource !== source;
   };
@@ -93,30 +103,28 @@ export default function Frame() {
       />
       <Wrapper>
         <SideContainer>
-          <FrameBackground>
+          <Background>
             {appFrame({
               id: query.id,
               framework: query.framework,
               source: source,
               language: query.language,
             })}
-          </FrameBackground>
+          </Background>
         </SideContainer>
         <SideContainer style={{ width: '45vw' }}>
-          <Toolbar>
-            <TabList>
-              <TabButton style={{ color: '#000000', marginRight: 8 }}>
-                <TabIconImage src="/assets/icons/mdi_code_round.svg" />
-                Code Editor
-              </TabButton>
-              <a href={query.globalizationRedirect}>
-                <TabButton>
-                  <TabIconImage src="/assets/icons/mdi_language_round.svg" />
-                  Language translation
-                </TabButton>
-              </a>
-            </TabList>
+          <Toolbar toGlobalization={query.globalizationRedirect}>
             <ButtonList>
+              <Button
+                style={{
+                  backgroundColor: '#151617',
+                }}
+                onClick={openVSCode}
+              >
+                <ButtonIconImage src="/assets/icons/bridged_brand_icons_vscode_white.svg" />
+                <span>VS CODE</span>
+              </Button>
+              <div style={{ marginLeft: 12 }}></div>
               <Button
                 style={{
                   backgroundColor: '#2562FF',
@@ -203,56 +211,6 @@ const SideContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-`;
-
-const FrameBackground = styled.div`
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(90deg, #f1f1f1 20px, transparent 1%) center,
-    linear-gradient(#f1f1f1 20px, transparent 1%) center, #e8e1e1;
-  background-size: 24px 24px;
-`;
-
-const Toolbar = styled.div`
-  padding: 10px 12px;
-  background: #ffffff;
-  box-shadow: inset 0px -1px 0px #e3e3e3;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const TabList = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const TabButton = styled.button`
-  border: 0;
-  background-color: transparent;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 1.2;
-  color: #dadadc;
-  border-radius: 4px;
-  padding: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-
-  &:active,
-  &:focus {
-    outline: 0;
-  }
-`;
-
-const TabIconImage = styled.img`
-  margin-right: 8px;
-  width: 24px;
-  height: 24px;
 `;
 
 const ButtonList = styled.div`

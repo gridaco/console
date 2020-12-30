@@ -1,17 +1,13 @@
-import React from 'react';
-import './background.module.scss';
+import { styled } from '@linaria/react';
 
-export function CanvasBackground(props: { onClick: (e: any) => void }) {
-  return (
-    <div
-      className="canvas-bg"
-      style={{
-        width: '50vw',
-        height: '100vw',
-        position: 'absolute',
-        top: 0,
-      }}
-      onClick={props.onClick}
-    ></div>
-  );
-}
+const Background = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(90deg, #f1f1f1 20px, transparent 1%) center,
+    linear-gradient(#f1f1f1 20px, transparent 1%) center, #e8e1e1;
+  background-size: 24px 24px;
+`;
+
+export default Background;

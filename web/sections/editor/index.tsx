@@ -1,15 +1,18 @@
 import React from 'react';
-import SceneKeyEditor from '../scene-key-editor';
-import Preview from '../canvas-preview';
-import SingleKeyEditor from '../key-editor';
-import { editorState } from '../../states/text-editor.state';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { Resizable } from 're-resizable';
-import { SceneLocalRepository, SceneRepositoryStore } from '../../repositories';
+import { styled } from '@linaria/react';
 import { DesignGlobalizationRepositoriesStore } from '@bridged.xyz/client-sdk/lib/g11n/repository';
+
 import { targetLayerSelector } from '../../states';
+import { editorState } from '../../states/text-editor.state';
+import SceneKeyEditor from '../scene-key-editor';
+import CanvasPreview from '../canvas-preview';
+import SingleKeyEditor from '../key-editor';
+import { SceneLocalRepository, SceneRepositoryStore } from '../../repositories';
 
 type EditorMode = 'translation' | 'preview' | 'prototype' | '*';
+
 interface EditorProps {
   mode: EditorMode;
   projectId?: string;
@@ -27,8 +30,8 @@ function Editor(props: EditorProps) {
   const repository = DesignGlobalizationRepositoriesStore.find(props.sceneId);
 
   return (
-    <>
-      <Preview
+    <Wrapper>
+      <CanvasPreview
         onBackgroundClick={(e) => {
           console.log(e);
           setIsSelect(false);
@@ -37,18 +40,18 @@ function Editor(props: EditorProps) {
       />
       <Resizable
         style={{
-          float: 'right',
-          padding: '65px',
-          paddingBottom: '0',
-          backgroundColor: '#F8F8F8',
+          paddingBottom: 0,
+          backgroundColor: '#fff',
+          display: 'flex',
+          flexDirection: 'column',
         }}
         defaultSize={{
           width: '50%',
-          height: '100vh',
+          height: 'calc(100vh - 56px)',
         }}
         maxWidth="50%"
         minWidth="20%"
-        minHeight="100vh"
+        maxHeight="calc(100vh - 56px)"
       >
         {editorSwitch() ? (
           <SingleKeyEditor key={targetLayer.nodeId} repository={repository} />
@@ -56,8 +59,15 @@ function Editor(props: EditorProps) {
           <SceneKeyEditor repository={repository} />
         )}
       </Resizable>
-    </>
+    </Wrapper>
   );
 }
 
 export default Editor;
+
+const Wrapper = styled.div`
+  display: flex;
+  overflow-y: hidden;
+  justify-content: space-between;
+  margin-top: 56px;
+`;
