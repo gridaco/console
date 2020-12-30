@@ -15,6 +15,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 import FrameFlutter from '../../components/frame-flutter';
 import DashboardAppbar from '../../components/appbar/dashboard.appbar';
+import Background from '../../components/canvas/background';
 
 const MonacoEditor = dynamic(import('react-monaco-editor'), { ssr: false });
 
@@ -93,14 +94,14 @@ export default function Frame() {
       />
       <Wrapper>
         <SideContainer>
-          <FrameBackground>
+          <Background>
             {appFrame({
               id: query.id,
               framework: query.framework,
               source: source,
               language: query.language,
             })}
-          </FrameBackground>
+          </Background>
         </SideContainer>
         <SideContainer style={{ width: '45vw' }}>
           <Toolbar>
@@ -203,16 +204,6 @@ const SideContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-`;
-
-const FrameBackground = styled.div`
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(90deg, #f1f1f1 20px, transparent 1%) center,
-    linear-gradient(#f1f1f1 20px, transparent 1%) center, #e8e1e1;
-  background-size: 24px 24px;
 `;
 
 const Toolbar = styled.div`

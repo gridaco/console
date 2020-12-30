@@ -1,15 +1,18 @@
 import React from 'react';
-import SceneKeyEditor from '../scene-key-editor';
-import Preview from '../canvas-preview';
-import SingleKeyEditor from '../key-editor';
-import { editorState } from '../../states/text-editor.state';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { Resizable } from 're-resizable';
-import { SceneLocalRepository, SceneRepositoryStore } from '../../repositories';
+import { styled } from '@linaria/react';
 import { DesignGlobalizationRepositoriesStore } from '@bridged.xyz/client-sdk/lib/g11n/repository';
+
 import { targetLayerSelector } from '../../states';
+import { editorState } from '../../states/text-editor.state';
+import SceneKeyEditor from '../scene-key-editor';
+import CanvasPreview from '../canvas-preview';
+import SingleKeyEditor from '../key-editor';
+import { SceneLocalRepository, SceneRepositoryStore } from '../../repositories';
 
 type EditorMode = 'translation' | 'preview' | 'prototype' | '*';
+
 interface EditorProps {
   mode: EditorMode;
   projectId?: string;
@@ -27,8 +30,8 @@ function Editor(props: EditorProps) {
   const repository = DesignGlobalizationRepositoriesStore.find(props.sceneId);
 
   return (
-    <>
-      <Preview
+    <Wrapper>
+      <CanvasPreview
         onBackgroundClick={(e) => {
           console.log(e);
           setIsSelect(false);
@@ -56,8 +59,12 @@ function Editor(props: EditorProps) {
           <SceneKeyEditor repository={repository} />
         )}
       </Resizable>
-    </>
+    </Wrapper>
   );
 }
 
 export default Editor;
+
+const Wrapper = styled.div`
+  display: flex;
+`;
