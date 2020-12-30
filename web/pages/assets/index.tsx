@@ -54,7 +54,7 @@ export default function AssetsPage() {
       rightChildren={selectedAsset && <SelectedAssetInformation />}
     >
       <Toolbar>
-        <SearchFormBox inputStyle={{ width: 264 }} />
+        <SearchFormBox containerStyle={{ width: 264 }} />
         <Button>UPLOAD NEW</Button>
       </Toolbar>
       <TabBar>

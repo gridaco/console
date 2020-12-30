@@ -3,23 +3,22 @@ import { styled } from '@linaria/react';
 
 import IconButton from '../icon-button';
 
-interface ISearchInputBox {
-  style?: React.CSSProperties;
-  inputStyle?: React.CSSProperties;
+interface ISearchInputBox extends React.InputHTMLAttributes<HTMLInputElement> {
+  containerStyle?: React.CSSProperties;
   placeholder?: string;
 }
 
 export default function SearchInputBox({
-  style,
-  inputStyle,
+  containerStyle,
   placeholder = 'Search your stuff',
+  ...inputProps
 }: ISearchInputBox) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const onClickInputWrapper = () => inputRef?.current?.focus();
 
   return (
-    <InputWrapper style={inputStyle} onClick={onClickInputWrapper}>
+    <InputWrapper style={containerStyle} onClick={onClickInputWrapper}>
       <IconButton aria-label="search">
         <IconImage src="/assets/icons/mdi_search.svg" />
       </IconButton>
@@ -27,6 +26,7 @@ export default function SearchInputBox({
         ref={inputRef}
         placeholder={placeholder}
         aria-label={placeholder}
+        {...inputProps}
       />
     </InputWrapper>
   );

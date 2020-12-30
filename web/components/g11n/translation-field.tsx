@@ -54,10 +54,10 @@ export const TranslationEditField = ({
 
   return (
     <TextField
-      onKeyPress={(ev) => {
-        if (ev.key === 'Enter') {
-          handleOnSubmit(ev);
-          ev.preventDefault();
+      onKeyPress={(event) => {
+        if (event.key === 'Enter') {
+          handleOnSubmit(event);
+          event.preventDefault();
         }
       }}
       defaultValue={props.initialValue}

@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useRecoilState } from 'recoil';
 import { styled } from '@linaria/react';
-import { FormControl, MenuItem } from '@material-ui/core';
 import { DesignGlobalizationRepository } from '@bridged.xyz/client-sdk/lib/g11n/repository';
 import { LayerTranslation } from '@bridged.xyz/client-sdk/lib/g11n';
 
@@ -12,18 +11,22 @@ import { currentEditorialLocaleAtom } from '../../states/editor-state';
 import { SceneRepositoryStore } from '../../repositories';
 import Select from './select';
 
-const SceneKeyEditor = (props: {
+interface ISceneKeyEditor {
   repository: DesignGlobalizationRepository;
-}) => {
-  const { repository } = props;
+}
 
+const SceneKeyEditor: React.FC<ISceneKeyEditor> = ({ repository }) => {
+  const [query, setQuery] = useState<string>('');
   const [translations, setTranslations] = useState<
     ReadonlyArray<LayerTranslation>
   >([]);
   const [locale, setLocale] = useRecoilState(currentEditorialLocaleAtom);
-  const handleLocaleSelectChange = (e: any) => {
-    setLocale(e.target.value as string);
-  };
+
+  const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setQuery(e.target.value);
+
+  const handleLocaleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
+    setLocale(e.target.value);
 
   let sceneName = 'loading...';
   if (repository) {
@@ -33,22 +36,24 @@ const SceneKeyEditor = (props: {
   }
 
   useEffect(() => {
-    let mounted = true;
-    console.log('fetching translations under scene', props.repository.sceneId);
+    // let mounted = true;
+    console.log('fetching translations under scene', repository.sceneId);
     repository
       .fetchTranslations()
       .then((d) => {
-        console.log(
-          'fetched translations under scene',
-          props.repository.sceneId,
-          d
-        );
+        console.log('fetched translations under scene', repository.sceneId, d);
         setTranslations(d);
       })
       .catch((e) => {
         console.error(e);
       });
   }, []);
+
+  const filteredTranslations = useMemo(() => {
+    return translations.filter(({ translation: { key } }) =>
+      key.includes(query)
+    );
+  }, [translations, query]);
 
   return (
     <>
@@ -72,7 +77,7 @@ const SceneKeyEditor = (props: {
       </Header>
       <KeyContainer>
         <KeyToolbar>
-          <SearchInputBox />
+          <SearchInputBox value={query} onChange={handleQueryChange} />
           <Select value={locale} onChange={handleLocaleSelectChange}>
             <option value="ko">Ko</option>
             <option value="en">English</option>
@@ -80,8 +85,8 @@ const SceneKeyEditor = (props: {
           </Select>
         </KeyToolbar>
         <div>
-          {translations.map((t) => {
-            return <EditableTextCard translation={t.translation} />;
+          {filteredTranslations.map(({ translation }) => {
+            return <EditableTextCard translation={translation} />;
           })}
         </div>
       </KeyContainer>
