@@ -67,7 +67,7 @@ export default Editor;
 
 const Wrapper = styled.div`
   display: flex;
-  overflow-y: hidden;
+  overflow: hidden;
   justify-content: space-between;
   margin-top: 56px;
 `;

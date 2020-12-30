@@ -10,6 +10,7 @@ import SearchInputBox from '../../components/search/search-input-box';
 import { currentEditorialLocaleAtom } from '../../states/editor-state';
 import { SceneRepositoryStore } from '../../repositories';
 import Select from './select';
+import BottomBar from './bottom-bar';
 
 interface ISceneKeyEditor {
   repository: DesignGlobalizationRepository;
@@ -17,6 +18,8 @@ interface ISceneKeyEditor {
 
 const SceneKeyEditor: React.FC<ISceneKeyEditor> = ({ repository }) => {
   const [query, setQuery] = useState<string>('');
+  const [isBottomBarOpen, setIsBottomBarOpen] = useState<boolean>(true);
+
   const [translations, setTranslations] = useState<
     ReadonlyArray<LayerTranslation>
   >([]);
@@ -84,12 +87,13 @@ const SceneKeyEditor: React.FC<ISceneKeyEditor> = ({ repository }) => {
             <option value="ja">JP</option>
           </Select>
         </KeyToolbar>
-        <div>
+        <TranslationList data-is-bottom-bar-open={isBottomBarOpen && 'true'}>
           {filteredTranslations.map(({ translation }) => {
             return <EditableTextCard translation={translation} />;
           })}
-        </div>
+        </TranslationList>
       </KeyContainer>
+      <BottomBar />
     </>
   );
 };
@@ -201,4 +205,10 @@ const KeyToolbar = styled.div`
   justify-content: space-between;
   margin-bottom: 24px;
   width: 100%;
+`;
+
+const TranslationList = styled.div`
+  &[data-is-bottom-bar-open='true'] {
+    margin-bottom: 85px;
+  }
 `;
