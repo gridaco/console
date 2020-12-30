@@ -57,17 +57,6 @@ const SceneKeyEditor = (props: {
   return (
     <>
       <Toolbar />
-      {/* <div className="fileDepthTitle">
-        <Typography variant="subtitle1">screens/</Typography>
-      </div>
-      <div className="screenName">
-        <Typography variant="h5">{sceneName}</Typography>
-      </div>
-      <Box m={2}>
-        <Typography variant="subtitle1" align="left" style={{ float: 'left' }}>
-          {translations.length} keys
-        </Typography>
-      </Box> */}
       <KeyContainer>
         <Box m={2}>
           <FormControl>

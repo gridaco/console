@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { useRouter } from 'next/router';
 import { styled } from '@linaria/react';
+
+import CodeRoundSVG from '../assets/icons/mdi_code_round.svg';
+import LanguageRoundSVG from '../assets/icons/mdi_language_round.svg';
 
 interface IToolbar {
   toQuicklook?: string;
@@ -11,18 +15,24 @@ const Toolbar: React.FC<IToolbar> = ({
   toGlobalization,
   children,
 }) => {
+  const { pathname } = useRouter();
+  const isCodeSelected = useMemo(() => pathname === '/quicklook', [pathname]);
+
   return (
     <Wrapper>
       <TabList>
         <a href={toQuicklook}>
-          <TabButton style={{ color: '#000000', marginRight: 8 }}>
-            <TabIconImage src="/assets/icons/mdi_code_round.svg" />
+          <TabButton
+            style={{ marginRight: 8 }}
+            data-selected={isCodeSelected && 'true'}
+          >
+            <CodeRoundSVG />
             Code Editor
           </TabButton>
         </a>
         <a href={toGlobalization}>
-          <TabButton>
-            <TabIconImage src="/assets/icons/mdi_language_round.svg" />
+          <TabButton data-selected={!isCodeSelected && 'true'}>
+            <LanguageRoundSVG />
             Language translation
           </TabButton>
         </a>
@@ -65,6 +75,24 @@ const TabButton = styled.button`
   &:active,
   &:focus {
     outline: 0;
+  }
+
+  & > svg {
+    height: 24px;
+    width: 24px;
+    margin-right: 8px;
+
+    & > path {
+      fill: #dadadc;
+    }
+  }
+
+  &[data-selected='true'] {
+    color: #151617;
+
+    & > svg > path {
+      fill: #151617;
+    }
   }
 `;
 
