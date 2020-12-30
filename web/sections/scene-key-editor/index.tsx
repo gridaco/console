@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
+import { styled } from '@linaria/react';
 import {
   Typography,
   FormControl,
@@ -55,33 +56,19 @@ const SceneKeyEditor = (props: {
 
   return (
     <>
-      <div>
-        <Toolbar />
-        <div className="fileDepthTitle">
-          <Typography variant="subtitle1">screens/</Typography>
-        </div>
-        <div className="screenName">
-          <Typography variant="h5">{sceneName}</Typography>
-        </div>
-        <Box m={2}>
-          <Typography
-            variant="subtitle1"
-            align="left"
-            style={{ float: 'left' }}
-          >
-            {translations.length} keys
-          </Typography>
-          {/* <Typography
-            variant="subtitle1"
-            align="left"
-            style={{ float: "left" }}
-          >
-            32 Texts
-          </Typography>
-          <Typography variant="subtitle1" align="left">
-            12 Components
-          </Typography> */}
-        </Box>
+      <Toolbar />
+      <div className="fileDepthTitle">
+        <Typography variant="subtitle1">screens/</Typography>
+      </div>
+      <div className="screenName">
+        <Typography variant="h5">{sceneName}</Typography>
+      </div>
+      <Box m={2}>
+        <Typography variant="subtitle1" align="left" style={{ float: 'left' }}>
+          {translations.length} keys
+        </Typography>
+      </Box>
+      <KeyContainer>
         <Box m={2}>
           <FormControl>
             <Select value={locale} onChange={handleLocaleSelectChange}>
@@ -96,9 +83,14 @@ const SceneKeyEditor = (props: {
             return <EditableTextCard translation={t.translation} />;
           })}
         </div>
-      </div>
+      </KeyContainer>
     </>
   );
 };
 
 export default SceneKeyEditor;
+
+const KeyContainer = styled.div`
+  padding: 24px 32px;
+  overflow-y: scroll;
+`;
