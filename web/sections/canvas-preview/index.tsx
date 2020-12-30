@@ -23,7 +23,10 @@ export default function CanvasPreview(props: {
 
   return (
     <PreviewWrapper {...bind()}>
-      <Background onClick={props.onBackgroundClick}>
+      <Background
+        onClick={props.onBackgroundClick}
+        style={{ overflow: 'scroll', paddingTop: 54, paddingBottom: 54 }}
+      >
         {/* <motion.div animate={{ zoom: zoom }}> */}
         <div
           style={{

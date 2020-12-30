@@ -67,4 +67,5 @@ export default Editor;
 
 const Wrapper = styled.div`
   display: flex;
+  overflow-y: hidden;
 `;
