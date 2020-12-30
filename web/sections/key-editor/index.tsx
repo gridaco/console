@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { styled } from '@linaria/react';
 import {
   Typography,
   TextField,
@@ -68,7 +69,11 @@ export default function SingleKeyEditor(props: {
 }
 
 function SingleKeyEditorLoadingState() {
-  return <CircularProgress></CircularProgress>;
+  return (
+    <ProgressContainer>
+      <CircularProgress />
+    </ProgressContainer>
+  );
 }
 
 function SingleKeyEditorCreateNewState(props: {
@@ -202,3 +207,10 @@ function SingleKeyEditorEditExistingState(props: {
     </div>
   );
 }
+
+const ProgressContainer = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
