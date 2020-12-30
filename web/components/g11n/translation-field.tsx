@@ -7,36 +7,37 @@ import { currentTextEditValueAtom } from '../../states';
 /**
  * single field with translation compatability
  */
-export function TranslationFieldRow(props: {
+interface ITranslationFieldRow {
   key: string;
   locale: string;
   initialValue?: string;
   onSubmit: (locale: string, value: string) => void;
-}) {
-  const onSubmit = (value: string) => {
-    props.onSubmit(props.locale, value);
-  };
+  isAutoTranslate?: boolean;
+}
 
+export const TranslationFieldRow: React.FC<ITranslationFieldRow> = ({
+  isAutoTranslate,
+  ...props
+}) => {
   return (
     <Wrapper>
       <LocaleText>
         <span>{props.locale}</span>
       </LocaleText>
-      <TranslationEditField {...props} onSubmit={onSubmit} />
-      {/* TODO: onClick for Button */}
-      <Button>
-        <span>Accept</span>
-      </Button>
+      <TranslationEditField isAutoTranslate={isAutoTranslate} {...props} />
+      {isAutoTranslate && (
+        <Button>
+          <span>Accept</span>
+        </Button>
+      )}
     </Wrapper>
   );
-}
+};
 
-export function TranslationEditField(props: {
-  key: string;
-  locale: string;
-  initialValue?: string;
-  onSubmit: (s: string) => void;
-}) {
+export const TranslationEditField = ({
+  isAutoTranslate,
+  ...props
+}: ITranslationFieldRow) => {
   const [currentEditTextValue, setCurrentEditTextValue] = useRecoilState(
     currentTextEditValueAtom
   );
@@ -48,7 +49,7 @@ export function TranslationEditField(props: {
   // on key down, when enter key is pressed via keyboard or save button clicked.
   const handleOnSubmit = (e: any) => {
     console.log('saving translation - ', currentEditTextValue);
-    props.onSubmit(currentEditTextValue);
+    props.onSubmit(props.locale, currentEditTextValue);
   };
 
   return (
@@ -61,9 +62,10 @@ export function TranslationEditField(props: {
       }}
       defaultValue={props.initialValue}
       onChange={handleEdit}
+      data-auto-translate={isAutoTranslate && 'true'}
     />
   );
-}
+};
 
 const Wrapper = styled.li`
   display: flex;
@@ -87,8 +89,8 @@ const LocaleText = styled.div`
 `;
 
 const TextField = styled.input`
-  background: #edf2ff;
-  border: 1px solid #2562ff;
+  background: #f9f9f9;
+  border: 1px solid #dadadc;
   border-radius: 4px;
   padding: 9px 12px;
   font-size: 13px;
@@ -96,7 +98,12 @@ const TextField = styled.input`
   color: #151617;
   flex: 1;
   margin-left: 12px;
-  margin-right: 16px;
+
+  &[data-auto-translate='true'] {
+    background: #edf2ff;
+    border: 1px solid #2562ff;
+    margin-right: 16px;
+  }
 `;
 
 const Button = styled.button`
