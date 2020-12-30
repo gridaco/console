@@ -68,6 +68,7 @@ export default function SingleKeyEditor(props: {
         <SingleKeyEditorCreateNewState
           layer={targetLayer}
           repository={repository}
+          goBack={goBack}
         />
       );
     case 'edit-existing':
@@ -93,6 +94,7 @@ function SingleKeyEditorLoadingState() {
 function SingleKeyEditorCreateNewState(props: {
   layer: StorableLayer;
   repository: DesignGlobalizationRepository;
+  goBack: () => void;
 }) {
   const { layer, repository } = props;
   const [state, setState] = useState<string>('loaded');
@@ -139,12 +141,12 @@ function SingleKeyEditorCreateNewState(props: {
 
   return (
     <>
-      <div>
+      <Header title="Add Key" onClickBack={props.goBack} />
+      <EditorContent>
         <div className="fileDepthTitle">
           <Typography variant="subtitle1">navigation1/</Typography>
         </div>
         <div className="textKey">
-          <Typography variant="h2">Add Key</Typography>
           <Typography variant="h6">
             no key is set for selected layer "{textValue}"
           </Typography>
@@ -171,7 +173,7 @@ function SingleKeyEditorCreateNewState(props: {
         <Button variant="contained" onClick={handleCreateKeyClick}>
           create key
         </Button>
-      </div>
+      </EditorContent>
     </>
   );
 }
