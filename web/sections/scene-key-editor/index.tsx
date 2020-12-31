@@ -12,6 +12,7 @@ import { currentEditorialLocaleAtom } from '../../states/editor-state';
 import { SceneRepositoryStore } from '../../repositories';
 import Select from './select';
 import BottomBar from './bottom-bar';
+import PublishModal from '../../components/modals/publish.modal';
 
 interface ISceneKeyEditor {
   repository: DesignGlobalizationRepository;
@@ -19,6 +20,7 @@ interface ISceneKeyEditor {
 
 const SceneKeyEditor: React.FC<ISceneKeyEditor> = ({ repository }) => {
   const [query, setQuery] = useState<string>('');
+  const [isConfirmOpen, setIsConfirmOpen] = useState<boolean>(false);
   const [bottomBarChanges] = useQueryParam(
     'changes',
     withDefault(NumberParam, 0)
@@ -98,7 +100,19 @@ const SceneKeyEditor: React.FC<ISceneKeyEditor> = ({ repository }) => {
           })}
         </TranslationList>
       </KeyContainer>
-      {isBottomBarOpen && <BottomBar changes={bottomBarChanges} />}
+      {isBottomBarOpen && (
+        <BottomBar
+          changes={bottomBarChanges}
+          onClickPublish={() => setIsConfirmOpen(true)}
+        />
+      )}
+      <PublishModal
+        isOpen={isConfirmOpen}
+        onClose={() => setIsConfirmOpen(false)}
+        title="Change Publish"
+      >
+        Would you like to update {bottomBarChanges.toLocaleString()} changes?
+      </PublishModal>
     </>
   );
 };

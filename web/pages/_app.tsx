@@ -1,6 +1,7 @@
 import React from 'react';
-import { RecoilRoot } from 'recoil';
 import { JssProvider } from 'react-jss';
+import Modal from 'react-modal';
+import { RecoilRoot } from 'recoil';
 import { createGenerateClassName } from '@material-ui/core/styles';
 
 import QueryParamProvider from '../components/query-param-provider';
@@ -13,6 +14,8 @@ const generateClassName = createGenerateClassName({
   dangerouslyUseGlobalCSS: true,
   productionPrefix: 'c',
 });
+
+Modal.setAppElement('#__next');
 
 function MyApp({ Component, pageProps }) {
   return (

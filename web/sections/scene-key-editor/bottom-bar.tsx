@@ -3,9 +3,10 @@ import { styled } from '@linaria/react';
 
 interface IBottomBar {
   changes: number;
+  onClickPublish: () => void;
 }
 
-const BottomBar: React.FC<IBottomBar> = ({ changes }) => {
+const BottomBar: React.FC<IBottomBar> = ({ changes, onClickPublish }) => {
   return (
     <Container>
       <Information>
@@ -20,7 +21,7 @@ const BottomBar: React.FC<IBottomBar> = ({ changes }) => {
         <OutlineButton style={{ marginRight: 12 }}>
           <span>Review</span>
         </OutlineButton>
-        <PublishButton>
+        <PublishButton onClick={onClickPublish}>
           <Circle style={{ marginRight: 8 }}>
             <span>{changes.toLocaleString()}</span>
           </Circle>
