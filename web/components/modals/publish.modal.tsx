@@ -23,7 +23,7 @@ const PublishModal: React.FC<IPublishModal> = ({
         </Header>
         <Content>{children}</Content>
         <ButtonList>
-          <CancelButton style={{ marginRight: 12 }}>
+          <CancelButton onClick={onClose} style={{ marginRight: 12 }}>
             <span>Cancel</span>
           </CancelButton>
           <ChangeButton onClick={onClose}>
