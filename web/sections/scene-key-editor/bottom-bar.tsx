@@ -1,9 +1,11 @@
 import React from 'react';
 import { styled } from '@linaria/react';
 
-interface IBottomBar {}
+interface IBottomBar {
+  changes: number;
+}
 
-const BottomBar: React.FC<IBottomBar> = () => {
+const BottomBar: React.FC<IBottomBar> = ({ changes }) => {
   return (
     <Container>
       <Information>
@@ -11,7 +13,7 @@ const BottomBar: React.FC<IBottomBar> = () => {
           <PublishIcon src="/assets/icons/mdi_publish_round.svg" />
         </PublishIconWrapper>
         <Message>
-          <strong>6</strong> Changes ready to publish
+          <strong>{changes.toLocaleString()}</strong> Changes ready to publish
         </Message>
       </Information>
       <ButtonList>
@@ -20,7 +22,7 @@ const BottomBar: React.FC<IBottomBar> = () => {
         </OutlineButton>
         <PublishButton>
           <Circle style={{ marginRight: 8 }}>
-            <span>6</span>
+            <span>{changes.toLocaleString()}</span>
           </Circle>
           <span>Publish</span>
         </PublishButton>
