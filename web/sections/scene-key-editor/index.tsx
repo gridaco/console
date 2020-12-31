@@ -3,6 +3,7 @@ import { useRecoilState } from 'recoil';
 import { styled } from '@linaria/react';
 import { DesignGlobalizationRepository } from '@bridged.xyz/client-sdk/lib/g11n/repository';
 import { LayerTranslation } from '@bridged.xyz/client-sdk/lib/g11n';
+import { useQueryParam, NumberParam, withDefault } from 'use-query-params';
 
 import Toolbar from '../../components/toolbar';
 import EditableTextCard from '../../components/g11n/editable-text-card';
@@ -18,7 +19,11 @@ interface ISceneKeyEditor {
 
 const SceneKeyEditor: React.FC<ISceneKeyEditor> = ({ repository }) => {
   const [query, setQuery] = useState<string>('');
-  const [isBottomBarOpen, setIsBottomBarOpen] = useState<boolean>(true);
+  const [bottomBarChanges] = useQueryParam(
+    'changes',
+    withDefault(NumberParam, 0)
+  );
+  const isBottomBarOpen = !!bottomBarChanges;
 
   const [translations, setTranslations] = useState<
     ReadonlyArray<LayerTranslation>
@@ -93,7 +98,7 @@ const SceneKeyEditor: React.FC<ISceneKeyEditor> = ({ repository }) => {
           })}
         </TranslationList>
       </KeyContainer>
-      <BottomBar />
+      {isBottomBarOpen && <BottomBar changes={bottomBarChanges} />}
     </>
   );
 };
