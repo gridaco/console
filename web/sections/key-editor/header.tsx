@@ -7,7 +7,7 @@ interface IHeader {
   onClickBack?: () => void;
 }
 
-const Header: React.FC<IHeader> = ({ title, onClickBack }) => {
+const Header: React.FC<IHeader> = ({ title, onClickBack, children }) => {
   return (
     <Container>
       <LeftSide>
@@ -16,6 +16,7 @@ const Header: React.FC<IHeader> = ({ title, onClickBack }) => {
         </BackButton>
         <Title>{title}</Title>
       </LeftSide>
+      {children}
     </Container>
   );
 };
