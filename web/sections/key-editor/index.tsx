@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { styled } from '@linaria/react';
-import {
-  Typography,
-  TextField,
-  Box,
-  Button,
-  CircularProgress,
-} from '@material-ui/core';
+import { CircularProgress } from '@material-ui/core';
 import { targetLayerIdAtom, targetLayerSelector } from '../../states';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
@@ -141,38 +135,28 @@ function SingleKeyEditorCreateNewState(props: {
 
   return (
     <>
-      <Header title="Add Key" onClickBack={props.goBack} />
-      <EditorContent>
-        <div className="fileDepthTitle">
-          <Typography variant="subtitle1">navigation1/</Typography>
-        </div>
-        <div className="textKey">
-          <Typography variant="h6">
-            no key is set for selected layer "{textValue}"
-          </Typography>
-          <Typography variant="h6">STATE: {state}</Typography>
-        </div>
-        <Box marginTop={2} marginBottom={2}>
-          <Box m={2}>
-            <TextField
-              label="Key Name"
-              onChange={handleKeyNameEdit}
-              autoFocus
-              fullWidth
-              variant="outlined"
-            />
-          </Box>
-          <Box m={2}>
-            <TranslationSetForKey
-              key={keyname}
-              locales={repository.locales}
-              onSubmit={handleInitialTranslationChange}
-            />
-          </Box>
-        </Box>
-        <Button variant="contained" onClick={handleCreateKeyClick}>
-          create key
+      <Header title="Add Key" onClickBack={props.goBack}>
+        <Button onClick={handleCreateKeyClick}>
+          <span>+ Add Key</span>
         </Button>
+      </Header>
+      <EditorContent>
+        {/*
+          no key is set for selected layer "{textValue}"
+          STATE: {state}
+        */}
+        <FieldWrapper>
+          <InputField>Key Name</InputField>
+          <TextInput onChange={handleKeyNameEdit} disabled />
+        </FieldWrapper>
+        <FieldWrapper>
+          <InputField>Value</InputField>
+          <TranslationSetForKey
+            key={keyname}
+            locales={repository.locales}
+            onSubmit={handleInitialTranslationChange}
+          />
+        </FieldWrapper>
       </EditorContent>
     </>
   );
@@ -258,4 +242,20 @@ const InputField = styled.h2`
   line-height: 1.2;
   color: #888888;
   margin-bottom: 16px;
+`;
+
+const Button = styled.button`
+  background: #151617;
+  border-radius: 6px;
+  padding: 12px;
+  border: 0;
+  cursor: pointer;
+
+  & > span {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.2;
+    letter-spacing: 0.3px;
+    color: #ffffff;
+  }
 `;
