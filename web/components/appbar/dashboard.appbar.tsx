@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { styled } from '@linaria/react';
 
 import IconButton from '../../components/icon-button';
+import ShareModal from '../../components/modals/share.modal';
+
 import logoImage from '../../assets/brand/logo.png';
 
 export interface IDashboardAppBar {
@@ -18,34 +20,43 @@ export default function DashboardAppbar({
   onClickShare,
   onClickPlay,
 }: IDashboardAppBar) {
+  const [isShareModalOpen, setIsShareModalOpen] = useState<boolean>(false);
+
+  const onClickOpenShare = () => setIsShareModalOpen(true);
+
+  const onClickCloseShare = () => setIsShareModalOpen(false);
+
   return (
-    <Container>
-      <Link href="/">
-        {!!backButton ? (
-          <BackButton>
-            <BackButtonIconImage src="/assets/icons/mdi_navigate_before.svg" />
-            <span>{backButton}</span>
-          </BackButton>
-        ) : (
-          <LogoImage src={logoImage} />
-        )}
-      </Link>
-      {title && <Title>{title}</Title>}
-      <Toolbar>
-        <IconButton
-          style={{
-            marginRight: 17,
-          }}
-          onClick={onClickShare}
-        >
-          <IconImage src="/assets/icons/mdi_ios_share.svg" />
-        </IconButton>
-        <IconButton onClick={onClickPlay}>
-          <IconImage src="/assets/icons/mdi_play_arrow.svg" />
-        </IconButton>
-        <ProfileImage src="/assets/examples/profile.png" />
-      </Toolbar>
-    </Container>
+    <>
+      <Container>
+        <Link href="/">
+          {!!backButton ? (
+            <BackButton>
+              <BackButtonIconImage src="/assets/icons/mdi_navigate_before.svg" />
+              <span>{backButton}</span>
+            </BackButton>
+          ) : (
+            <LogoImage src={logoImage} />
+          )}
+        </Link>
+        {title && <Title>{title}</Title>}
+        <Toolbar>
+          <IconButton
+            style={{
+              marginRight: 17,
+            }}
+            onClick={onClickShare || onClickOpenShare}
+          >
+            <IconImage src="/assets/icons/mdi_ios_share.svg" />
+          </IconButton>
+          <IconButton onClick={onClickPlay}>
+            <IconImage src="/assets/icons/mdi_play_arrow.svg" />
+          </IconButton>
+          <ProfileImage src="/assets/examples/profile.png" />
+        </Toolbar>
+      </Container>
+      <ShareModal isOpen={isShareModalOpen} onClose={onClickCloseShare} />
+    </>
   );
 }
 

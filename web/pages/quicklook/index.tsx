@@ -84,7 +84,7 @@ export default function Frame() {
     window.location.href = 'vscode://file';
     // not using this line since its purpose on oppening app on same window.
     // open('vscode://file')
-  }
+  };
 
   const hasDiff = () => {
     return editingSource !== source;
@@ -95,10 +95,10 @@ export default function Frame() {
       <DashboardAppbar
         title={query.name || 'No Name'}
         backButton="DASHBOARD"
-        onClickShare={() => {
-          navigator.clipboard.writeText(window.location.href);
-          alert('copied to clipboard');
-        }}
+        // onClickShare={() => {
+        //   navigator.clipboard.writeText(window.location.href);
+        //   alert('copied to clipboard');
+        // }}
         onClickPlay={run}
       />
       <Wrapper>
