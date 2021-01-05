@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { styled } from '@linaria/react';
 
 import IconButton from '../../components/icon-button';
-import ShareModal from '../../components/modals/share.modal';
+import ShareModal from '../../components/modals/share';
 
 import logoImage from '../../assets/brand/logo.png';
 

@@ -95,10 +95,6 @@ export default function Frame() {
       <DashboardAppbar
         title={query.name || 'No Name'}
         backButton="DASHBOARD"
-        // onClickShare={() => {
-        //   navigator.clipboard.writeText(window.location.href);
-        //   alert('copied to clipboard');
-        // }}
         onClickPlay={run}
       />
       <Wrapper>
