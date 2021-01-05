@@ -34,5 +34,6 @@ const modalStyles: object = {
     backgroundColor: 'rgba(0, 0, 0, 0.6)',
     display: 'flex',
     justifyContent: 'center',
+    zIndex: 999,
   },
 };
