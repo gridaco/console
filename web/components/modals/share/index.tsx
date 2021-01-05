@@ -3,6 +3,7 @@ import { styled } from '@linaria/react';
 
 import Modal, { IModal } from '../atom.modal';
 import ShareMemberItem, { IShareMemberItem } from './share-member-item';
+import { writeToClipboard } from '../../../utils/clipboard';
 
 const exampleManagers: IShareMemberItem[] = [
   {
@@ -20,9 +21,8 @@ interface IShareModal extends IModal {}
 
 const ShareModal: React.FC<IShareModal> = ({ isOpen, onClose }) => {
   const onClickShareLink = () => {
-    // TODO: refactor to document.execCommand (for browser support)
-    window.navigator.clipboard.writeText(window.location.href);
-    alert('copied to clipboard');
+    writeToClipboard(window.location.href);
+    alert('Copied to clipboard!');
   };
 
   return (
