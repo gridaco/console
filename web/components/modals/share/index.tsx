@@ -36,7 +36,7 @@ const ShareModal: React.FC<IShareModal> = ({ isOpen, onClose }) => {
           />
         </Header>
         <InviteWrapper>
-          <InviteInput placeholder="Invitation Member Email" />
+          <InviteInput placeholder="Invite member with email" />
           <InviteButton>
             <span>+ Invite</span>
           </InviteButton>
