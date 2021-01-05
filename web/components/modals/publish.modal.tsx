@@ -1,10 +1,9 @@
 import React from 'react';
-import Modal from 'react-modal';
 import { styled } from '@linaria/react';
 
-interface IPublishModal {
-  isOpen: boolean;
-  onClose: () => void;
+import Modal, { IModal } from './atom.modal';
+
+interface IPublishModal extends IModal {
   title: string;
 }
 
@@ -15,7 +14,7 @@ const PublishModal: React.FC<IPublishModal> = ({
   children,
 }) => {
   return (
-    <Modal isOpen={isOpen} onRequestClose={onClose} style={modalStyles}>
+    <Modal isOpen={isOpen} onClose={onClose}>
       <Container>
         <Header>
           <Icon src="/assets/icons/mdi_error_round.svg" />
@@ -103,24 +102,3 @@ const ChangeButton = styled(CancelButton)`
     color: #151617;
   }
 `;
-
-const modalStyles: object = {
-  content: {
-    overflow: 'unset',
-    position: 'unset',
-    width: 'fit-content',
-    inset: 0,
-    border: 0,
-    background: 'transparent',
-    padding: 0,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  overlay: {
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
-    display: 'flex',
-    justifyContent: 'center',
-  },
-};

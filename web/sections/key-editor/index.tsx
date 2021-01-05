@@ -129,7 +129,7 @@ function SingleKeyEditorCreateNewState(props: {
 
   const handleInitialTranslationChange = (locale: string, value: string) => {
     initialTranslations.set(locale, {
-      value: value,
+      value,
     });
   };
 
@@ -186,7 +186,7 @@ function SingleKeyEditorEditExistingState(props: {
     repository.putTextTranslation(props.layer.nodeId, {
       keyId: props.gkey.id,
       locale: locale,
-      value: value,
+      value,
     });
   };
 

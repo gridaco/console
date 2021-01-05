@@ -152,7 +152,6 @@ const OutlineButton = styled.button`
   justify-content: center;
   padding: 12px 16px;
   border: 1px solid #151617;
-  box-sizing: border-box;
   border-radius: 6px;
   background-color: transparent;
   height: 40px;
