@@ -18,7 +18,7 @@ export const navigations: INavigation[] = [
   },
   {
     name: 'Icons',
-    // path: '/icons',
+    path: '/icons',
     icon: '',
   },
   {
