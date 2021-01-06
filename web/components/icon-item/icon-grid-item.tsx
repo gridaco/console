@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from '@linaria/react';
 
-interface IIconGridItem {
+export interface IIconGridItem {
   icon: React.ReactNode;
   name: string;
 }
