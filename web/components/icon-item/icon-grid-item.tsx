@@ -27,6 +27,9 @@ const IconWrapper = styled.div`
   height: 100px;
   background: #fafafa;
   border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Name = styled.h3`

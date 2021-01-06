@@ -3,11 +3,10 @@ import { styled } from '@linaria/react';
 
 import DashboardLayout from '../../layouts/dashboard';
 import SearchFormBox from '../../components/search/search-form-box';
-import IconGridItem, {
-  IIconGridItem,
-} from '../../components/icon-item/icon-grid-item';
+import { IIconGridItem } from '../../components/icon-item/icon-grid-item';
 
-import ExampleSVG from '../../assets/icons/mdi_language_round.svg';
+import ExampleSVG from '../../assets/icons/mdi_brunch_dining.svg';
+import IconSection from '../../components/icons/icon-section';
 
 const exampleIcons: IIconGridItem[] = Array(15).fill({
   icon: <ExampleSVG />,
@@ -20,14 +19,9 @@ export default function AssetsPage() {
       <Toolbar>
         <SearchFormBox containerStyle={{ width: 200 }} />
       </Toolbar>
-      <SectionTitle>Icon List</SectionTitle>
-      <Grid>
-        {exampleIcons.map(({ icon, name }) => (
-          <IconGridItem icon={null} name="Icon Name" />
-        ))}
-      </Grid>
-      <SectionTitle>Material Icons (default)</SectionTitle>
-      <SectionTitle>Reflect Icons (default)</SectionTitle>
+      <IconSection title="Icon List" icons={exampleIcons} />
+      <IconSection title="Material Icons (default)" icons={exampleIcons} />
+      <IconSection title="Reflect Icons (default)" icons={exampleIcons} />
     </DashboardLayout>
   );
 }
@@ -42,20 +36,4 @@ const Toolbar = styled.div`
     padding: 0 24px;
     font-size: 16px;
   }
-`;
-
-const SectionTitle = styled.h1`
-  font-weight: 900;
-  font-size: 28px;
-  line-height: 1.17;
-  color: #000000;
-  margin-bottom: 24px;
-`;
-
-const Grid = styled.ul`
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  grid-gap: 1.5rem;
 `;
