@@ -62,7 +62,7 @@ export default function ScreensPage() {
   return (
     <DashboardLayout title="Overview">
       <SearchFormBox
-        style={{
+        containerStyle={{
           marginBottom: 24,
         }}
       />

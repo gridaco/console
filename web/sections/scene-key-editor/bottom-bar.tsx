@@ -58,7 +58,6 @@ const PublishIconWrapper = styled.div`
   justify-content: center;
   background: #312d24;
   border: 1px solid #f5c242;
-  box-sizing: border-box;
   border-radius: 4px;
   padding: 4px;
 `;
