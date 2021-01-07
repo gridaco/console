@@ -8,31 +8,11 @@
 
 <head>
   <meta charset="utf-8">
-  <title></title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <!-- <link href="./frame-flutter.css" rel="stylesheet"> -->
+  <script src="require.js"></script>
   <link href="./frame-flutter.css" rel="stylesheet">
-  <!-- <style>    </style> -->
-  <script type="application/javascript">
-    window.onerror = function (e) {
-      console.warn('error native', e);
-    }
-  </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
   <script id="compiledJsScript" type="application/javascript"></script>
   <script>
-
-    // == ADDED ==
-    // # region catch error from requirejs
-    require.config({
-      catchError: {
-        define: true
-      }
-    });
-    require.onError = function (err) {
-      console.warn('err from requirejs', err);
-    };
-    // # endregion
-
 
     replaceJavaScript = function (value) {
       // Remove the old node.
@@ -71,6 +51,7 @@
           document.getElementById('styleId').innerHTML = obj.css;
         }
 
+        body.innerHTML = '';
         // Replace script.
         replaceJavaScript(obj.js);
       }
