@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { JssProvider } from 'react-jss';
 import Modal from 'react-modal';
 import { RecoilRoot } from 'recoil';
 import { createGenerateClassName } from '@material-ui/core/styles';
 
 import QueryParamProvider from '../components/query-param-provider';
+import { analytics } from '../utils/firebase';
 
 import '../styles/globals.css';
 import 'monaco-editor/esm/vs/base/browser/ui/codicons/codicon/codicon.css';
@@ -18,6 +19,10 @@ const generateClassName = createGenerateClassName({
 Modal.setAppElement('#__next');
 
 function MyApp({ Component, pageProps }) {
+  useEffect(() => {
+    analytics();
+  }, []);
+  
   return (
     // @ts-ignore
     <JssProvider generateClassName={generateClassName}>
