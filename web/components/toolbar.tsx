@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { styled } from '@linaria/react';
 
 import CodeRoundSVG from '../assets/icons/mdi_code_round.svg';
@@ -11,8 +12,8 @@ interface IToolbar {
 }
 
 const Toolbar: React.FC<IToolbar> = ({
-  toQuicklook,
-  toGlobalization,
+  toQuicklook = '#',
+  toGlobalization = '#',
   children,
 }) => {
   const { pathname } = useRouter();
@@ -21,7 +22,7 @@ const Toolbar: React.FC<IToolbar> = ({
   return (
     <Wrapper>
       <TabList>
-        <a href={toQuicklook}>
+        <Link href={toQuicklook}>
           <TabButton
             style={{ marginRight: 8 }}
             data-selected={isCodeSelected && 'true'}
@@ -29,13 +30,13 @@ const Toolbar: React.FC<IToolbar> = ({
             <CodeRoundSVG />
             Code Editor
           </TabButton>
-        </a>
-        <a href={toGlobalization}>
+        </Link>
+        <Link href={toGlobalization}>
           <TabButton data-selected={!isCodeSelected && 'true'}>
             <LanguageRoundSVG />
             Language translation
           </TabButton>
-        </a>
+        </Link>
       </TabList>
       {children}
     </Wrapper>
