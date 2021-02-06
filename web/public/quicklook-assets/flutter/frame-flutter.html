@@ -9,31 +9,29 @@
 <head>
   <meta charset="utf-8">
   <title></title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-  <link href="./frame-flutter.css" rel="stylesheet">
-  <!-- <style>    </style> -->
-  <script type="application/javascript">
-    window.onerror = function (e) {
-      console.warn('error native', e);
+  <style>
+    body {
+      font-size: 12pt;
+      margin: 0;
+      padding: 0;
     }
-  </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
-  <script id="compiledJsScript" type="application/javascript"></script>
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    label {
+      color: #FFFFFF;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+  </style>
   <script>
-
-    // == ADDED ==
-    // # region catch error from requirejs
-    require.config({
-      catchError: {
-        define: true
-      }
-    });
-    require.onError = function (err) {
-      console.warn('err from requirejs', err);
-    };
-    // # endregion
-
-
     replaceJavaScript = function (value) {
       // Remove the old node.
       var oldNode = document.getElementById('compiledJsScript');
@@ -44,14 +42,9 @@
       // Create a new node.
       var scriptNode = document.createElement('script');
       scriptNode.setAttribute('id', 'compiledJsScript');
-      scriptNode.src = value;
+      scriptNode.text = value;
+      // scriptNode.src = value;
       document.head.appendChild(scriptNode);
-
-      // =ADDED=
-      scriptNode.addEventListener('load', function () {
-        parent.postMessage({ 'sender': 'frame', 'type': 'script-loaded' }, '*');
-        console.warn('script loaded')
-      })
     };
 
     messageHandler = function (e) {
@@ -59,44 +52,30 @@
       var command = obj.command;
       var body = document.body;
 
-      console.log(e)
-
       if (command === 'setCss') {
         document.getElementById('styleId').innerHTML = obj.css;
       } else if (command === 'setHtml') {
         body.innerHTML = obj.html;
       } else if (command === 'execute') {
-        if (obj.html) {
-          body.innerHTML = obj.html;
-          document.getElementById('styleId').innerHTML = obj.css;
-        }
-
-        // Replace script.
+        // Replace all three.
+        console.log('received from iframe', obj)
+        // body.innerHTML = obj.html;
+        // document.getElementById('styleId').innerHTML = obj.css;
         replaceJavaScript(obj.js);
       }
     };
 
     window.addEventListener('load', function () {
-      console.log('iframe prewarmed')
       window.addEventListener('message', messageHandler, false);
       parent.postMessage({ 'sender': 'frame', 'type': 'ready' }, '*');
     });
   </script>
   <style id="styleId"></style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+  <script id="compiledJsScript" type="application/javascript"></script>
 </head>
 
 <body>
-  <!-- progress animation -->
-  <div class="center">
-    <div class="sk-chase">
-      <div class="sk-chase-dot"></div>
-      <div class="sk-chase-dot"></div>
-      <div class="sk-chase-dot"></div>
-      <div class="sk-chase-dot"></div>
-      <div class="sk-chase-dot"></div>
-      <div class="sk-chase-dot"></div>
-    </div>
-  </div>
 </body>
 
 </html>

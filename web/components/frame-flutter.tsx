@@ -50,12 +50,21 @@ export default class FrameFlutter extends React.Component<Props, State> {
 
   componentDidMount() {}
 
-  async getCompiledJsSource(): Promise<string> {
+  async getCompiledJsSource(): Promise<
+    | {
+        url: string;
+        source: string;
+      }
+    | undefined
+  > {
     if (this.props.js) {
       this.setState(() => {
         return { compileState: 'js-compiled' };
       });
-      return this.props.js;
+      return {
+        url: URL.createObjectURL(new Blob([this.props.js])),
+        source: this.props.js,
+      };
     } else if (this.props.dart) {
       try {
         const app = await compileFlutterApp({
@@ -63,21 +72,25 @@ export default class FrameFlutter extends React.Component<Props, State> {
           id: this.props.id,
         });
 
-        var blob = new Blob([app.js!], {
+        console.log('compiled', app);
+
+        const blob = new Blob([app.js!], {
           type: 'application/javascript',
         });
-        var url = URL.createObjectURL(blob);
+        const url = URL.createObjectURL(blob);
 
         this.setState(() => {
           return { compileState: 'js-compiled' };
         });
 
-        return url;
+        return {
+          url: url,
+          source: app.js!,
+        };
       } catch (e) {
         this.setState(() => {
           return { compileState: 'failed' };
         });
-        return '';
       }
     } else {
       throw 'one of dart or js should be provided';
@@ -92,12 +105,13 @@ export default class FrameFlutter extends React.Component<Props, State> {
     let iframe = document.getElementById('frame') as HTMLIFrameElement;
 
     // get the compiled js source
-    this.getCompiledJsSource().then((js) => {
+    this.getCompiledJsSource().then((res) => {
       // post message to iframe to execute js source
+      console.log('sending compile result to flutter frame', 'res', res);
       iframe.contentWindow!.postMessage(
         {
           command: 'execute',
-          js: js,
+          js: res?.source,
         },
         '*'
       );
