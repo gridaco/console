@@ -8,30 +8,12 @@
 
 <head>
   <meta charset="utf-8">
-  <title></title>
-  <style>
-    body {
-      font-size: 12pt;
-      margin: 0;
-      padding: 0;
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    p,
-    label {
-      color: #FFFFFF;
-    }
-
-    h2 {
-      margin-top: 0;
-    }
-  </style>
+  <!-- <link href="./frame-flutter.css" rel="stylesheet"> -->
+  <script src="require.js"></script>
+  <link href="./frame-flutter.css" rel="stylesheet">
+  <script id="compiledJsScript" type="application/javascript"></script>
   <script>
+
     replaceJavaScript = function (value) {
       // Remove the old node.
       var oldNode = document.getElementById('compiledJsScript');
@@ -57,10 +39,13 @@
       } else if (command === 'setHtml') {
         body.innerHTML = obj.html;
       } else if (command === 'execute') {
-        // Replace all three.
-        console.log('received from iframe', obj)
-        // body.innerHTML = obj.html;
-        // document.getElementById('styleId').innerHTML = obj.css;
+        if (obj.html) {
+          body.innerHTML = obj.html;
+          document.getElementById('styleId').innerHTML = obj.css;
+        }
+
+        body.innerHTML = '';
+        // Replace script.
         replaceJavaScript(obj.js);
       }
     };
