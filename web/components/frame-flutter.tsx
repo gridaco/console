@@ -1,9 +1,20 @@
+/**
+ * IMPORTANT NOTE TO CONTRIBUTORS.
+ * FLUTTER FRAME'S MOST RELIABLE IMPLMENETATION SHOULD BE HOSTED ON APPBOX FRAME
+ * FRAMES.APPBOX.BRIDGED.XYZ/FLUTTER -- THIS MAY BE EXPORTED AS A REACT COMPONENT INCLUDING HTML SOURCE IN-JS FIILE,
+ * BUT FOR NOW WE MUST SYNC THE IMPLEMENTATION BY MANUAL
+ * PLEASE VISIT https://github.com/bridgedxyz/appbox/tree/main/packages/frames
+ */
+
 import { NumberSize, Resizable } from 're-resizable';
 import { Direction } from 're-resizable/lib/resizer';
 import React from 'react';
 import { styled } from '@linaria/react';
 import { compileFlutterApp } from '@bridged.xyz/client-sdk/lib/build/flutter';
-import { FlutterLoadingState } from '@bridged.xyz/client-sdk/lib/frame-embed/flutter';
+import {
+  FlutterLoadingState,
+  FlutterFrameQuery,
+} from '@bridged.xyz/client-sdk/lib/frame-embed/flutter';
 import Alert from '@material-ui/lab/Alert';
 
 interface State {
@@ -12,22 +23,11 @@ interface State {
   compileState: FlutterLoadingState;
 }
 
-interface Props {
-  id: string;
-
-  /**
-   * this can be both string source of js file, or url of the hosted js file
-   */
-  js?: string;
-
-  /**
-   * this can not be a url of dart file. it should be dart source as string
-   */
-  dart?: string;
-}
-
-export default class FrameFlutter extends React.Component<Props, State> {
-  constructor(props: Props) {
+export default class FrameFlutter extends React.Component<
+  FlutterFrameQuery,
+  State
+> {
+  constructor(props: FlutterFrameQuery) {
     super(props);
     this.state = {
       compileState: 'pre-warming',
@@ -39,15 +39,15 @@ export default class FrameFlutter extends React.Component<Props, State> {
   componentDidMount() {}
 
   async getCompiledJsSource(): Promise<string> {
-    if (this.props.js) {
+    if (this.props.language == 'js') {
       this.setState(() => {
         return { compileState: 'js-compiled' };
       });
-      return this.props.js;
-    } else if (this.props.dart) {
+      return this.props.src;
+    } else if (this.props.language == 'dart') {
       try {
         const app = await compileFlutterApp({
-          dart: this.props.dart,
+          dart: this.props.src,
           id: this.props.id,
         });
 
