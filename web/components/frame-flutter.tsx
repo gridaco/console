@@ -2,26 +2,14 @@ import { NumberSize, Resizable } from 're-resizable';
 import { Direction } from 're-resizable/lib/resizer';
 import React from 'react';
 import { styled } from '@linaria/react';
-
 import { compileFlutterApp } from '@bridged.xyz/client-sdk/lib/build/flutter';
+import { FlutterLoadingState } from '@bridged.xyz/client-sdk/lib/frame-embed/flutter';
 import Alert from '@material-ui/lab/Alert';
-
-const isIFrame = (input: HTMLElement | null): input is HTMLIFrameElement =>
-  input !== null && input.tagName === 'IFRAME';
-
-type flutterLoadingState =
-  | 'pre-warming'
-  | 'compiling'
-  | 'js-compiled'
-  | 'engine-loaded'
-  | 'drawing'
-  | 'complete'
-  | 'failed';
 
 interface State {
   viewportWidth: number;
   viewportHeight: number;
-  compileState: flutterLoadingState;
+  compileState: FlutterLoadingState;
 }
 
 interface Props {
