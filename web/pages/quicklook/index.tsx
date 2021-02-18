@@ -1,15 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled } from '@linaria/react';
 import Axios from 'axios';
 
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 
-import {
-  QuicklookQueryParams,
-  framework,
-  language,
-} from '@bridged.xyz/client-sdk/lib/projects/quicklook';
+import { QuicklookQueryParams } from '@bridged.xyz/client-sdk/lib/projects/quicklook';
 import * as monacoEditor from 'monaco-editor/esm/vs/editor/editor.api';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -17,6 +13,9 @@ import FrameFlutter from '../../components/frame-flutter';
 import DashboardAppbar from '../../components/appbar/dashboard.appbar';
 import Background from '../../components/canvas/background';
 import Toolbar from '../../components/toolbar';
+import { checkFrameSourceMode } from '@bridged.xyz/client-sdk/lib/frame-embed';
+import { AppFramework } from '@bridged.xyz/client-sdk/lib/types/app-frameworks';
+import { AppLanguage } from '@bridged.xyz/client-sdk/lib/types/app-languages';
 
 const MonacoEditor = dynamic(import('react-monaco-editor'), { ssr: false });
 
@@ -24,7 +23,6 @@ interface IQuicklookQueries extends QuicklookQueryParams {
   globalizationRedirect?: string;
 }
 
-let IS_LOADED_ONCE: boolean = false;
 /**
  * frame or url is required
  * @param frame the frame id of selected node, which uploaded to default bridged quicklook s3 buket.
@@ -34,11 +32,10 @@ export default function Frame() {
   const router = useRouter();
   const [source, setSource] = useState<string>();
   let editingSource: string;
-
   const query: IQuicklookQueries = {
     id: (router.query.id as string) ?? '',
-    framework: (router.query.framework as 'flutter' | 'react') ?? 'flutter',
-    language: (router.query.language as 'dart' | 'js') ?? 'js',
+    framework: (router.query.framework as AppFramework) ?? AppFramework.flutter,
+    language: (router.query.language as AppLanguage) ?? AppLanguage.dart,
     url: router.query.url as string,
     name: router.query.name as string,
     w: Number.parseInt(router.query.w as string) ?? 375,
@@ -46,8 +43,9 @@ export default function Frame() {
     globalizationRedirect:
       (router.query['globalization-redirect'] as string) ?? '#',
   };
+  console.info('query for quicklook: ', query);
 
-  if (!IS_LOADED_ONCE) {
+  useEffect(() => {
     switch (query.framework) {
       case 'flutter':
         if (query.url) {
@@ -56,19 +54,19 @@ export default function Frame() {
           } else if (query.language == 'dart') {
             // fetch dart file and set as source
             Axios.get(query.url).then((r) => {
-              IS_LOADED_ONCE = true;
-
               const dartSource = r.data;
-
               editingSource = dartSource;
               setSource(dartSource);
             });
           }
         }
         break;
-      case 'react':
+      default:
+        throw new Error(
+          `the framework ${query.framework} is not supported yet.`
+        );
     }
-  }
+  }, [query.url]);
 
   const run = () => {
     if (editingSource) {
@@ -76,18 +74,6 @@ export default function Frame() {
     } else {
       alert('your code has no changes');
     }
-  };
-
-  // opens vs code; code editor for editing this source on developer's local environment.
-  const openVSCode = () => {
-    // todo -- pass params for rerouting on the editor
-    window.location.href = 'vscode://file';
-    // not using this line since its purpose on oppening app on same window.
-    // open('vscode://file')
-  };
-
-  const hasDiff = () => {
-    return editingSource !== source;
   };
 
   return (
@@ -103,7 +89,7 @@ export default function Frame() {
             {appFrame({
               id: query.id,
               framework: query.framework,
-              source: source,
+              source: source!!,
               language: query.language,
             })}
           </Background>
@@ -162,11 +148,14 @@ export default function Frame() {
 
 function appFrame(props: {
   id: string;
-  source: string | undefined;
-  framework: framework;
-  language: language;
+  source: string;
+  framework: AppFramework;
+  language: AppLanguage;
 }) {
-  console.log(props);
+  // region check mode
+  const mode = checkFrameSourceMode(props.framework, props.source);
+  // endregion check mode
+
   const loading = <CircularProgress />;
 
   if (!props.source) {
@@ -176,13 +165,21 @@ function appFrame(props: {
   switch (props.framework) {
     case 'flutter':
       if (props.language == 'js') {
-        return <FrameFlutter id={props.id} js={props.source}></FrameFlutter>;
+        return (
+          <FrameFlutter
+            id={props.id}
+            src={props.source}
+            language="js"
+            mode={mode}
+          ></FrameFlutter>
+        );
       } else if (props.language == 'dart') {
         return (
           <FrameFlutter
             key={props.source}
             id={props.id}
-            dart={props.source}
+            src={props.source}
+            language={'dart'}
           ></FrameFlutter>
         );
       }
@@ -193,6 +190,14 @@ function appFrame(props: {
       return loading;
   }
 }
+
+// opens vs code; code editor for editing this source on developer's local environment.
+const openVSCode = () => {
+  // todo -- pass params for rerouting on the editor
+  window.location.href = 'vscode://file';
+  // not using this line since its purpose on oppening app on same window.
+  // open('vscode://file')
+};
 
 const Wrapper = styled.div`
   margin-top: 56px;
