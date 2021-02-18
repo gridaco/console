@@ -20,9 +20,13 @@ Modal.setAppElement('#__next');
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
-    analytics();
+    try {
+      analytics();
+    } catch (_) {
+      /* this error can be ignored since anaytics are only used on depoyed environment. */
+    }
   }, []);
-  
+
   return (
     // @ts-ignore
     <JssProvider generateClassName={generateClassName}>
