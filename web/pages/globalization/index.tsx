@@ -73,7 +73,8 @@ export default function Home() {
   return (
     <div>
       <DashboardAppbar
-        title={sceneRepository.scene.name}
+        title="Demo Globalization"
+        // title={sceneRepository.scene.name}
         backButton="DASHBOARD"
         onClickShare={() => {
           navigator.clipboard.writeText(window.location.href);

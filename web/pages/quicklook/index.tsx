@@ -79,7 +79,8 @@ export default function Frame() {
   return (
     <>
       <DashboardAppbar
-        title={query.name || 'No Name'}
+        // title={query.name || 'No Name'}
+        title="Quicklook Demo"
         backButton="DASHBOARD"
         onClickPlay={run}
       />
