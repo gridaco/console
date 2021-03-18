@@ -34,7 +34,7 @@
 
 // DEMO ( YC )
 const DEMO =
-  'http://localhost:3000/quicklook?id=bridged-2021-jan-demo-screen-main&name=Main&framework=flutter&language=dart&url=https://gist.githubusercontent.com/taeilyoon/55734de0a7cfb397ba4cc47d1e760f15/raw/d67159525b0e96b7bdf9412aa526916689c2d98d/Bridged-CodeGen-Demo-2&globalizationRedirect=http://localhost:3000/globalization?scene=7icLJn7TBRZIIB6PqogWV';
+  '/quicklook?id=bridged-2021-jan-demo-screen-main&name=Main&framework=flutter&language=dart&url=https://gist.githubusercontent.com/taeilyoon/55734de0a7cfb397ba4cc47d1e760f15/raw/d67159525b0e96b7bdf9412aa526916689c2d98d/Bridged-CodeGen-Demo-2&globalizationRedirect=http://localhost:3000/globalization?scene=7icLJn7TBRZIIB6PqogWV';
 
 export default [
   {
