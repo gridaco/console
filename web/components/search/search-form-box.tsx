@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { styled } from '@linaria/react';
 
 import IconButton from '../icon-button';
@@ -17,8 +17,12 @@ export default function SearchFormBox({
 
   const onClickInputWrapper = () => inputRef?.current?.focus();
 
+  const onSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
+    e?.preventDefault();
+  }, []);
+
   return (
-    <Form>
+    <Form onSubmit={onSubmit}>
       <InputWrapper style={containerStyle} onClick={onClickInputWrapper}>
         <Input
           ref={inputRef}

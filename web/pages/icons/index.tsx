@@ -11,7 +11,6 @@ import HomeDemoSVG from '../../public/assets/icons/demo/home.svg';
 import HeartDemoSVG from '../../public/assets/icons/demo/heart.svg';
 import SettingDemoSVG from '../../public/assets/icons/demo/setting.svg';
 
-
 const exampleIcons: IIconGridItem[] = [
   {
     icon: <HomeDemoSVG />,
@@ -24,14 +23,14 @@ const exampleIcons: IIconGridItem[] = [
   {
     icon: <SettingDemoSVG />,
     name: 'B_T_Setting',
-  }
-]
+  },
+];
 
 export default function AssetsPage() {
   return (
-    <DashboardLayout title="Overview">
+    <DashboardLayout>
       <Toolbar>
-        {/* <SearchFormBox containerStyle={{ width: 200 }} /> */}
+        <SearchFormBox />
       </Toolbar>
       <IconSection title="Bottom Tab Bar Icons" icons={exampleIcons} />
       {/* <IconSection title="Material Icons (default)" icons={exampleIcons} /> */}

@@ -97,12 +97,13 @@ export default function AssetsPage() {
 
   return (
     <DashboardLayout
-      title="Overview"
-      rightChildren={selectedAsset && <SelectedAssetInformation data={selectedAsset} />}
+      rightChildren={
+        selectedAsset && <SelectedAssetInformation data={selectedAsset} />
+      }
     >
       <Toolbar>
-        {/* <SearchFormBox containerStyle={{ width: 264 }} />
-        <Button>UPLOAD NEW</Button> */}
+        <SearchFormBox />
+        {/* <Button>UPLOAD NEW</Button> */}
       </Toolbar>
       <TabBar>
         <TabList>

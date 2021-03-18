@@ -23,7 +23,7 @@ export function DashboardSideNavigationBar() {
           />
         ))}
       </NavigationList>
-      <DashboardSideFooter />
+      {/* <DashboardSideFooter /> */}
     </ListContainer>
   );
 }
