@@ -1,7 +1,7 @@
 export default [
   {
     preview: '/assets/examples/project.png',
-    name: 'My New Project',
+    name: 'Example Project',
     onclick: '/screens',
     updatedAt: 'Just now',
   },

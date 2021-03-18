@@ -36,6 +36,7 @@ const Home = () => {
 
     const fetchData = async () => {
       if (!query.src) {
+        // DEMO ( MOCK DATA. )
         updateProjects(mockups);
         return;
       }
@@ -46,6 +47,11 @@ const Home = () => {
     fetchData();
   }, [query.src]);
 
+  const onClickCreateProjectButton = () => {
+    // DEMO ( YC )
+    // router.push('/screens');
+  };
+
   return (
     <>
       <DashboardAppbar />
@@ -53,7 +59,9 @@ const Home = () => {
         <BannerWrapper>
           <BannerContainer>
             <BrandImage src="/assets/images/bridged.svg" />
-            <CreateButton>+ Create New</CreateButton>
+            <CreateButton onClick={onClickCreateProjectButton}>
+              + Create New
+            </CreateButton>
           </BannerContainer>
         </BannerWrapper>
         <ProjectList>

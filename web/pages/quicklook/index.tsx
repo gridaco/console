@@ -95,7 +95,7 @@ export default function Frame() {
           </Background>
         </SideContainer>
         <SideContainer style={{ width: '45vw' }}>
-          <Toolbar toGlobalization={query.globalizationRedirect}>
+          <Toolbar toGlobalization={"https://console.bridged.xyz/globalization?scene=7icLJn7TBRZIIB6PqogWV"}>
             <ButtonList>
               <Button
                 style={{
