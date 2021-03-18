@@ -59,9 +59,9 @@ const Home = () => {
         <BannerWrapper>
           <BannerContainer>
             <BrandImage src="/assets/images/bridged.svg" />
-            <CreateButton onClick={onClickCreateProjectButton}>
+            {/* <CreateButton onClick={onClickCreateProjectButton}>
               + Create New
-            </CreateButton>
+            </CreateButton> */}
           </BannerContainer>
         </BannerWrapper>
         <ProjectList>
