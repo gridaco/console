@@ -5,24 +5,31 @@ import Select from './select';
 import InformationSection from './information.section';
 import IconButton from '../icon-button';
 
+interface IAsset {
+  id: string;
+  title: string;
+  preview: string;
+  type: 'image' | 'illustration';
+}
+
 const exampleManagers = Array(4).fill({
   profile: '/assets/examples/profile.png',
 });
 
-const SelectedAssetInformation: React.FC = () => {
+const SelectedAssetInformation: React.FC<{ data?: IAsset }> = ({ data }) => {
   return (
     <Container>
-      <Title>Lint Cover Illust</Title>
-      <FilePath>illusts/lint/eye-cover-main</FilePath>
+      <Title>{data?.title}</Title>
+      <FilePath>{data?.preview}</FilePath>
       <SelectWrapper>
         <Select>
           <option selected>English(Default)</option>
-          <option>한국어</option>
+          {/* <option>한국어</option> */}
         </Select>
       </SelectWrapper>
-      <PreviewImage src={'/assets/examples/project.png'} />
-      <UpdatedAt>last updated 2 hours ago by @gy</UpdatedAt>
-      <SectionList>
+      <PreviewImage src={data?.preview} />
+      <UpdatedAt>last updated 1 hours ago by @bridged.xyz</UpdatedAt>
+      {/* <SectionList>
         <InformationSection
           title="Manager"
           icon={
@@ -42,7 +49,7 @@ const SelectedAssetInformation: React.FC = () => {
         <InformationSection title="Variants" />
         <InformationSection title="Locales" />
         <InformationSection title="Used in" />
-      </SectionList>
+      </SectionList> */}
     </Container>
   );
 };

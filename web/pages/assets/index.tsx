@@ -11,26 +11,73 @@ import SelectedAssetInformation from '../../components/assets/selected-asset-inf
 
 const tabs = [
   { name: 'ALL', value: 'all' },
-  { name: 'Illustrations', value: 'illustrations' },
-  { name: 'Images', value: 'images' },
-  { name: 'Text', value: 'text' },
+  { name: 'Illustrations', value: 'illustration' },
+  { name: 'Images', value: 'image' },
+  // { name: 'Text', value: 'text' },
 ];
 
 interface IAsset {
   id: string;
   title: string;
   preview: string;
+  type: 'image' | 'illustration';
 }
 
-const exampleAssets: IAsset[] = Array(7).fill({
-  title: 'Asset Name',
-  preview: '/assets/examples/project.png',
-});
+const exampleAssets: IAsset[] = [
+  {
+    title: 'Main Page Illust',
+    id: '/assets/examples/demo/title.png',
+    preview: '/assets/examples/demo/title.png',
+    type: 'illustration',
+  },
+  {
+    title: 'Album Mock Image',
+    id: '/assets/examples/demo/album1.png',
+    preview: '/assets/examples/demo/album1.png',
+    type: 'image',
+  },
+  {
+    title: 'Album Mock Image',
+    id: '/assets/examples/demo/album2.png',
+    preview: '/assets/examples/demo/album2.png',
+    type: 'image',
+  },
+  {
+    title: 'Album Mock Image',
+    id: '/assets/examples/demo/album3.png',
+    preview: '/assets/examples/demo/album3.png',
+    type: 'image',
+  },
+  {
+    title: 'Music Mock Image',
+    id: '/assets/examples/demo/song1.png',
+    preview: '/assets/examples/demo/song1.png',
+    type: 'image',
+  },
+  {
+    title: 'Album Mock Image',
+    id: '/assets/examples/demo/song2.png',
+    preview: '/assets/examples/demo/song2.png',
+    type: 'image',
+  },
+  {
+    title: 'Album Mock Image',
+    id: '/assets/examples/demo/song3.png',
+    preview: '/assets/examples/demo/song3.png',
+    type: 'image',
+  },
+  {
+    title: 'Album Mock Image',
+    id: '/assets/examples/demo/song4.png',
+    preview: '/assets/examples/demo/song4.png',
+    type: 'image',
+  },
+];
 
 export default function AssetsPage() {
   const [currentView, setCurrentView] = useQueryParam(
     'view',
-    withDefault(StringParam, 'grid')
+    withDefault(StringParam, 'list')
   );
   const [currentTab, setCurrentTab] = useQueryParam(
     'tab',
@@ -51,11 +98,11 @@ export default function AssetsPage() {
   return (
     <DashboardLayout
       title="Overview"
-      rightChildren={selectedAsset && <SelectedAssetInformation />}
+      rightChildren={selectedAsset && <SelectedAssetInformation data={selectedAsset} />}
     >
       <Toolbar>
-        <SearchFormBox containerStyle={{ width: 264 }} />
-        <Button>UPLOAD NEW</Button>
+        {/* <SearchFormBox containerStyle={{ width: 264 }} />
+        <Button>UPLOAD NEW</Button> */}
       </Toolbar>
       <TabBar>
         <TabList>
@@ -72,17 +119,17 @@ export default function AssetsPage() {
         <IconList>
           <IconButton
             onClick={() => setCurrentView('list')}
-            style={{ marginRight: 9 }}
+            // style={{ marginRight: 9 }}
           >
             <IconImage
               src={`/assets/icons/${isGridView ? 'list' : 'list_view'}.svg`}
             />
           </IconButton>
-          <IconButton onClick={() => setCurrentView('grid')}>
+          {/* <IconButton onClick={() => setCurrentView('grid')}>
             <IconImage
               src={`/assets/icons/${isGridView ? 'grid_view' : 'grid'}.svg`}
             />
-          </IconButton>
+          </IconButton> */}
         </IconList>
       </TabBar>
       {isGridView ? (
@@ -106,22 +153,26 @@ export default function AssetsPage() {
         </Grid>
       ) : (
         <List>
-          {exampleAssets.map((asset, assetIndex) => {
-            const { title, preview } = asset;
-            return (
-              <AssetListItem
-                key={assetIndex}
-                title={title}
-                preview={preview}
-                onClick={() =>
-                  onClickAsset({
-                    ...asset,
-                    id: assetIndex.toString(),
-                  })
-                }
-              />
-            );
-          })}
+          {exampleAssets
+            .filter((v) =>
+              currentTab === 'all' ? true : v.type === currentTab
+            )
+            .map((asset, assetIndex) => {
+              const { title, preview } = asset;
+              return (
+                <AssetListItem
+                  key={assetIndex}
+                  title={title}
+                  preview={preview}
+                  onClick={() =>
+                    onClickAsset({
+                      ...asset,
+                      id: assetIndex.toString(),
+                    })
+                  }
+                />
+              );
+            })}
         </List>
       )}
     </DashboardLayout>

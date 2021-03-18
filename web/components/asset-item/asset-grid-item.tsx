@@ -27,6 +27,7 @@ const Image = styled.img`
   width: 100%;
   min-height: 156px;
   object-fit: cover;
+  margin-bottom: auto;
 `;
 
 const Information = styled.div`

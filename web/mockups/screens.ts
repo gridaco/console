@@ -38,7 +38,7 @@ const DEMO =
 
 export default [
   {
-    preview: '/assets/examples/screens/demo.png',
+    preview: '/assets/examples/demo/demo.png',
     name: 'Demo ( Example )',
     // onclick: 'https://console.bridged.xyz/screen?id=09090',
     onclick: DEMO,
