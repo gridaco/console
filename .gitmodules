@@ -3,4 +3,4 @@
 	url = https://github.com/bridgedxyz/client-sdk-ts.git
 [submodule "packages/reflect-core"]
 	path = packages/reflect-core
-	url = https://github.com/bridgedxyz/reflect-core-ts.git
+	url = https://github.com/reflect-ui/reflect-core-ts.git
