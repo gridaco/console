@@ -1,5 +1,5 @@
 import React from 'react';
-import * as _ModelViewer from '@google/model-viewer';
+import '@google/model-viewer';
 
 const DEMO_MODEL_3D_SIMPLE = {
   astronaut:
@@ -18,7 +18,8 @@ export function ModelViewer({
   cameraControls,
 }: ModelViewerProps) {
   return (
-    <_ModelViewer
+    //@ts-ignore
+    <model-viewer
       src={src}
       auto-rotate={autoRotate}
       camera-controls={cameraControls}
