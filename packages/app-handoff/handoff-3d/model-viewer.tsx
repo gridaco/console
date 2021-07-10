@@ -1,5 +1,6 @@
 import React from 'react';
-import '@google/model-viewer';
+import Head from 'next/head';
+// import '@google/model-viewer/dist/model-viewer';
 
 const DEMO_MODEL_3D_SIMPLE = {
   astronaut:
@@ -17,12 +18,28 @@ export function ModelViewer({
   autoRotate,
   cameraControls,
 }: ModelViewerProps) {
-  return (
-    //@ts-ignore
-    <model-viewer
-      src={src}
-      auto-rotate={autoRotate}
-      camera-controls={cameraControls}
-    />
-  );
+  if (process.browser) {
+    return (
+      <>
+        <Head>
+          <script
+            type="module"
+            src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
+          ></script>
+          <script
+            noModule
+            src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"
+          ></script>
+        </Head>
+        {/* @ts-ignore */}
+        <model-viewer
+          src={src}
+          auto-rotate={autoRotate}
+          camera-controls={cameraControls}
+        />
+      </>
+    );
+  }
+
+  return <>Loading..</>;
 }
