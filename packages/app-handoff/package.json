@@ -1,0 +1,9 @@
+{
+    "name": "@app/handoff",
+    "description": "Handoff app module",
+    "authors": "Grida.co",
+    "version": "0.0.0",
+    "dependencies": {
+        "@google/model-viewer": "^1.7.2"
+    }
+}
