@@ -19,16 +19,15 @@ export default function ModelViewer({
 }: ModelViewerProps) {
   if (process.browser) {
     return (
-      <div style={{ width: '100%' }}>
-        {/* @ts-ignore */}
-        <model-viewer
-          src={src}
-          width={`500px`}
-          height={`500px`}
-          auto-rotate={autoRotate}
-          camera-controls={cameraControls}
-        />
-      </div>
+      // @ts-ignore
+      <model-viewer
+        class="model-viewer"
+        src={src}
+        width={`100%`}
+        height={`100%`}
+        auto-rotate={autoRotate}
+        camera-controls={cameraControls}
+      />
     );
   }
 
