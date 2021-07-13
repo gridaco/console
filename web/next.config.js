@@ -44,32 +44,46 @@ module.exports = withTM(
           use: ['@svgr/webpack'],
         });
 
-        const jsLoaderRule = config.module.rules.find(
-          (rule) => rule.test instanceof RegExp && rule.test.test('.js')
-        );
-        const linariaLoader = {
-          loader: '@linaria/webpack-loader',
-          options: {
-            sourceMap: process.env.NODE_ENV !== 'production',
-          },
-        };
-        if (Array.isArray(jsLoaderRule.use)) {
-          jsLoaderRule.use.push(linariaLoader);
-        } else {
-          jsLoaderRule.use = [jsLoaderRule.use, linariaLoader];
-        }
-        return config;
-      },
-      env: {
-        FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
-        FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN,
-        FIREBASE_DATABASE_URL: process.env.FIREBASE_DATABASE_URL,
-        FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID,
-        FIREBASE_STORAGE_BUKET: process.env.FIREBASE_STORAGE_BUKET,
-        FIREBASE_MESSAGING_SENDER_ID: process.env.FIREBASE_MESSAGING_SENDER_ID,
-        FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
-        FIREBASE_MEASUREMENT_ID: process.env.FIREBASE_MEASUREMENT_ID,
-      },
-    })
-  )
+      const jsLoaderRule = config.module.rules.find(
+        (rule) => rule.test instanceof RegExp && rule.test.test('.js')
+      );
+      const linariaLoader = {
+        loader: '@linaria/webpack-loader',
+        options: {
+          sourceMap: process.env.NODE_ENV !== 'production',
+        },
+      };
+      if (Array.isArray(jsLoaderRule.use)) {
+        jsLoaderRule.use.push(linariaLoader);
+      } else {
+        jsLoaderRule.use = [jsLoaderRule.use, linariaLoader];
+      }
+      return config;
+    },
+    env: {
+      FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
+      FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN,
+      FIREBASE_DATABASE_URL: process.env.FIREBASE_DATABASE_URL,
+      FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID,
+      FIREBASE_STORAGE_BUKET: process.env.FIREBASE_STORAGE_BUKET,
+      FIREBASE_MESSAGING_SENDER_ID: process.env.FIREBASE_MESSAGING_SENDER_ID,
+      FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
+      FIREBASE_MEASUREMENT_ID: process.env.FIREBASE_MEASUREMENT_ID,
+    },
+    async rewrites() {
+      // reference: https://github.com/vercel/next.js/tree/canary/examples/with-zones
+      const GLOBALIZATION_URL = 'https://globalization-editor-mz.bridged.xyz';
+
+      return [
+        {
+          source: '/:path*',
+          destination: `/:path*`,
+        },
+        {
+          source: '/globalization',
+          destination: `${GLOBALIZATION_URL}/globalization`,
+        },
+      ];
+    },
+  })
 );
