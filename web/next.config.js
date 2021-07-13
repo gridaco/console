@@ -65,5 +65,20 @@ module.exports = withCSS(
       FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
       FIREBASE_MEASUREMENT_ID: process.env.FIREBASE_MEASUREMENT_ID,
     },
+    async rewrites() {
+      // reference: https://github.com/vercel/next.js/tree/canary/examples/with-zones
+      const GLOBALIZATION_URL = 'https://globalization-editor-mz.bridged.xyz';
+
+      return [
+        {
+          source: '/:path*',
+          destination: `/:path*`,
+        },
+        {
+          source: '/globalization',
+          destination: `${GLOBALIZATION_URL}/globalization`,
+        },
+      ];
+    },
   })
 );
