@@ -1,5 +1,5 @@
-# console
-Bridged's project collaboration console for product-level management
+# [Grida Console](https://console.grida.co)
+Grida's project collaboration console for product-level management
 
 
 
