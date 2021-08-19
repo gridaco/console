@@ -5,7 +5,7 @@ import Axios from 'axios';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 
-import { QuicklookQueryParams } from '@bridged.xyz/client-sdk/lib/projects/quicklook';
+import { QuicklookQueryParams } from '@base-sdk/base/features/quicklook';
 import * as monacoEditor from 'monaco-editor/esm/vs/editor/editor.api';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -13,9 +13,8 @@ import FrameFlutter from '../../components/frame-flutter';
 import DashboardAppbar from '../../components/appbar/dashboard.appbar';
 import Background from '../../components/canvas/background';
 import Toolbar from '../../components/toolbar';
-import { checkFrameSourceMode } from '@bridged.xyz/client-sdk/lib/frame-embed';
-import { AppFramework } from '@bridged.xyz/client-sdk/lib/types/app-frameworks';
-import { AppLanguage } from '@bridged.xyz/client-sdk/lib/types/app-languages';
+import { checkFrameSourceMode } from '@base-sdk/base/frame-embed';
+import { AppFramework, AppLanguage } from '@base-sdk/base/types';
 
 const MonacoEditor = dynamic(import('react-monaco-editor'), { ssr: false });
 

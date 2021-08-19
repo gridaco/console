@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Stage, Layer, Text, Image, Group, Rect } from 'react-konva';
 import useImage from 'use-image';
-import { StorableLayerType } from '@bridged.xyz/client-sdk/lib';
+import { StorableLayerType } from '@base-sdk/base';
 import { CGRectManifest, TextManifest } from '@reflect.bridged.xyz/core/lib';
 import {
   currentTextEditValueAtom,
@@ -25,15 +25,14 @@ import { ColorFormat } from '@reflect.bridged.xyz/core/lib/color';
 import {
   DesignGlobalizationRepositoriesStore,
   DesignGlobalizationRepository,
-} from '@bridged.xyz/client-sdk/lib/g11n/repository';
+} from '@base-sdk/base/g11n/repository';
 import { currentEditorialLocaleAtom } from '../../states/editor-state';
 
 const CanvasStage = (props: { sceneRepository?: SceneLocalRepository }) => {
   const { sceneRepository } = props;
   const scene = sceneRepository?.scene;
-  const designGlobalizationRepository = DesignGlobalizationRepositoriesStore.find(
-    scene?.id!
-  );
+  const designGlobalizationRepository =
+    DesignGlobalizationRepositoriesStore.find(scene?.id!);
 
   // const [locale,] = useRecoilState(currentEditorialLocaleAtom)
   // const translatedText = designGlobalizationRepository.fetchTranslation(id)
