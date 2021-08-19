@@ -4,3 +4,6 @@
 [submodule "packages/base-sdk"]
 	path = packages/base-sdk
 	url = https://github.com/gridaco/base-sdk
+[submodule "packages/editor-ui"]
+	path = packages/editor-ui
+	url = https://github.com/reflect-ui/reflect-editor-ui
