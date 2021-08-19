@@ -6,7 +6,8 @@
         "web",
         "packages/*",
         "packages/base-sdk/*",
-        "packages/base-sdk/_firstparty/*"
+        "packages/base-sdk/_firstparty/*",
+        "packages/editor-ui/packages/*"
     ],
     "repository": "https://github.com/bridgedxyz/console.bridged.xyz",
     "author": "bridged.xyz softmarshmallow <woojoo@softmarshmallow.com>",
