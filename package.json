@@ -4,7 +4,9 @@
     "private": true,
     "workspaces": [
         "web",
-        "packages/*"
+        "packages/*",
+        "packages/base-sdk/*",
+        "packages/base-sdk/_firstparty/*"
     ],
     "repository": "https://github.com/bridgedxyz/console.bridged.xyz",
     "author": "bridged.xyz softmarshmallow <woojoo@softmarshmallow.com>",
