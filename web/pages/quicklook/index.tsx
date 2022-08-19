@@ -5,7 +5,7 @@ import Axios from 'axios';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 
-import { QuicklookQueryParams } from '@base-sdk/base/features/quicklook';
+// import { QuicklookQueryParams } from '@base-sdk/build/dist';
 import * as monacoEditor from 'monaco-editor/esm/vs/editor/editor.api';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -13,12 +13,19 @@ import FrameFlutter from '../../components/frame-flutter';
 import DashboardAppbar from '../../components/appbar/dashboard.appbar';
 import Background from '../../components/canvas/background';
 import Toolbar from '../../components/toolbar';
-import { checkFrameSourceMode } from '@base-sdk/base/frame-embed';
-import { AppFramework, AppLanguage } from '@base-sdk/base/types';
+import { checkFrameSourceMode } from '@base-sdk/base/dist/frame-embed';
+import { AppFramework, AppLanguage } from '@base-sdk/base/dist/types';
 
 const MonacoEditor = dynamic(import('react-monaco-editor'), { ssr: false });
 
-interface IQuicklookQueries extends QuicklookQueryParams {
+interface IQuicklookQueries {
+  name;
+  url;
+  w;
+  h;
+  id;
+  language;
+  framework;
   globalizationRedirect?: string;
 }
 

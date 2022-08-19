@@ -14,7 +14,7 @@ const IconSection: React.FC<IIconSection> = ({ title, icons }) => {
       <SectionTitle>{title}</SectionTitle>
       <Grid>
         {icons.map(({ icon, name }) => (
-          <IconGridItem icon={icon} name={name} />
+          <IconGridItem key={name} icon={icon} name={name} />
         ))}
       </Grid>
     </Section>
