@@ -17,7 +17,7 @@ export default function ModelViewer({
   autoRotate,
   cameraControls,
 }: ModelViewerProps) {
-  if (process.browser) {
+  if (typeof window !== "undefined") {
     return (
       // @ts-ignore
       <model-viewer
