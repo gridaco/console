@@ -1,13 +1,9 @@
 const withCSS = require('@zeit/next-css');
 const withSASS = require('@zeit/next-sass');
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
-const withTM = require('next-transpile-modules')(
-  ['@app/handoff', '@base-sdk/core', '@base-sdk/base'],
-  {
-    // resolveSymlinks: true,
-    debug: true,
-  }
-);
+const withTM = require('next-transpile-modules')(['@app/handoff'], {
+  debug: true,
+});
 
 const typescriptLoader = {
   test: /\.ts(x?)$/,

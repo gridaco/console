@@ -1,16 +1,17 @@
 {
-    "name": "console.grida.co",
+    "name": "console",
     "version": "0.1.0",
     "private": true,
     "workspaces": [
         "web",
         "packages/*",
-        "packages/base-sdk/*",
-        "packages/base-sdk/_firstparty/*",
         "packages/editor-ui/packages/*"
     ],
-    "repository": "https://github.com/bridgedxyz/console.bridged.xyz",
-    "author": "bridged.xyz softmarshmallow <woojoo@softmarshmallow.com>",
+    "repository": "https://github.com/gridaco/console.grida.co",
+    "authors": [
+        "universe <universe@grida.co>",
+        "Grida Authors"
+    ],
     "scripts": {
         "web": "yarn workspace web run dev"
     }

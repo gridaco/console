@@ -1,9 +1,3 @@
-[submodule "packages/reflect-core"]
-	path = packages/reflect-core
-	url = https://github.com/reflect-ui/reflect-core-ts.git
-[submodule "packages/base-sdk"]
-	path = packages/base-sdk
-	url = https://github.com/gridaco/base-sdk
 [submodule "packages/editor-ui"]
 	path = packages/editor-ui
 	url = https://github.com/reflect-ui/reflect-editor-ui
