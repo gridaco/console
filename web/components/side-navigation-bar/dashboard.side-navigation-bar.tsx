@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { styled } from '@linaria/react';
+import { styled } from 'linaria/react';
 
 import { navigations } from './dashboard.constants';
 import ListItem from './dashboard.side-item';

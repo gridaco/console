@@ -1,5 +1,5 @@
 import React from 'react';
-import { styled } from '@linaria/react';
+import { styled } from 'linaria/react';
 
 import Select from './select';
 import InformationSection from './information.section';

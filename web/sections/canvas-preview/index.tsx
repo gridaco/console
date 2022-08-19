@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { usePinch } from 'react-use-gesture';
 import { motion } from 'framer-motion';
-import { styled } from '@linaria/react';
+import { styled } from 'linaria/react';
 
 import Background from '../../components/canvas/background';
 import CanvasStage from '../../components/canvas/stage';

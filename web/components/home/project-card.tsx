@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { styled } from '@linaria/react';
+import { styled } from 'linaria/react';
 
 export interface IProjectCard {
   preview?: string;

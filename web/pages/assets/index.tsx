@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useQueryParam, StringParam, withDefault } from 'use-query-params';
-import { styled } from '@linaria/react';
+import { styled } from 'linaria/react';
 
 import DashboardLayout from '../../layouts/dashboard';
 import Button from '../../components/button';

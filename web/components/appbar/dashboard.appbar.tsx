@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { styled } from '@linaria/react';
+import { styled } from 'linaria/react';
 
 import IconButton from '../../components/icon-button';
 import ShareModal from '../../components/modals/share';
-
-import logoImage from '../../assets/brand/logo.png';
 
 export interface IDashboardAppBar {
   title?: string;
@@ -36,7 +34,7 @@ export default function DashboardAppbar({
               <span>{backButton}</span>
             </BackButton>
           ) : (
-            <LogoImage src={logoImage} />
+            <LogoImage src={'/assets/brand/logo.png'} />
           )}
         </Link>
         {title && <Title>{title}</Title>}

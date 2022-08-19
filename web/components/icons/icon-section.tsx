@@ -1,5 +1,5 @@
 import React from 'react';
-import { styled } from '@linaria/react';
+import { styled } from 'linaria/react';
 
 import IconGridItem, { IIconGridItem } from '../icon-item/icon-grid-item';
 

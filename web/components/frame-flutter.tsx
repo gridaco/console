@@ -9,7 +9,7 @@
 import { NumberSize, Resizable } from 're-resizable';
 import { Direction } from 're-resizable/lib/resizer';
 import React from 'react';
-import { styled } from '@linaria/react';
+import { styled } from 'linaria/react';
 import { compileFlutterApp } from '@base-sdk/build/dist/flutter';
 import {
   FlutterLoadingState,

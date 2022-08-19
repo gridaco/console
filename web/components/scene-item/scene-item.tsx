@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ContextMenu, ContextMenuTrigger } from 'react-contextmenu';
-import { styled } from '@linaria/react';
+import { styled } from 'linaria/react';
 
 import { SceneItemContextMenu } from '../context-menus';
 

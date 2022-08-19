@@ -1,6 +1,6 @@
 import React from 'react';
 import { NextRouter } from 'next/router';
-import { styled } from '@linaria/react';
+import { styled } from 'linaria/react';
 
 export interface INavigation {
   name: string;

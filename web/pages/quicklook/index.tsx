@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { styled } from '@linaria/react';
+import { styled } from 'linaria/react';
 import Axios from 'axios';
 
 import { useRouter } from 'next/router';

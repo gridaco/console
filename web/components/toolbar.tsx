@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { styled } from '@linaria/react';
+import { styled } from 'linaria/react';
 
 import CodeRoundSVG from '../assets/icons/mdi_code_round.svg';
 import LanguageRoundSVG from '../assets/icons/mdi_language_round.svg';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { styled } from '@linaria/react';
+import { styled } from 'linaria/react';
 
 import DashboardLayout from '../../layouts/dashboard';
 import SearchFormBox from '../../components/search/search-form-box';

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { styled } from '@linaria/react';
+import { styled } from 'linaria/react';
 
 import IconButton from '../icon-button';
 

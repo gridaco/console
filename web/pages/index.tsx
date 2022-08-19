@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { styled } from '@linaria/react';
+import { styled } from 'linaria/react';
 import axios from 'axios';
 
 import DashboardAppbar from '../components/appbar/dashboard.appbar';
