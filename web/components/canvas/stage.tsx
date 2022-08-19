@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Stage, Layer, Text, Image, Group, Rect } from 'react-konva';
 import useImage from 'use-image';
 import { StorableLayerType } from '@base-sdk/base';
-import { CGRectManifest, TextManifest } from '@reflect.bridged.xyz/core/lib';
+import { CGRectManifest, TextManifest, ColorFormat } from '@reflect-ui/core';
 import {
   currentTextEditValueAtom,
   editorState,
@@ -15,24 +15,21 @@ import {
 } from 'recoil';
 import { SelectableLayer } from '../../components/canvas/selectable-layer';
 import { SceneLocalRepository } from '../../repositories';
-import {
-  convertReflectColorToUniversal,
-  fetchColrOpacity,
-} from '@reflect.bridged.xyz/core/lib/converters/color.convert';
-import { convertBorderRadius } from '@reflect.bridged.xyz/core/lib/converters/border-radius.convert';
-import { convertOffsetToUniversal } from '@reflect.bridged.xyz/core/lib/converters/offset.convert';
-import { ColorFormat } from '@reflect.bridged.xyz/core/lib/color';
+import { converters } from '@reflect-ui/core';
+import { convertBorderRadius } from '@reflect-ui/core/dist/converters/border-radius.convert';
+import { convertOffsetToUniversal } from '@reflect-ui/core/dist/converters/offset.convert';
 import {
   DesignGlobalizationRepositoriesStore,
   DesignGlobalizationRepository,
-} from '@base-sdk/base/g11n/repository';
+} from '@base-sdk/base/dist/g11n/repository';
 import { currentEditorialLocaleAtom } from '../../states/editor-state';
 
 const CanvasStage = (props: { sceneRepository?: SceneLocalRepository }) => {
   const { sceneRepository } = props;
   const scene = sceneRepository?.scene;
-  const designGlobalizationRepository =
-    DesignGlobalizationRepositoriesStore.find(scene?.id!);
+  const designGlobalizationRepository = DesignGlobalizationRepositoriesStore.find(
+    scene?.id!
+  );
 
   // const [locale,] = useRecoilState(currentEditorialLocaleAtom)
   // const translatedText = designGlobalizationRepository.fetchTranslation(id)
@@ -95,7 +92,7 @@ const CanvasStage = (props: { sceneRepository?: SceneLocalRepository }) => {
                           key={e.nodeId}
                           id={e.nodeId}
                           selected={selectionLayerId === e.nodeId}
-                          manifest={e.data as TextManifest}
+                          manifest={(e.data as any) as TextManifest}
                           width={e.width}
                           height={e.height}
                           onFocusChange={(id: string, focus: boolean) => {
@@ -150,9 +147,12 @@ function StageBG(props: { width: number; height: number; fill: string }) {
 function CGRect(props: { data: CGRectManifest }) {
   const fill =
     props.data.fill !== undefined
-      ? convertReflectColorToUniversal(props.data.fill, ColorFormat.hex6)
+      ? converters.color.convertReflectColorToUniversal(
+          props.data.fill,
+          ColorFormat.hex6
+        )
       : undefined;
-  const opacity = fetchColrOpacity(props.data.fill);
+  const opacity = converters.color.fetchColrOpacity(props.data.fill);
   const borderRadius =
     props.data.borderRadius !== undefined
       ? convertBorderRadius(props.data.borderRadius)
@@ -164,11 +164,11 @@ function CGRect(props: { data: CGRectManifest }) {
     <Rect
       opacit={opacity}
       fill={fill}
-      shadowColor={convertReflectColorToUniversal(
+      shadowColor={converters.color.convertReflectColorToUniversal(
         shadow?.color,
         ColorFormat.hex6
       )}
-      shadowOpacity={fetchColrOpacity(shadow?.color)}
+      shadowOpacity={converters.color.fetchColrOpacity(shadow?.color)}
       shadowBlur={shadow?.blurRadius}
       shadowOffset={convertOffsetToUniversal(shadow?.offset)}
       cornerRadius={borderRadius}
@@ -212,7 +212,7 @@ function EditableG11nText(props: {
   repository: DesignGlobalizationRepository;
   onFocusChange: (id: string, focus: boolean) => void;
 }) {
-  let defaulttext = props.manifest.text;
+  let defaulttext = props.manifest.data as string;
   const [translatedText, setTranslatedText] = useState<string>(defaulttext);
 
   // useEffect(() => {
@@ -250,12 +250,12 @@ function EditableG11nText(props: {
         key={props.id}
         id={props.id}
         text={displayText}
-        align={props.manifest.textAlign}
-        verticalAlign={props.manifest.textAlignVertical}
-        fontSize={props.manifest.style.fontSize}
+        align={props.manifest.textAlign as any}
+        verticalAlign={props.manifest.textAlignVertical as any}
+        fontSize={(props.manifest.style as any).fontSize as any}
         ellipsis={true}
-        fill={convertReflectColorToUniversal(
-          props.manifest.style.color,
+        fill={converters.color.convertReflectColorToUniversal(
+          (props.manifest.style as any).color,
           ColorFormat.hex6
         )}
         fontFamily="'Arial'" //{`"${props.text.style.fontFamily}"`}

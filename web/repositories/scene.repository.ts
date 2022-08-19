@@ -1,4 +1,5 @@
-import { StorableLayer, StorableScene } from '@base-sdk/base';
+import { StorableScene } from '@base-sdk/base/dist/design/legacy-scenes/storable-scene';
+import { StorableLayer } from '@base-sdk/base';
 
 // NOT USING
 export class SceneRepositoryStore {

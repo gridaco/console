@@ -1,5 +1,5 @@
 {
-    "name": "console",
+    "name": "console.grida.co",
     "version": "0.1.0",
     "private": true,
     "workspaces": [
@@ -14,5 +14,10 @@
     ],
     "scripts": {
         "web": "yarn workspace web run dev"
+    },
+    "resolutions": {
+        "react": "17.0.1",
+        "react-dom": "17.0.1",
+        "@types/react": "^17.0.0"
     }
 }
