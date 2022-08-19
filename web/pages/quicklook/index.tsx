@@ -1,22 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { styled } from 'linaria/react';
-import Axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { styled } from "linaria/react";
+import Axios from "axios";
 
-import { useRouter } from 'next/router';
-import dynamic from 'next/dynamic';
+import { useRouter } from "next/router";
 
 // import { QuicklookQueryParams } from '@base-sdk/build/dist';
-import * as monacoEditor from 'monaco-editor/esm/vs/editor/editor.api';
-import CircularProgress from '@material-ui/core/CircularProgress';
+// import * as monacoEditor from "monaco-editor/esm/vs/editor/editor.api";
+import CircularProgress from "@mui/material/CircularProgress";
 
-import FrameFlutter from '../../components/frame-flutter';
-import DashboardAppbar from '../../components/appbar/dashboard.appbar';
-import Background from '../../components/canvas/background';
-import Toolbar from '../../components/toolbar';
-import { checkFrameSourceMode } from '@base-sdk/base/dist/frame-embed';
-import { AppFramework, AppLanguage } from '@base-sdk/base/dist/types';
+import FrameFlutter from "../../components/frame-flutter";
+import DashboardAppbar from "../../components/appbar/dashboard.appbar";
+import Background from "../../components/canvas/background";
+import Toolbar from "../../components/toolbar";
+import { checkFrameSourceMode } from "@base-sdk/base/dist/frame-embed";
+import { AppFramework, AppLanguage } from "@base-sdk/base/dist/types";
 
-const MonacoEditor = dynamic(import('react-monaco-editor'), { ssr: false });
+// const MonacoEditor = dynamic(import("react-monaco-editor"), { ssr: false });
 
 interface IQuicklookQueries {
   name;
@@ -39,7 +38,7 @@ export default function Frame() {
   const [source, setSource] = useState<string>();
   let editingSource: string;
   const query: IQuicklookQueries = {
-    id: (router.query.id as string) ?? '',
+    id: (router.query.id as string) ?? "",
     framework: (router.query.framework as AppFramework) ?? AppFramework.flutter,
     language: (router.query.language as AppLanguage) ?? AppLanguage.dart,
     url: router.query.url as string,
@@ -47,17 +46,17 @@ export default function Frame() {
     w: Number.parseInt(router.query.w as string) ?? 375,
     h: Number.parseInt(router.query.h as string) ?? 812,
     globalizationRedirect:
-      (router.query['globalization-redirect'] as string) ?? '#',
+      (router.query["globalization-redirect"] as string) ?? "#",
   };
-  console.info('query for quicklook: ', query);
+  console.info("query for quicklook: ", query);
 
   useEffect(() => {
     switch (query.framework) {
-      case 'flutter':
+      case "flutter":
         if (query.url) {
-          if (query.language == 'js') {
+          if (query.language == "js") {
             setSource(query.url);
-          } else if (query.language == 'dart') {
+          } else if (query.language == "dart") {
             // fetch dart file and set as source
             Axios.get(query.url).then((r) => {
               const dartSource = r.data;
@@ -78,14 +77,14 @@ export default function Frame() {
     if (editingSource) {
       setSource(editingSource);
     } else {
-      alert('your code has no changes');
+      alert("your code has no changes");
     }
   };
 
   return (
     <>
       <DashboardAppbar
-        title={query.name || 'No Name'}
+        title={query.name || "No Name"}
         backButton="DASHBOARD"
         onClickPlay={run}
       />
@@ -100,12 +99,13 @@ export default function Frame() {
             })}
           </Background>
         </SideContainer>
-        <SideContainer style={{ width: '45vw' }}>
+        <SideContainer style={{ width: "45vw" }}>
+          {/* @ts-ignore */}
           <Toolbar toGlobalization={query.globalizationRedirect}>
             <ButtonList>
               <Button
                 style={{
-                  backgroundColor: '#151617',
+                  backgroundColor: "#151617",
                 }}
                 onClick={openVSCode}
               >
@@ -115,7 +115,7 @@ export default function Frame() {
               <div style={{ marginLeft: 12 }}></div>
               <Button
                 style={{
-                  backgroundColor: '#2562FF',
+                  backgroundColor: "#2562FF",
                 }}
                 onClick={run}
               >
@@ -124,11 +124,11 @@ export default function Frame() {
               </Button>
             </ButtonList>
           </Toolbar>
-          <MonacoEditor
+          {/* <MonacoEditor
             language="dart"
             theme="vs-dark"
             value={source}
-            options={{ unusualLineTerminators: 'off' }}
+            options={{ unusualLineTerminators: "off" }}
             onChange={(value: string) => {
               editingSource = value;
             }}
@@ -137,15 +137,15 @@ export default function Frame() {
             ) => {
               // @ts-ignore
               window.MonacoEnvironment.getWorkerUrl = (moduleId, label) => {
-                if (label === 'json') return '/_next/static/json.worker.js';
-                if (label === 'css') return '/_next/static/css.worker.js';
-                if (label === 'html') return '/_next/static/html.worker.js';
-                if (label === 'typescript' || label === 'javascript')
-                  return '/_next/static/ts.worker.js';
-                return '/_next/static/editor.worker.js';
+                if (label === "json") return "/_next/static/json.worker.js";
+                if (label === "css") return "/_next/static/css.worker.js";
+                if (label === "html") return "/_next/static/html.worker.js";
+                if (label === "typescript" || label === "javascript")
+                  return "/_next/static/ts.worker.js";
+                return "/_next/static/editor.worker.js";
               };
             }}
-          />
+          /> */}
         </SideContainer>
       </Wrapper>
     </>
@@ -169,8 +169,8 @@ function appFrame(props: {
   }
 
   switch (props.framework) {
-    case 'flutter':
-      if (props.language == 'js') {
+    case "flutter":
+      if (props.language == "js") {
         return (
           <FrameFlutter
             id={props.id}
@@ -179,18 +179,18 @@ function appFrame(props: {
             mode={mode}
           ></FrameFlutter>
         );
-      } else if (props.language == 'dart') {
+      } else if (props.language == "dart") {
         return (
           <FrameFlutter
             key={props.source}
             id={props.id}
             src={props.source}
-            language={'dart'}
+            language={"dart"}
           ></FrameFlutter>
         );
       }
       return loading;
-    case 'react':
+    case "react":
       return <p>react framework is not yet supported.</p>;
     default:
       return loading;
@@ -200,7 +200,7 @@ function appFrame(props: {
 // opens vs code; code editor for editing this source on developer's local environment.
 const openVSCode = () => {
   // todo -- pass params for rerouting on the editor
-  window.location.href = 'vscode://file';
+  window.location.href = "vscode://file";
   // not using this line since its purpose on oppening app on same window.
   // open('vscode://file')
 };

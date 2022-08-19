@@ -6,16 +6,16 @@
  * PLEASE VISIT https://github.com/bridgedxyz/appbox/tree/main/packages/frames
  */
 
-import { NumberSize, Resizable } from 're-resizable';
-import { Direction } from 're-resizable/lib/resizer';
-import React from 'react';
-import { styled } from 'linaria/react';
-import { compileFlutterApp } from '@base-sdk/build/dist/flutter';
+import { NumberSize, Resizable } from "re-resizable";
+import { Direction } from "re-resizable/lib/resizer";
+import React from "react";
+import { styled } from "linaria/react";
+import { compileFlutterApp } from "@base-sdk/build/dist/flutter";
 import {
   FlutterLoadingState,
   FlutterFrameQuery,
-} from '@base-sdk/base/dist/frame-embed';
-import Alert from '@material-ui/lab/Alert';
+} from "@base-sdk/base/dist/frame-embed";
+import Alert from "@mui/material/Alert";
 
 interface State {
   viewportWidth: number;
@@ -30,7 +30,7 @@ export default class FrameFlutter extends React.Component<
   constructor(props: FlutterFrameQuery) {
     super(props);
     this.state = {
-      compileState: 'pre-warming',
+      compileState: "pre-warming",
       viewportHeight: 812,
       viewportWidth: 375,
     };
@@ -39,12 +39,12 @@ export default class FrameFlutter extends React.Component<
   componentDidMount() {}
 
   async getCompiledJsSource(): Promise<string> {
-    if (this.props.language == 'js') {
+    if (this.props.language == "js") {
       this.setState(() => {
-        return { compileState: 'js-compiled' };
+        return { compileState: "js-compiled" };
       });
       return this.props.src;
-    } else if (this.props.language == 'dart') {
+    } else if (this.props.language == "dart") {
       try {
         const app = await compileFlutterApp({
           dart: this.props.src,
@@ -52,49 +52,49 @@ export default class FrameFlutter extends React.Component<
         });
 
         var blob = new Blob([app.js!], {
-          type: 'application/javascript',
+          type: "application/javascript",
         });
         var url = URL.createObjectURL(blob);
 
         this.setState(() => {
-          return { compileState: 'js-compiled' };
+          return { compileState: "js-compiled" };
         });
 
         return url;
       } catch (e) {
         this.setState(() => {
-          return { compileState: 'failed' };
+          return { compileState: "failed" };
         });
-        return '';
+        return "";
       }
     } else {
-      throw 'one of dart or js should be provided';
+      throw "one of dart or js should be provided";
     }
   }
 
   onIframeLoaded = () => {
     this.setState(() => {
-      return { compileState: 'compiling' };
+      return { compileState: "compiling" };
     });
 
-    let iframe = document.getElementById('frame') as HTMLIFrameElement;
+    let iframe = document.getElementById("frame") as HTMLIFrameElement;
 
     // get the compiled js source
     this.getCompiledJsSource().then((js) => {
       // post message to iframe to execute js source
       iframe.contentWindow!.postMessage(
         {
-          command: 'execute',
+          command: "execute",
           js: js,
         },
-        '*'
+        "*"
       );
 
       this.setState(() => {
-        return { compileState: 'drawing' };
+        return { compileState: "drawing" };
       });
       this.setState(() => {
-        return { compileState: 'complete' };
+        return { compileState: "complete" };
       });
     });
 
@@ -105,7 +105,7 @@ export default class FrameFlutter extends React.Component<
       colno?: number,
       error?: Error
     ) => {
-      console.error('error from flutter js', source);
+      console.error("error from flutter js", source);
     };
   };
 
@@ -132,15 +132,15 @@ export default class FrameFlutter extends React.Component<
 
   message() {
     switch (this.state.compileState) {
-      case 'failed':
+      case "failed":
         return (
-          <Alert severity="error" style={{ border: '1px solid #f44336' }}>
+          <Alert severity="error" style={{ border: "1px solid #f44336" }}>
             Failed to compile. check your code
           </Alert>
         );
-      case 'complete':
+      case "complete":
         return (
-          <Alert severity="success" style={{ border: '1px solid #4caf50' }}>
+          <Alert severity="success" style={{ border: "1px solid #4caf50" }}>
             Complete
           </Alert>
         );
@@ -148,7 +148,7 @@ export default class FrameFlutter extends React.Component<
         return (
           <Alert
             severity="info"
-            style={{ textTransform: 'capitalize', border: '1px solid #2196f3' }}
+            style={{ textTransform: "capitalize", border: "1px solid #2196f3" }}
           >
             {this.state.compileState}...
           </Alert>
@@ -208,14 +208,14 @@ const BottomRightHandle = () => (
 const CustomHandle = (props: any) => (
   <div
     style={{
-      background: '#fff',
-      borderRadius: '2px',
-      border: '1px solid #ddd',
-      height: '100%',
-      width: '100%',
+      background: "#fff",
+      borderRadius: "2px",
+      border: "1px solid #ddd",
+      height: "100%",
+      width: "100%",
       padding: 0,
     }}
-    className={'SomeCustomHandle'}
+    className={"SomeCustomHandle"}
     {...props}
   />
 );

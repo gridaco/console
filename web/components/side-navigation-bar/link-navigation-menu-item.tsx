@@ -1,5 +1,5 @@
 import React from 'react';
-import ListItem, { ListItemProps } from '@material-ui/core/ListItem';
+import ListItem, { ListItemProps } from '@mui/material/ListItem';
 
 export function LinkNavigationMenuItem(
   props: ListItemProps<'a', { button?: true }>

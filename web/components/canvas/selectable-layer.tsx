@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Group, Rect } from 'react-konva';
+import React, { useState } from "react";
+import { Group, Rect } from "react-konva";
 
 interface ISelectableLayer {
   children: JSX.Element;
@@ -17,7 +17,7 @@ export const SelectableLayer: React.FC<ISelectableLayer> = ({
 }) => {
   const [hover, setHover] = useState<boolean>();
 
-  const childId = (children.key || '').toString();
+  const childId = (children.key || "").toString();
 
   const handleClick = () => {
     if (onFocusChange) {

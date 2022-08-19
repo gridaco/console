@@ -1,19 +1,19 @@
-import React, { useState, useMemo } from 'react';
-import { useQueryParam, StringParam, withDefault } from 'use-query-params';
-import { styled } from 'linaria/react';
+import React, { useState, useMemo } from "react";
+import { useQueryParam, StringParam, withDefault } from "next-query-params";
+import { styled } from "linaria/react";
 
-import DashboardLayout from '../../layouts/dashboard';
-import Button from '../../components/button';
-import SearchFormBox from '../../components/search/search-form-box';
-import { AssetListItem, AssetGridItem } from '../../components/asset-item';
-import IconButton from '../../components/icon-button';
-import SelectedAssetInformation from '../../components/assets/selected-asset-information';
+import DashboardLayout from "../../layouts/dashboard";
+import Button from "../../components/button";
+import SearchFormBox from "../../components/search/search-form-box";
+import { AssetListItem, AssetGridItem } from "../../components/asset-item";
+import IconButton from "../../components/icon-button";
+import SelectedAssetInformation from "../../components/assets/selected-asset-information";
 
 const tabs = [
-  { name: 'ALL', value: 'all' },
-  { name: 'Illustrations', value: 'illustrations' },
-  { name: 'Images', value: 'images' },
-  { name: 'Text', value: 'text' },
+  { name: "ALL", value: "all" },
+  { name: "Illustrations", value: "illustrations" },
+  { name: "Images", value: "images" },
+  { name: "Text", value: "text" },
 ];
 
 interface IAsset {
@@ -23,22 +23,22 @@ interface IAsset {
 }
 
 const exampleAssets: IAsset[] = Array(7).fill({
-  title: 'Asset Name',
-  preview: '/assets/examples/project.png',
+  title: "Asset Name",
+  preview: "/assets/examples/project.png",
 });
 
 export default function AssetsPage() {
   const [currentView, setCurrentView] = useQueryParam(
-    'view',
-    withDefault(StringParam, 'grid')
+    "view",
+    withDefault(StringParam, "grid")
   );
   const [currentTab, setCurrentTab] = useQueryParam(
-    'tab',
-    withDefault(StringParam, 'all')
+    "tab",
+    withDefault(StringParam, "all")
   );
   const [selectedAsset, setSelectedAsset] = useState<IAsset>();
 
-  const isGridView = useMemo(() => currentView === 'grid', [currentView]);
+  const isGridView = useMemo(() => currentView === "grid", [currentView]);
 
   const onClickAsset = (asset: IAsset) => {
     if (asset.id === selectedAsset?.id) {
@@ -71,16 +71,16 @@ export default function AssetsPage() {
         </TabList>
         <IconList>
           <IconButton
-            onClick={() => setCurrentView('list')}
+            onClick={() => setCurrentView("list")}
             style={{ marginRight: 9 }}
           >
             <IconImage
-              src={`/assets/icons/${isGridView ? 'list' : 'list_view'}.svg`}
+              src={`/assets/icons/${isGridView ? "list" : "list_view"}.svg`}
             />
           </IconButton>
-          <IconButton onClick={() => setCurrentView('grid')}>
+          <IconButton onClick={() => setCurrentView("grid")}>
             <IconImage
-              src={`/assets/icons/${isGridView ? 'grid_view' : 'grid'}.svg`}
+              src={`/assets/icons/${isGridView ? "grid_view" : "grid"}.svg`}
             />
           </IconButton>
         </IconList>
@@ -160,7 +160,7 @@ interface ITabItem {
 const TabItem = styled.li<ITabItem>`
   font-size: 16px;
   line-height: 1.2;
-  color: ${({ isSelected }) => (isSelected ? 'black' : '#9a9a9a')};
+  color: ${({ isSelected }) => (isSelected ? "black" : "#9a9a9a")};
   cursor: pointer;
 
   &:not(:last-child) {

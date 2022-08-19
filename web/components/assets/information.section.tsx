@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from 'linaria/react';
 
-interface IInformationSection {
+interface IInformationSection extends React.PropsWithChildren {
   title: string;
   icon?: React.ReactNode;
 }

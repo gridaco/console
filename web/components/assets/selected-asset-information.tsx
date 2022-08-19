@@ -15,6 +15,7 @@ const SelectedAssetInformation: React.FC = () => {
       <Title>Lint Cover Illust</Title>
       <FilePath>illusts/lint/eye-cover-main</FilePath>
       <SelectWrapper>
+        {/* @ts-ignore */}
         <Select>
           <option selected>English(Default)</option>
           <option>한국어</option>

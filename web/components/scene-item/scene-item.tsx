@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { ContextMenu, ContextMenuTrigger } from 'react-contextmenu';
-import { styled } from 'linaria/react';
+import React, { useState } from "react";
+import * as ContextMenu from "@radix-ui/react-context-menu";
+import { styled } from "linaria/react";
 
-import { SceneItemContextMenu } from '../context-menus';
+import { SceneItemContextMenu } from "../context-menus";
 
 export interface ISceneItemDisplay {
   name: string;
@@ -42,22 +42,29 @@ export const SceneItem = ({
 
   return (
     <Wrapper>
-      <ContextMenuTrigger id={id}>
-        <ItemContainer
-          onClick={handleClick}
-          onDoubleClick={handleDoubleClick}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        >
-          <PreviewImageWrapper>
-            <PreviewImage src={preview} data-selected={isSelected && 'true'} />
-          </PreviewImageWrapper>
-          <Name>{name}</Name>
-        </ItemContainer>
-      </ContextMenuTrigger>
-      <ContextMenu id={id}>
-        <SceneItemContextMenu />
-      </ContextMenu>
+      <ContextMenu.Root>
+        <ContextMenu.Trigger>
+          <ItemContainer
+            onClick={handleClick}
+            onDoubleClick={handleDoubleClick}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <PreviewImageWrapper>
+              <PreviewImage
+                src={preview}
+                data-selected={isSelected && "true"}
+              />
+            </PreviewImageWrapper>
+            <Name>{name}</Name>
+          </ItemContainer>
+        </ContextMenu.Trigger>
+        <ContextMenu.Portal>
+          <ContextMenu.Content>
+            <SceneItemContextMenu />
+          </ContextMenu.Content>
+        </ContextMenu.Portal>
+      </ContextMenu.Root>
     </Wrapper>
   );
 };
@@ -89,7 +96,7 @@ const PreviewImage = styled.img`
   user-select: none;
   -webkit-user-drag: none;
 
-  &[data-selected='true'] {
+  &[data-selected="true"] {
     outline: 2px solid #2f80ed;
   }
 `;

@@ -1,9 +1,9 @@
-import React from 'react';
-import dynamic from 'next/dynamic';
-import { styled } from 'linaria/react';
-
+import React from "react";
+import dynamic from "next/dynamic";
+import { styled } from "linaria/react";
+// import {} from "@app/handoff/handoff-3d/model-viewer";
 const ModelViewer_withnossr = dynamic(
-  () => import('@app/handoff/handoff-3d/model-viewer'),
+  () => import("@app/handoff/handoff-3d/model-viewer"),
   {
     ssr: false,
   }

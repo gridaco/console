@@ -1,8 +1,8 @@
 import { useRecoilState } from 'recoil';
 import React from 'react';
 import { currentEditorialLocaleAtom } from '../../states/editor-state';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
 /**
  * locale select compoent for canvas section
