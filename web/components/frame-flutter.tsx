@@ -10,11 +10,11 @@ import { NumberSize, Resizable } from 're-resizable';
 import { Direction } from 're-resizable/lib/resizer';
 import React from 'react';
 import { styled } from '@linaria/react';
-import { compileFlutterApp } from '@bridged.xyz/client-sdk/lib/build/flutter';
+import { compileFlutterApp } from '@base-sdk/build/flutter';
 import {
   FlutterLoadingState,
   FlutterFrameQuery,
-} from '@bridged.xyz/client-sdk/lib/frame-embed/flutter';
+} from '@base-sdk/base/frame-embed';
 import Alert from '@material-ui/lab/Alert';
 
 interface State {

@@ -8,12 +8,12 @@ import { writeToClipboard } from '../../../utils/clipboard';
 const exampleManagers: IShareMemberItem[] = [
   {
     profile: '/assets/examples/profile.png',
-    email: 'junhoyeo@bridged.xyz',
+    email: 'universe@grida.co',
     isEditor: true,
   },
   ...Array(8).fill({
     profile: '/assets/examples/profile.png',
-    email: 'junhoyeo@bridged.xyz',
+    email: 'pacman@grida.co',
   }),
 ];
 

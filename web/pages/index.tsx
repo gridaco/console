@@ -52,7 +52,7 @@ const Home = () => {
       <Wrapper>
         <BannerWrapper>
           <BannerContainer>
-            <BrandImage src="/assets/images/bridged.svg" />
+            <BrandImage src="/assets/images/grida.svg" />
             <CreateButton>+ Create New</CreateButton>
           </BannerContainer>
         </BannerWrapper>

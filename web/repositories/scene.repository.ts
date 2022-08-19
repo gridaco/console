@@ -1,4 +1,4 @@
-import { StorableLayer, StorableScene } from '@bridged.xyz/client-sdk/lib';
+import { StorableLayer, StorableScene } from '@base-sdk/base';
 
 // NOT USING
 export class SceneRepositoryStore {

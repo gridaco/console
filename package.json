@@ -1,10 +1,13 @@
 {
-    "name": "console.bridged.xyz",
+    "name": "console.grida.co",
     "version": "0.1.0",
     "private": true,
     "workspaces": [
         "web",
-        "packages/*"
+        "packages/*",
+        "packages/base-sdk/*",
+        "packages/base-sdk/_firstparty/*",
+        "packages/editor-ui/packages/*"
     ],
     "repository": "https://github.com/bridgedxyz/console.bridged.xyz",
     "author": "bridged.xyz softmarshmallow <woojoo@softmarshmallow.com>",

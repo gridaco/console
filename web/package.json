@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@app/handoff": "0.0.0",
-    "@bridged.xyz/client-sdk": "^0.0.1-14",
+    "@base-sdk/core": "0.1.0-1",
     "@linaria/babel-preset": "^3.0.0-beta.1",
     "@linaria/core": "^3.0.0-beta.1",
     "@linaria/react": "^3.0.0-beta.1",
