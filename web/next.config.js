@@ -1,15 +1,11 @@
 // const withPlugins = require("next-compose-plugins");
 const withLinaria = require("next-linaria");
-const withTM = require("next-transpile-modules")(
-  [
-    //
-    "@app/handoff",
-    "@app/assets",
-  ],
-  {
-    debug: true,
-  }
-);
+const withTM = require("next-transpile-modules")([
+  //
+  "@app/handoff",
+  "@app/assets",
+  "@editor-ui/console",
+]);
 
 /**
  * @type {import('next').NextConfig}

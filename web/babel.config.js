@@ -6,23 +6,23 @@ module.exports = {
   ],
   plugins: [
     // ["@emotion"],
-    // [
-    //   "module-resolver",
-    //   {
-    //     root: ["."],
-    //     alias: {
-    //       components: "./components",
-    //       icons: "./icons",
-    //       layouts: "./layouts",
-    //       scaffolds: "./scaffolds",
-    //       utils: "./utils",
-    //       core: "./core",
-    //       store: "./store",
-    //       repository: "./repository",
-    //       public: "./public",
-    //       hooks: "./hooks",
-    //     },
-    //   },
-    // ],
+    [
+      "module-resolver",
+      {
+        root: ["."],
+        alias: {
+          components: "./components",
+          icons: "./icons",
+          layouts: "./layouts",
+          scaffolds: "./scaffolds",
+          utils: "./utils",
+          core: "./core",
+          store: "./store",
+          repository: "./repository",
+          public: "./public",
+          hooks: "./hooks",
+        },
+      },
+    ],
   ],
 };
