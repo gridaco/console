@@ -3,18 +3,18 @@ import dynamic from "next/dynamic";
 import { styled } from "linaria/react";
 // FIXME:
 // import ModelViewer_withnossr from "@app/handoff/handoff-3d/model-viewer";
-// const ModelViewer_withnossr = dynamic(
-//   () => import("@app/handoff/handoff-3d/model-viewer"),
-//   {
-//     ssr: false,
-//   }
-// );
+const ModelViewer_withnossr = dynamic(
+  () => import("@app/handoff/handoff-3d/model-viewer"),
+  {
+    ssr: false,
+  }
+);
 
 export default function Handoff3DPage() {
   return (
     <PageRoot>
       <ModelViewerWrap>
-        {/* <ModelViewer_withnossr autoRotate cameraControls /> */}
+        <ModelViewer_withnossr autoRotate cameraControls />
       </ModelViewerWrap>
     </PageRoot>
   );
