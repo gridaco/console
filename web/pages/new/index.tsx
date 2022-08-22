@@ -11,10 +11,12 @@ import { Button, Divider, TextField, TextFormField } from "@editor-ui/console";
 import { useEffect } from "react";
 import type { GetArrayElementType } from "utils/utility-types";
 import { validateEmail } from "utils/validatiors";
+import { useRouter } from "next/router";
 
 const steps = ["essential", "invite"] as const;
 
 export default function NewWrokspaceOnboardingPage() {
+  const router = useRouter();
   const [step, setStep] = React.useState<GetArrayElementType<typeof steps>>(
     steps[0]
   );
@@ -34,7 +36,13 @@ export default function NewWrokspaceOnboardingPage() {
         <Body />
       </OnboardingBody>
       <CancelContainer>
-        <Button height={"40px"} color="white">
+        <Button
+          height={"40px"}
+          color="white"
+          onClick={() => {
+            router.replace("/");
+          }}
+        >
           Cancel
         </Button>
       </CancelContainer>

@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import { styled } from 'linaria/react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { styled } from "linaria/react";
+import axios from "axios";
 
-import DashboardAppbar from '../components/appbar/dashboard.appbar';
-import ProjectCard from '../components/home/project-card';
-import Button from '../components/button';
+import DashboardAppbar from "../components/appbar/dashboard.appbar";
+import ProjectCard from "../components/home/project-card";
+import Button from "../components/button";
 
-import mockups from '../mockups/projects';
+import mockups from "../mockups/projects";
 
 interface IProject {
   name: string;
@@ -53,7 +53,13 @@ const Home = () => {
         <BannerWrapper>
           <BannerContainer>
             <BrandImage src="/assets/images/grida.svg" />
-            <CreateButton>+ Create New</CreateButton>
+            <CreateButton
+              onClick={() => {
+                router.push("/new");
+              }}
+            >
+              + Create New
+            </CreateButton>
           </BannerContainer>
         </BannerWrapper>
         <ProjectList>
@@ -113,7 +119,7 @@ const ProjectList = styled.ul`
   flex: 1;
   padding-top: 80px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(425px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-column-gap: 1.5rem;
   grid-row-gap: 2.5rem;
 `;

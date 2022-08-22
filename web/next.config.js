@@ -4,6 +4,7 @@ const withTM = require("next-transpile-modules")([
   //
   "@app/handoff",
   "@app/assets",
+  "@app/members",
   "@editor-ui/console",
 ]);
 

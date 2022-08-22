@@ -1,19 +1,19 @@
-import React from 'react';
-import { styled } from 'linaria/react';
+import React from "react";
+import { styled } from "linaria/react";
 
-import Modal, { IModal } from '../atom.modal';
-import ShareMemberItem, { IShareMemberItem } from './share-member-item';
-import { writeToClipboard } from '../../../utils/clipboard';
+import Modal, { IModal } from "../atom.modal";
+import ShareMemberItem, { IShareMemberItem } from "./share-member-item";
+import { writeToClipboard } from "../../../utils/clipboard";
 
 const exampleManagers: IShareMemberItem[] = [
   {
-    profile: '/assets/examples/profile.png',
-    email: 'universe@grida.co',
+    profile: "/assets/examples/profile.png",
+    email: "universe@grida.co",
     isEditor: true,
   },
   ...Array(8).fill({
-    profile: '/assets/examples/profile.png',
-    email: 'pacman@grida.co',
+    profile: "/assets/examples/profile.png",
+    email: "universe@grida.co",
   }),
 ];
 
@@ -22,7 +22,7 @@ interface IShareModal extends IModal {}
 const ShareModal: React.FC<IShareModal> = ({ isOpen, onClose }) => {
   const onClickShareLink = () => {
     writeToClipboard(window.location.href);
-    alert('Copied to clipboard!');
+    alert("Copied to clipboard!");
   };
 
   return (

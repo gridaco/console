@@ -1,2 +1,3 @@
+export * from "./settings-appbar";
 export * from "./settings-layout";
-export * from "./settings-section-header";
+export * from "./settings-section";

@@ -1,10 +1,16 @@
-import React from 'react';
-import { styled } from 'linaria/react';
+import React from "react";
+import { styled } from "linaria/react";
+import { useRouter } from "next/router";
 
 const DashboardSideFooter: React.FC = () => {
+  const router = useRouter();
   return (
     <ButtonWrapper>
-      <Button>
+      <Button
+        onClick={() => {
+          router.push("/settings");
+        }}
+      >
         <IconImage src="/assets/icons/mdi_settings.svg" />
         <span>Project Settings</span>
       </Button>

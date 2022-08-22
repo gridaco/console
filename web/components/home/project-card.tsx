@@ -1,6 +1,6 @@
-import React from 'react';
-import Link from 'next/link';
-import { styled } from 'linaria/react';
+import React from "react";
+import Link from "next/link";
+import { styled } from "linaria/react";
 
 export interface IProjectCard {
   preview?: string;
@@ -31,7 +31,7 @@ const ProjectCard: React.FC<IProjectCard> = ({
 export default ProjectCard;
 
 const Container = styled.li`
-  min-width: 425px;
+  min-width: 200px;
   display: flex;
   flex-direction: column;
   box-shadow: 0px 4px 16px 2px rgba(157, 157, 157, 0.12);
@@ -46,6 +46,7 @@ const PreviewImage = styled.img`
   border-top-right-radius: 4px;
   user-select: none;
   -webkit-user-drag: none;
+  object-fit: cover;
 `;
 
 const Information = styled.div`

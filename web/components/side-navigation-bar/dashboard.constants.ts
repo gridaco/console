@@ -1,34 +1,34 @@
-import { INavigation } from './dashboard.side-item';
+import { INavigation } from "./dashboard.side-item";
 
 export const navigations: INavigation[] = [
   {
-    name: 'Overview',
+    name: "Overview",
     // path: '/overview',
-    icon: '/assets/icons/mdi_remove_red_eye.svg',
+    icon: "/assets/icons/mdi_remove_red_eye.svg",
   },
   {
-    name: 'Screens',
-    path: '/screens',
-    icon: '/assets/icons/mdi_remove_red_eye.svg',
+    name: "Scenes",
+    path: "/scenes",
+    icon: "/assets/icons/mdi_remove_red_eye.svg",
   },
   {
-    name: 'Fonts',
+    name: "Fonts",
     // path: '/fonts',
-    icon: '',
+    icon: "",
   },
   {
-    name: 'Icons',
-    path: '/icons',
-    icon: '',
+    name: "Icons",
+    path: "/icons",
+    icon: "",
   },
   {
-    name: 'Assets',
-    path: '/assets',
-    icon: '/assets/icons/mdi_web_asset.svg',
+    name: "Assets",
+    path: "/assets",
+    icon: "/assets/icons/mdi_web_asset.svg",
   },
   {
-    name: 'Code',
+    name: "Code",
     // path: '/code',
-    icon: '/assets/icons/icons.svg',
+    icon: "/assets/icons/icons.svg",
   },
 ];
