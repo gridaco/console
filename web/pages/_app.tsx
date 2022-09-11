@@ -9,6 +9,19 @@ import "../styles/globals.css";
 
 Modal.setAppElement("#__next");
 
+function GoogleOnetapSignin() {
+  return (
+    <div
+      id="g_id_onload"
+      data-client_id={process.env.NEXT_PUBLIC_GSI_CLIENT_ID}
+      data-login_uri="https://accounts.services.grida.co/signin/with-google"
+      data-auto_prompt="true"
+      data-state_cookie_domain=".grida.co"
+      data-itp_support="false"
+    ></div>
+  );
+}
+
 function MyApp({ Component, pageProps }) {
   return (
     <>
@@ -28,6 +41,7 @@ function MyApp({ Component, pageProps }) {
       <Head>
         <title>Grida console</title>
       </Head>
+      <GoogleOnetapSignin />
       <RecoilRoot>
         <QueryParamProvider>
           <Component {...pageProps} />
