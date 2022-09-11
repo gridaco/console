@@ -11,14 +11,20 @@ Modal.setAppElement("#__next");
 
 function GoogleOnetapSignin() {
   return (
-    <div
-      id="g_id_onload"
-      data-client_id={process.env.NEXT_PUBLIC_GSI_CLIENT_ID}
-      data-login_uri="https://accounts.services.grida.co/signin/with-google"
-      data-auto_prompt="true"
-      data-state_cookie_domain=".grida.co"
-      data-itp_support="false"
-    ></div>
+    <>
+      {/* region GSI - https://developers.google.com/identity/gsi/web/guides/client-library */}
+      <Script src="https://accounts.google.com/gsi/client" async defer />
+      {/* endregion */}
+      {/* ontap display */}
+      <div
+        id="g_id_onload"
+        data-client_id={process.env.NEXT_PUBLIC_GSI_CLIENT_ID}
+        data-login_uri="https://accounts.services.grida.co/signin/with-google"
+        data-auto_prompt="true"
+        data-state_cookie_domain=".grida.co"
+        data-itp_support="false"
+      ></div>
+    </>
   );
 }
 
